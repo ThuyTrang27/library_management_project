@@ -28,7 +28,7 @@ CREATE TABLE books (
     content text,
     image_ulr text
     );
-INSERT INTO books (book_id, book_title, price, author, publisher, publisher_year, stock_quantity, categories_id, content, image_ulr)
+INSERT INTO books (book_id, book_title, price, author, publisher, publisher_year, stock_quantity, categories_id, content, image_url)
 VALUES 
 (1, "THE HOUSE WITCH",450000,"Delemhach", "Podium Publishing", 2022,7, 1, "The House Witch is a fantasy story with romance and humor about Finlay Ashowan — a “house” witch skilled in cooking, who is hired as the royal chef in Daxaria. Fin only wants a peaceful life with his cat Kraken, but when his true powers are revealed, he is drawn into court intrigues, protects the pregnant queen, clashes with a troublesome knight, hunts for a spy, and is forced to confront his past and his complicated love life.", "../public/images/fantasy/a_house_witch.png"),
 (2, "ANYA AND THE NIGHTINGALE",196000,"Sofiya Pasternack", " Versify", 2020,10, 1, "”Anya and the Nightingale” is the finale of the Anya and the Dragon duology. After her father is conscripted and doesn’t return, Anya sets out to find him with Ivan and Håkon the dragon. Along the way they face dark forces and the mysterious Nightingale, uncovering hidden secrets. Anya must choose between saving her father, protecting her friends, and understanding who she is.", "../public/images/fantasy/anya_and_the_nightingale.png"),
