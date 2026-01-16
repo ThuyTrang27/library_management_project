@@ -17,8 +17,8 @@ class UserModel
 
     public function updatePassword($email, $hashedPassword)
     {
-        // Cập nhật mật khẩu mới và làm sạch OTP
-        $stmt = $this->db->prepare("UPDATE users SET password = ?, otp_code = NULL, otp_expiry = NULL WHERE email = ?");
+        // Chỉ cập nhật cột password, vì OTP đã lưu trong Session
+        $stmt = $this->db->prepare("UPDATE users SET password = ? WHERE email = ?");
         return $stmt->execute([$hashedPassword, $email]);
     }
 }
