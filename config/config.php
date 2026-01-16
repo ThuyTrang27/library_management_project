@@ -1,13 +1,22 @@
 <?php
-$host = 'localhost';
-$db   = 'LIBRARY_MANAGEMENT';
-$user = 'root';
-$pass = ''; // Mật khẩu database của bạn
-$charset = 'utf8mb4';
+class Database
+{
+    private $host = "localhost";
+    private $db_name = "LIBRARY_MANAGEMENT";
+    private $username = "root";
+    private $password = "";
+    public $conn;
 
-try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=$charset", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    die("Lỗi kết nối database: " . $e->getMessage());
+    public function connect()
+    {
+        $this->conn = null;
+        try {
+            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->conn->exec("set names utf8");
+        } catch (PDOException $exception) {
+            echo "Lỗi kết nối: " . $exception->getMessage();
+        }
+        return $this->conn;
+    }
 }
