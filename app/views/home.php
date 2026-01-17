@@ -1,4 +1,5 @@
 <?php
+
 /**
  * app/views/home.php
  * 
@@ -32,8 +33,9 @@ require_once __DIR__ . '/layouts/slider.php';
 
 // Bước 4: Include danh mục sách (ngay dưới slider)
 require_once __DIR__ . '/layouts/categories.php';
+// require_once __DIR__ . '/css/styles.php';
 ?>
-
+<link rel="stylesheet" href="/css/style.css">
 <!-- PHẦN HIỂN THỊ DANH SÁCH SÁCH -->
 <div class="container mt-4 mb-5">
     <!-- Tiêu đề phần sách -->
@@ -82,12 +84,13 @@ require_once __DIR__ . '/layouts/categories.php';
                     -->
                     <div class="col-lg-2 col-md-3 col-sm-4 col-6 d-flex align-items-stretch">
 
-                        <?php if ($book): // Nếu có sách, hiển thị thông tin ?>
+                        <?php if ($book): // Nếu có sách, hiển thị thông tin 
+                        ?>
                             <?php
                             // Xử lý dữ liệu sách
                             // Hàm getBookImagePath() tự động xử lý cả image_ulr và image_url
                             $imagePath = getBookImagePath($book);
-                            
+
                             // Hàm safeValue() đảm bảo không có giá trị null (tránh lỗi)
                             $bookTitle = safeValue($book['book_title'] ?? '', 'No Title');
                             $bookAuthor = safeValue($book['author'] ?? '', 'Unknown');
@@ -126,25 +129,25 @@ require_once __DIR__ . '/layouts/categories.php';
                                         title="<?php echo htmlspecialchars($bookTitle); ?>">
                                         <?php echo htmlspecialchars($bookTitle); ?>
                                     </h6>
-                                    
+
                                     <!-- Tác giả -->
                                     <div class="book-info small mb-1">
-                                        <i class="bi bi-person-fill text-muted"></i> 
+                                        <i class="bi bi-person-fill text-muted"></i>
                                         <span class="text-muted"><?php echo htmlspecialchars($bookAuthor); ?></span>
                                     </div>
-                                    
+
                                     <!-- Thể loại -->
                                     <div class="book-info small mb-2">
-                                        <i class="bi bi-bookmark-fill text-muted"></i> 
+                                        <i class="bi bi-bookmark-fill text-muted"></i>
                                         <span class="text-muted"><?php echo htmlspecialchars($bookGenre); ?></span>
                                     </div>
-                                    
+
                                     <!-- Số lượng còn lại -->
                                     <div class="book-info stock-badge mb-3">
-                                        <i class="bi bi-box-seam-fill"></i> 
+                                        <i class="bi bi-box-seam-fill"></i>
                                         <strong>Stock:</strong> <?php echo htmlspecialchars($bookStock); ?>
                                     </div>
-                                    
+
                                     <!-- Nút View Detail -->
                                     <a href="<?php echo BASE_URL; ?>/index.php?action=book&id=<?php echo htmlspecialchars($bookId); ?>"
                                         class="btn btn-primary btn-sm mt-auto view-detail-btn">
@@ -153,14 +156,17 @@ require_once __DIR__ . '/layouts/categories.php';
                                 </div>
                             </div>
 
-                        <?php else: // Nếu không có sách, hiển thị card trống để giữ layout ?>
+                        <?php else: // Nếu không có sách, hiển thị card trống để giữ layout 
+                        ?>
                             <div class="card h-100 w-100 bg-transparent border-0"></div>
                         <?php endif; ?>
 
                     </div>
-                <?php endfor; // Kết thúc vòng lặp 5 cột ?>
+                <?php endfor; // Kết thúc vòng lặp 5 cột 
+                ?>
             </div>
-        <?php endfor; // Kết thúc vòng lặp 4 dòng ?>
+        <?php endfor; // Kết thúc vòng lặp 4 dòng 
+        ?>
     </div>
 
     <!-- PHÂN TRANG (PAGINATION) -->
@@ -178,7 +184,7 @@ require_once __DIR__ . '/layouts/categories.php';
                         <i class="bi bi-chevron-left"></i> Previous
                     </a>
                 </li>
-                
+
                 <!-- Các số trang -->
                 <?php for ($i = 1; $i <= $totalPages; $i++): ?>
                     <li class="page-item <?php echo ($i == ($page ?? 1)) ? 'active' : ''; ?>">
@@ -187,7 +193,7 @@ require_once __DIR__ . '/layouts/categories.php';
                         </a>
                     </li>
                 <?php endfor; ?>
-                
+
                 <!-- Nút "Sau" -->
                 <li class="page-item <?php echo ($page ?? 1) >= $totalPages ? 'disabled' : ''; ?>">
                     <a class="page-link" href="?action=home&page=<?php echo ($page ?? 1) + 1; ?>">
