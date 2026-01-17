@@ -32,9 +32,6 @@
                 <div class="form-group" style="position: relative;">
                     <label>Password</label>
                     <input type="password" name="password" id="pass" placeholder="Type your password" required>
-                    <span class="toggle" onclick="toggle('pass')">
-                        <i class="bi bi-eye"></i>
-                    </span>
 
                 </div>
 
