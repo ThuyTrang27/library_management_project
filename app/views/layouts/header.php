@@ -1,4 +1,5 @@
 <?php
+
 /**
  * app/views/layouts/header.php
  * 
@@ -27,18 +28,18 @@ if (!defined('BASE_URL')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TVAN Library</title>
-    
+
     <!-- Google Fonts - Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/style.css">
 </head>
@@ -53,13 +54,13 @@ if (!defined('BASE_URL')) {
     -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container d-flex align-items-center">
-            
+
             <!-- Logo và tên thư viện -->
-            <img src="<?php echo BASE_URL; ?>/image/logo.jpg" 
-                 alt="Logo"
-                 class="logo-img me-2"
-                 onerror="this.src='<?php echo BASE_URL; ?>/images/slider/logo.jpg'">
-            
+            <img src="/images/logo/logo.jpg "
+                alt="Logo"
+                class="logo-img me-2"
+                onerror="this.src='<?php echo BASE_URL; ?>/images/slider/logo.jpg'">
+
             <a class="navbar-brand fw-bold mb-0" href="<?php echo BASE_URL; ?>/index.php?action=home">
                 TVAN LIBRARY
             </a>
@@ -70,7 +71,7 @@ if (!defined('BASE_URL')) {
                 - Hiển thị đầy đủ trên màn hình lớn
             -->
             <div class="collapse navbar-collapse">
-                
+
                 <!-- Menu điều hướng -->
                 <!-- 
                     Bootstrap Nav Component:
@@ -99,7 +100,8 @@ if (!defined('BASE_URL')) {
                             <i class="bi bi-telephone"></i> Contact
                         </a>
                     </li>
-                    <?php if (isset($_SESSION['user_id'])): // Nếu đã đăng nhập ?>
+                    <?php if (isset($_SESSION['user_id'])): // Nếu đã đăng nhập 
+                    ?>
                         <li class="nav-item">
                             <a class="nav-link" href="<?php echo BASE_URL; ?>/index.php?action=myBorrows">
                                 <i class="bi bi-book"></i> My Books
@@ -116,12 +118,12 @@ if (!defined('BASE_URL')) {
                 -->
                 <form class="d-flex me-3" action="<?php echo BASE_URL; ?>/index.php" method="GET">
                     <input type="hidden" name="action" value="search">
-                    <input id="searchInput" 
-                           name="keyword" 
-                           class="form-control me-2" 
-                           type="search"
-                           placeholder="Nhập tên sách..." 
-                           value="<?php echo htmlspecialchars($_GET['keyword'] ?? ''); ?>">
+                    <input id="searchInput"
+                        name="keyword"
+                        class="form-control me-2"
+                        type="search"
+                        placeholder="Nhập tên sách..."
+                        value="<?php echo htmlspecialchars($_GET['keyword'] ?? ''); ?>">
                     <button class="btn btn-warning" type="submit">
                         <i class="bi bi-search"></i> Search
                     </button>
@@ -129,18 +131,19 @@ if (!defined('BASE_URL')) {
 
                 <!-- Phần đăng nhập/đăng ký hoặc thông tin user -->
                 <div class="d-flex align-items-center">
-                    <?php if (isset($_SESSION['user_id'])): // Nếu đã đăng nhập ?>
+                    <?php if (isset($_SESSION['user_id'])): // Nếu đã đăng nhập 
+                    ?>
                         <!-- 
                             Bootstrap Dropdown Component:
                             - dropdown: Class cơ bản của dropdown
                             - data-bs-toggle="dropdown": Kích hoạt dropdown khi click
                         -->
                         <div class="dropdown">
-                            <button class="btn btn-light dropdown-toggle" 
-                                    type="button" 
-                                    id="userDropdown" 
-                                    data-bs-toggle="dropdown" 
-                                    aria-expanded="false">
+                            <button class="btn btn-light dropdown-toggle"
+                                type="button"
+                                id="userDropdown"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 <i class="bi bi-person-circle"></i>
                                 <?php echo htmlspecialchars($_SESSION['full_name'] ?? $_SESSION['username'] ?? 'User'); ?>
                             </button>
@@ -150,7 +153,9 @@ if (!defined('BASE_URL')) {
                                         <i class="bi bi-book"></i> My Books
                                     </a>
                                 </li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <li>
                                     <a class="dropdown-item text-danger" href="<?php echo BASE_URL; ?>/index.php?action=logout">
                                         <i class="bi bi-box-arrow-right"></i> Logout
@@ -158,15 +163,16 @@ if (!defined('BASE_URL')) {
                                 </li>
                             </ul>
                         </div>
-                    <?php else: // Nếu chưa đăng nhập ?>
+                    <?php else: // Nếu chưa đăng nhập 
+                    ?>
                         <!-- Nút đăng nhập -->
-                        <a href="<?php echo BASE_URL; ?>/index.php?action=login" 
-                           class="btn btn-outline-light me-2">
+                        <a href="<?php echo BASE_URL; ?>/index.php?action=login"
+                            class="btn btn-outline-light me-2">
                             <i class="bi bi-box-arrow-in-right"></i> Login
                         </a>
                         <!-- Nút đăng ký -->
-                        <a href="<?php echo BASE_URL; ?>/index.php?action=register" 
-                           class="btn btn-light">
+                        <a href="<?php echo BASE_URL; ?>/index.php?action=register"
+                            class="btn btn-light">
                             <i class="bi bi-person-plus"></i> Register
                         </a>
                     <?php endif; ?>

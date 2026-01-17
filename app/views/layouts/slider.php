@@ -20,8 +20,10 @@
 // Đảm bảo BASE_URL đã được định nghĩa
 if (!defined('BASE_URL')) {
     require_once dirname(dirname(dirname(__DIR__))) . '/config/config.php';
+    require_once __DIR__ . '../../css/style.css';
 }
 ?>
+<link rel="stylesheet" href="/css/style.css">
 
 <!-- SLIDER - SỬ DỤNG BOOTSTRAP CAROUSEL -->
 <div class="container mt-3 mb-4">
@@ -53,7 +55,7 @@ if (!defined('BASE_URL')) {
                         <!-- Slide 1: Hoàng Tử Bé (active = hiển thị đầu tiên) -->
                         <div class="carousel-item active">
                             <div class="carousel-image-wrapper">
-                                <img src="<?php echo BASE_URL; ?>/images/fantasy/hoang_tu_be.png"
+                                <img src="/images/fantasy/hoang_tu_be.png"
                                     class="d-block w-100 carousel-image"
                                     alt="Hoàng Tử Bé"
                                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>/images/hoang_tu_be.jpg';">
@@ -63,7 +65,7 @@ if (!defined('BASE_URL')) {
                         <!-- Slide 2: Harry Potter -->
                         <div class="carousel-item">
                             <div class="carousel-image-wrapper">
-                                <img src="<?php echo BASE_URL; ?>/images/fantasy/harry_potter.png"
+                                <img src="/images/fantasy/harry_potter.png"
                                     class="d-block w-100 carousel-image"
                                     alt="Harry Potter"
                                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>/images/harry_potter.jpg';">
@@ -73,7 +75,7 @@ if (!defined('BASE_URL')) {
                         <!-- Slide 3: Đắc Nhân Tâm -->
                         <div class="carousel-item">
                             <div class="carousel-image-wrapper">
-                                <img src="<?php echo BASE_URL; ?>/images/self_help/dac_nhan_tam.png"
+                                <img src="/images/self_help/dac_nhan_tam.png"
                                     class="d-block w-100 carousel-image"
                                     alt="Đắc Nhân Tâm"
                                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>/images/self_help/dac_nhan_tam.jpg';">
@@ -83,7 +85,7 @@ if (!defined('BASE_URL')) {
                         <!-- Slide 4: A House Witch -->
                         <div class="carousel-item">
                             <div class="carousel-image-wrapper">
-                                <img src="<?php echo BASE_URL; ?>/images/fantasy/a_house_witch.png"
+                                <img src="/images/fantasy/a_house_witch.png"
                                     class="d-block w-100 carousel-image"
                                     alt="A House Witch"
                                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>/images/fantasy/a_house_witch.png';">
@@ -93,7 +95,7 @@ if (!defined('BASE_URL')) {
                         <!-- Slide 5: Đất Rừng Phương Nam -->
                         <div class="carousel-item">
                             <div class="carousel-image-wrapper">
-                                <img src="<?php echo BASE_URL; ?>/images/fantasy/dat_rung_phuong_nam.png"
+                                <img src="/images/fantasy/dat_rung_phuong_nam.png"
                                     class="d-block w-100 carousel-image"
                                     alt="Đất Rừng Phương Nam"
                                     onerror="this.onerror=null; this.src='<?php echo BASE_URL; ?>/images/fantasy/dat_rung_phuong_nam.png';">

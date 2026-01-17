@@ -7,7 +7,6 @@
 
 // Load config
 require_once dirname(__DIR__) . '/config/config.php';
-
 // Load models
 require_once MODELS_PATH . '/book.php';
 require_once MODELS_PATH . '/category.php';
