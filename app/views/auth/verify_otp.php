@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Verify OTP - TVAN Library</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/login.css">
 </head>
 
