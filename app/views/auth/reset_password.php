@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Reset Password - TVAN Library</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/login.css">
 </head>
 
@@ -27,13 +28,19 @@
                 <div class="form-group" style="position: relative;">
                     <label>New Password</label>
                     <input type="password" name="new_password" id="n_pass" placeholder="••••••••" required>
-                    <span class="toggle" onclick="toggle('n_pass')" style="position: absolute; right: 12px; top: 38px; cursor: pointer;">👁️</span>
+                    <span class="toggle" onclick="toggle('n_pass')">
+                        <i class="bi bi-eye"></i>
+                    </span>
+
                 </div>
 
                 <div class="form-group" style="position: relative;">
                     <label>Confirm Password</label>
                     <input type="password" name="confirm_password" id="c_pass" placeholder="••••••••" required>
-                    <span class="toggle" onclick="toggle('c_pass')" style="position: absolute; right: 12px; top: 38px; cursor: pointer;">👁️</span>
+                    <span class="toggle" onclick="toggle('c_pass')">
+                        <i class="bi bi-eye"></i>
+                    </span>
+
                 </div>
 
                 <button type="submit" name="reset" class="btn-in">Update Password</button>
@@ -42,12 +49,7 @@
         <div class="right-img" style="background-image: url('https://images.unsplash.com/photo-1512820790803-83ca734da794');"></div>
     </div>
 
-    <script>
-        function toggle(id) {
-            const input = document.getElementById(id);
-            input.type = input.type === "password" ? "text" : "password";
-        }
-    </script>
+    <script src="js/login.js"></script>
 </body>
 
 </html>

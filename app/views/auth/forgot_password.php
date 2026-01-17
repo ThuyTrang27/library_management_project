@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Forgot Password - TVAN Library</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="css/login.css">
 </head>
 
@@ -30,7 +31,7 @@
             <form method="POST" action="index.php?action=forgot_password">
                 <div class="form-group">
                     <label>Email Address</label>
-                    <input type="email" name="email" placeholder="example@gmail.com" required>
+                    <input type="email" name="email" placeholder="Type your email" required>
                 </div>
 
                 <div class="button-group" style="margin-top: 30px;">
