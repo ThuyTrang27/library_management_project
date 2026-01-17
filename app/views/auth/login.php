@@ -25,15 +25,14 @@
                 <div class="form-group" style="position: relative;">
                     <label>Password</label>
                     <input type="password" name="password" id="pass" placeholder="Type your password" required>
-                    <span class="toggle" onclick="document.getElementById('pass').type = (document.getElementById('pass').type === 'password' ? 'text' : 'password')">👁️</span>
-                </div>
-                <div class="role-group">
-                    <input type="radio" name="role" value="User" checked> User
-                    <input type="radio" name="role" value="Admin"> Admin
-                </div>
-                <button type="submit" name="login" class="btn-in">Sign In</button>
-                <button type="button" class="btn-reg">Register</button>
-                <a href="index.php?action=forgot_password" class="link">Forget your password?</a>
+                    <span class="toggle" onclick="toggle('n_pass')" style="position: absolute; right: 12px; top: 38px; cursor: pointer;">👁️</span>
+                    <div class="role-group">
+                        <input type="radio" name="role" value="User" checked> User
+                        <input type="radio" name="role" value="Admin"> Admin
+                    </div>
+                    <button type="submit" name="login" class="btn-in">Sign In</button>
+                    <button type="button" class="btn-reg">Register</button>
+                    <a href="index.php?action=forgot_password" class="link">Forget your password?</a>
             </form>
         </div>
         <div class="right-img" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66');"></div>
