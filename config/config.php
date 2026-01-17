@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 class Database
 {
     private $host = "localhost";
@@ -66,5 +65,4 @@ try {
 } catch (PDOException $e) {
     error_log("Database Connection Error: " . $e->getMessage());
     die("Kết nối cơ sở dữ liệu thất bại. Vui lòng thử lại sau.");
->>>>>>> bb1a4fc23cac2d01eabe85366b40306b21f45d48
 }
