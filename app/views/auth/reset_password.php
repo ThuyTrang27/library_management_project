@@ -28,18 +28,13 @@
                 <div class="form-group" style="position: relative;">
                     <label>New Password</label>
                     <input type="password" name="new_password" id="n_pass" placeholder="••••••••" required>
-                    <span class="toggle" onclick="toggle('n_pass')">
-                        <i class="bi bi-eye"></i>
-                    </span>
 
                 </div>
 
                 <div class="form-group" style="position: relative;">
                     <label>Confirm Password</label>
                     <input type="password" name="confirm_password" id="c_pass" placeholder="••••••••" required>
-                    <span class="toggle" onclick="toggle('c_pass')">
-                        <i class="bi bi-eye"></i>
-                    </span>
+
 
                 </div>
 
