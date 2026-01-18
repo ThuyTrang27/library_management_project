@@ -57,9 +57,9 @@
                         </ul>
                     </div>
                 <?php else: ?>
-                    <a href="index.php?action=login"
+                    <a href="?action=login"
                         class="btn btn-outline-light btn-sm me-2">Login</a>
-                    <a href="index.php?action=register"
+                    <a href="?action=register"
                         class="btn btn-outline-light btn-sm me-2">Register</a>
                 <?php endif; ?>
             </div>

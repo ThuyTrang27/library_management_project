@@ -1,18 +1,20 @@
   /* Container chính bao quanh toàn bộ */
-        .main-container {
-            max-width: 1200px; /* Giới hạn chiều rộng để không bị quá to */
-            margin: 0 auto;
-            padding: 10px;
-            font-family: Arial, sans-serif;
+.main-container {
+    max-width: 1200px; /* Giới hạn chiều rộng để không bị quá to */
+    margin: 0 auto;
+    padding: 10px;
+    font-family: Arial, sans-serif;
         }
 /* Slider */
 .slider-container {
     position: relative;
     max-width: 100%;
-    margin: 20px auto;
+    margin-top: 20px;
     overflow: hidden;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    height: 400px; /* Chiều cao cố định cho banner */
+    margin-bottom: 40px;
 }
 .slider {
     display: flex;
@@ -23,7 +25,7 @@
 }
 .slide img {
     width: 100%;
-    height: 300px; /* Độ cao banner */
+    height: 400px; /* Độ cao banner */
     object-fit: cover;
 }
 .prev, .next {
@@ -46,6 +48,7 @@
     display: grid;    
     grid-template-columns: repeat(5, 1fr); 
     gap: 15px; 
+
 }
 
 /* Từng item cuốn sách */
@@ -87,9 +90,14 @@
     color: #666;
     text-align: left; /* Căn lề trái giống mẫu */
 }
-
+.book-img-container {
+    height: 200px; overflow: hidden; background: #f0f0f0;
+}
+.book-img-container img {
+    width: 100%; height: 100%; object-fit: cover;
+}
 /* Phân trang */
-.pagination { margin-left: 50%; margin-top: 30px; text-align: center; }
+.pagination { margin-left: 45%; margin-top: 30px; text-align: center; }
 .pagination a { 
     padding: 8px 12px; 
     text-decoration: none; 

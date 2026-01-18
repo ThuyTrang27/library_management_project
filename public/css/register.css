@@ -1,0 +1,46 @@
+.body-register{
+  display: grid;
+  grid-template-columns: 4fr 3fr; /* 2 phần và 1 phần */
+}
+.form-register{
+  padding: 20px;
+}
+.img-register{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.img-register img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.container-register {
+    margin-top: 10px;
+    margin-left: 25px;
+    width: 70%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+.form-content {    
+    width: 85%;
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+hr {
+    width: 70%;
+    margin-left: 25px;
+}
+.back-to-login {
+    width: 70%;
+    margin-left: 25px;
+}
+.back-to-login button {
+    width: 83%;
+    margin-left: 25px;
+}
