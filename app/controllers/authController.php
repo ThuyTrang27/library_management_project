@@ -20,7 +20,7 @@ class AuthController
         $user = $this->model->getUserByEmail($email);
         $roleValue = ($role == "Admin") ? 1 : 0;
 
-        if (!$user) return "Bạn chưa có tài khoản";
+        if (!$user) return "You did not register yet!";
 
         // Sử dụng password_verify để so khớp mật khẩu đã băm
         if (password_verify($password, $user['password']) && $user['role'] == $roleValue) {
@@ -29,13 +29,13 @@ class AuthController
             header("Location: index.php?action=home");
             exit();
         }
-        return "Bạn đã nhập sai mật khẩu/email";
+        return "You have entered the wrong password/email";
     }
 
     public function handleForgetPassword($email)
     {
         $user = $this->model->getUserByEmail($email);
-        if (!$user) return "Email chưa được đăng ký";
+        if (!$user) return "Your email is not registered!";
 
         $otp = rand(100000, 999999);
         $_SESSION['reset_otp'] = $otp; // Lưu OTP vào Session
@@ -60,35 +60,35 @@ class AuthController
             $mail->setFrom('ngocanhqb123end@gmail.com', 'TVAN Library');
             $mail->addAddress($email);
             $mail->isHTML(true);
-            $mail->Subject = 'Mã OTP xác thực mật khẩu';
-            $mail->Body = "Chào $name, mã OTP của bạn là: <b>$otp</b>. Hiệu lực 5 phút.";
+            $mail->Subject = 'OTP Reset Password from TVAN Library';
+            $mail->Body = "hello $name, your OTP code is: <b>$otp</b>. available in5 minutes.";
             $mail->send();
-            return "Hệ thống đã gửi mã OTP về email của bạn";
+            return "Our OTP code has been sent to your email address.";
         } catch (Exception $e) {
-            return "Lỗi gửi mail: " . $mail->ErrorInfo;
+            return "Error sending email: " . $mail->ErrorInfo;
         }
     }
 
     public function handleVerifyOTP($inputOtp)
     {
         if (!isset($_SESSION['otp_expire']) || time() > $_SESSION['otp_expire']) {
-            return "Mã OTP đã hết hạn!";
+            return "OTP has expired!";
         }
         if ($inputOtp == $_SESSION['reset_otp']) {
             $_SESSION['otp_verified'] = true;
             header("Location: index.php?action=reset_password");
             exit();
         }
-        return "Mã OTP không chính xác!";
+        return "OTP is incorrect!";
     }
 
     public function handleResetPassword($newPassword, $confirmPassword)
     {
         if (!isset($_SESSION['otp_verified']) || $_SESSION['otp_verified'] !== true) {
-            return "Bạn không có quyền thực hiện hành động này!";
+            return "Yuou are not authorized to reset the password.";
         }
         if ($newPassword !== $confirmPassword) {
-            return "Mật khẩu xác nhận không khớp!";
+            return "Passwords do not match!";
         }
 
         $email = $_SESSION['otp_email'];
@@ -99,8 +99,14 @@ class AuthController
         if ($result) {
             // Xóa dữ liệu OTP sau khi thành công
             unset($_SESSION['reset_otp'], $_SESSION['otp_email'], $_SESSION['otp_expire'], $_SESSION['otp_verified']);
-            return "Đổi mật khẩu thành công!";
+            return "update password successfull!";
         }
-        return "Có lỗi xảy ra, vui lòng thử lại.";
+        return "There was an error, please try again.";
     }
 }
+
+//     public function logout() {
+//         session_destroy();
+//         header("Location: index.php");
+//     }
+// }

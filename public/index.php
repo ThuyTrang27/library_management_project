@@ -10,7 +10,6 @@ require_once dirname(__DIR__) . '/config/config.php';
 // 2. Load Models
 require_once MODELS_PATH . '/user.php';
 require_once MODELS_PATH . '/book.php';
-require_once MODELS_PATH . '/category.php';
 
 // 3. Load Controllers
 require_once CONTROLLERS_PATH . '/authController.php';
@@ -24,7 +23,7 @@ try {
     $authController = new AuthController(new UserModel($db));
     $bookController = new BookController($db);
 
-    $action = $_GET['action'] ?? 'login';
+    $action = $_GET['action'] ?? 'home';
     $id = $_GET['id'] ?? null;
     $message = null;
 
@@ -40,7 +39,7 @@ try {
         case 'forgot_password':
             if (isset($_POST['send_otp'])) {
                 $message = $authController->handleForgetPassword($_POST['email']);
-                if (strpos($message, 'đã gửi') !== false) {
+                if (strpos($message, 'sent') !== false) {
                     header("Location: index.php?action=verify_otp");
                     exit();
                 }
@@ -58,7 +57,7 @@ try {
         case 'reset_password':
             if (isset($_POST['reset'])) {
                 $message = $authController->handleResetPassword($_POST['new_password'], $_POST['confirm_password']);
-                if ($message === "Đổi mật khẩu thành công!") {
+                if ($message === "update password successfull!") {
                     header("Refresh: 2; url=index.php?action=login");
                 }
             }
@@ -66,27 +65,21 @@ try {
             break;
 
         case 'home':
-            if (!isset($_SESSION['user_id'])) {
-                header("Location: index.php?action=login");
-                exit();
-            }
-            $bookController->index();
+            $bookController->showListBook();
             break;
-
-        case 'book':
-            $id ? $bookController->show($id) : $bookController->index();
+        case 'listbook':
+            $bookController->showListBook();
             break;
-
-        case 'category':
-            $id ? $bookController->showByCategory($id) : $bookController->index();
-            break;
-
-        case 'search':
-            $bookController->search();
+        case 'logout':
+            session_start();
+            session_unset();
+            session_destroy();
+            header("Location: index.php?action=login");
+            exit();
             break;
 
         default:
-            header("Location: index.php?action=login");
+            header("Location: index.php?action=home");
             break;
     } // Kết thúc switch
 

@@ -50,8 +50,6 @@
         <div class="right-img" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66');">
         </div>
     </div>
-
-    <script src="<?php echo BASE_URL; ?>/js/login.js"></script>
 </body>
 
 </html>

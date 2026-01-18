@@ -18,7 +18,7 @@
         <div class="left-form">
             <p class="brand-sub">TVAN LIBRARY</p>
             <h1>New Password</h1>
-            <p style="margin-bottom: 20px; color: #666;">Thiết lập mật khẩu mới cho tài khoản của bạn.</p>
+            <p style="margin-bottom: 20px; color: #666;">Reset your password for your account.</p>
 
             <?php if ($message): ?>
                 <div class="msg" style="color: #28a745; margin-bottom: 15px;"><?php echo $message; ?></div>
@@ -43,8 +43,6 @@
         </div>
         <div class="right-img" style="background-image: url('https://images.unsplash.com/photo-1512820790803-83ca734da794');"></div>
     </div>
-
-    <script src="js/login.js"></script>
 </body>
 
 </html>

@@ -41,12 +41,12 @@ define('CONTROLLERS_PATH', APP_PATH . '/controllers');
 define('VIEWS_PATH', APP_PATH . '/views');
 define('CSS_PATH', PUBLIC_PATH . '/css');
 define('JS_PATH', PUBLIC_PATH . '/js');
-define('IMAGE_PATH', PUBLIC_PATH . '/image');
 define('IMAGES_PATH', PUBLIC_PATH . '/images');
 
 // ===== DEFINE BASE_URL =====
 // Điều chỉnh theo cấu trúc thư mục của bạn
-define('BASE_URL', '/library_management_project/public');
+define('BASE_URL', '/public');
+
 
 // ===== DATABASE CONFIGURATION =====
 define('DB_HOST', 'localhost');

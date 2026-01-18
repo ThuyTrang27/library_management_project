@@ -19,7 +19,7 @@
             <p class="brand-sub">TVAN LIBRARY</p>
             <h1>Forgot Password?</h1>
             <p style="margin-bottom: 25px; color: #666; line-height: 1.5;">
-                Đừng lo lắng! Hãy nhập email của bạn dưới đây, chúng tôi sẽ gửi mã OTP để bạn thiết lập lại mật khẩu.
+                Don't worry! Enter your email below and we'll send you an OTP code to reset your password.
             </p>
 
             <?php if ($message): ?>
@@ -36,7 +36,7 @@
 
                 <div class="button-group" style="margin-top: 30px;">
                     <button type="submit" name="send_otp" class="btn-in">Send OTP Code</button>
-                    <a href="index.php?action=login" class="link">Quay lại Đăng nhập</a>
+                    <a href="index.php?action=login" class="link">Back to login</a>
                 </div>
             </form>
         </div>
