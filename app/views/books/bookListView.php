@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <?php require VIEWS_PATH . '/layouts/header.php'; ?>
+    <?php require_once __DIR__ . '/../layouts/header.php'; ?>
     <div class="container">
         <div class="slider-container">
             <div class="slider">
@@ -41,18 +41,20 @@
             setInterval(() => moveSlide(1), 5000);
         </script>
 
-        <div class="book-grid">
-            <?php foreach ($books as $book): ?>
-                <div class="book-item">
-                    <?php
-                    // Kiểm tra nếu image_url trống thì hiện ảnh mặc định
-                    $img = !empty($book['image_url']) ? $book['image_url'] : 'default-book.png';
-                    ?>
-                    <img src="public/images/<?php echo $img; ?>" onerror="this.src='public/images/default-book.png'" alt="Book Cover">
+      <div class="book-grid">
+    <?php foreach ($books as $book): ?>
+        <div class="book-item">            
+            <div class="book-img-container">
+            <?php 
+                $imageName = !empty($book['image_url']) ? trim($book['image_url']) : 'default-book.png';
+                $displayPath = "images/" . $imageName; 
+            ?>
+                <img src="<?php echo $displayPath; ?>" onerror="this.onerror=null; this.src='images/default-book.png';" alt="<?php echo htmlspecialchars($book['book_title']); ?>">
+                </div>
                     <h3><?php echo htmlspecialchars($book['book_title']); ?></h3>
                     <p><strong>Genre:</strong> <?php echo htmlspecialchars($book['categories_name'] ?? 'N/A'); ?></p>
                     <p><strong>Author:</strong> <?php echo htmlspecialchars($book['author']); ?></p>
-                    <p><strong>Stock:</strong> <?php echo $book['stock_quantity']; ?></p>
+                    <p><strong>Stock:</strong> <?php echo (int)$book['stock_quantity']; ?></p>
                 </div>
             <?php endforeach; ?>
         </div>
@@ -66,7 +68,7 @@
             <?php endfor; ?>
         </div>
     </div>
-    <?php require VIEWS_PATH . '/layouts/footer.php'; ?>
+    <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
 </body>
 
 </html>
