@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <?php require VIEWS_PATH . '/layouts/header.php'; ?>
+    <?php require dirname(__DIR__) . '/layouts/header.php'; ?>
     <div class="container">
         <div class="slider-container">
             <div class="slider">
@@ -45,10 +45,16 @@
             <?php foreach ($books as $book): ?>
                 <div class="book-item">
                     <?php
-                    // Kiểm tra nếu image_url trống thì hiện ảnh mặc định
-                    $img = !empty($book['image_url']) ? $book['image_url'] : 'default-book.png';
+                    $img = (!empty($book['image_url']) &&
+                        file_exists($_SERVER['DOCUMENT_ROOT'] . '/library_management_project/public/images/' . $book['image_url']))
+                        ? $book['image_url']
+                        : 'default-book.png';
                     ?>
-                    <img src="public/images/<?php echo $img; ?>" onerror="this.src='public/images/default-book.png'" alt="Book Cover">
+
+                    <img src="images/<?php echo htmlspecialchars($img); ?>"
+                        alt="Book Cover"
+                        loading="lazy">
+
                     <h3><?php echo htmlspecialchars($book['book_title']); ?></h3>
                     <p><strong>Genre:</strong> <?php echo htmlspecialchars($book['categories_name'] ?? 'N/A'); ?></p>
                     <p><strong>Author:</strong> <?php echo htmlspecialchars($book['author']); ?></p>
@@ -66,7 +72,7 @@
             <?php endfor; ?>
         </div>
     </div>
-    <?php require VIEWS_PATH . '/layouts/footer.php'; ?>
+    <?php require dirname(__DIR__) . '/layouts/footer.php'; ?>
 </body>
 
 </html>

@@ -104,9 +104,4 @@ class AuthController
         return "There was an error, please try again.";
     }
 }
-
-//     public function logout() {
-//         session_destroy();
-//         header("Location: index.php");
-//     }
-// }
+?><?php
