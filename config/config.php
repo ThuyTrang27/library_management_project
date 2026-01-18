@@ -1,7 +1,7 @@
 <?php
 class Database {
     private $host = "localhost";
-    private $dbname = "LIBRARY_MANAGEMENT";
+    private $db_name = "LIBRARY_MANAGEMENT";
     private $username = "root";
     private $password = "";
     public $conn;
@@ -12,14 +12,9 @@ class Database {
 
         try {
             $this->conn = new PDO(
-                "mysql:host=" . $this->host . ";dbname=" . $this->dbname . ";charset=utf8",
-                $this->username,
-                $this->password
+                "mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8",$this->username,$this->password
             );
-            // Thiết lập chế độ báo lỗi
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
-            // Thiết lập fetch mode mặc định là mảng kết hợp (tùy chọn)
             $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
             
         } catch (PDOException $e) {
