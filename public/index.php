@@ -23,21 +23,9 @@ switch ($action) {
         $authController->login();
         break;
 
-    // case 'forgot_password':
-    //     $authController->forgotPassword();
+    // case 'logout':
+    //     $authController->logout();
     //     break;
-
-    // case 'verify_otp':
-    //     $authController->verifyOtp();
-    //     break;
-
-    // case 'reset_password':
-    //     $authController->resetPassword();
-    //     break;
-
-    case 'logout':
-        $authController->logout();
-        break;
 
     case 'home':
     case 'listbook':
