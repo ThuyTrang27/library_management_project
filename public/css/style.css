@@ -28,12 +28,13 @@
 .book-title {
     font-size: 1rem;
     font-weight: 600;
-    color: #0d6efd;
+    color: #4093c0;
     line-height: 1.4;
     height: 2.8em;
     overflow: hidden;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
 }
 
