@@ -46,7 +46,7 @@
                     // Kiểm tra nếu image_url trống thì hiện ảnh mặc định
                     $img = !empty($book['image_url']) ? $book['image_url'] : 'default-book.png';
                     ?>
-                    <img src="images/<?php echo $img; ?>" alt="Book Cover">
+                    <img src="<?php echo $img; ?>" alt="Book Cover">
                     <h3><?php echo htmlspecialchars($book['book_title']); ?></h3>
                     <p><strong>Genre:</strong> <?php echo htmlspecialchars($book['categories_name'] ?? 'N/A'); ?></p>
                     <p><strong>Author:</strong> <?php echo htmlspecialchars($book['author']); ?></p>
