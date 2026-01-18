@@ -33,17 +33,26 @@ class AuthController
     }
 
     public function handleForgetPassword($email)
-    {
-        $user = $this->model->getUserByEmail($email);
-        if (!$user) return "Your email is not registered!";
-
-        $otp = rand(100000, 999999);
-        $_SESSION['reset_otp'] = $otp; // Lưu OTP vào Session
-        $_SESSION['otp_email'] = $email;
-        $_SESSION['otp_expire'] = time() + 300; // Hiệu lực 5 phút
-
-        return $this->sendEmail($email, $user['full_name'], $otp);
+{
+    $user = $this->model->getUserByEmail($email);
+    if (!$user) {
+        return ['status' => 'error', 'message' => "Your email is not registered!"];
     }
+
+    $otp = rand(100000, 999999);
+    $_SESSION['reset_otp'] = $otp; 
+    $_SESSION['otp_email'] = $email;
+    $_SESSION['otp_expire'] = time() + 300; 
+
+    $emailResult = $this->sendEmail($email, $user['full_name'], $otp);
+    
+    // Kiểm tra xem trong chuỗi trả về từ sendEmail có chữ "sent" không
+    if (strpos($emailResult, 'sent') !== false) {
+        return ['status' => 'success', 'message' => $emailResult];
+    } else {
+        return ['status' => 'error', 'message' => $emailResult];
+    }
+}
 
     private function sendEmail($email, $name, $otp)
     {
@@ -104,9 +113,5 @@ class AuthController
         return "There was an error, please try again.";
     }
 }
+?><?php
 
-//     public function logout() {
-//         session_destroy();
-//         header("Location: index.php");
-//     }
-// 
