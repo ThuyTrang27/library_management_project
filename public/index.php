@@ -1,45 +1,51 @@
 <?php
+// require_once __DIR__ . '/../config/config.php';
+require_once dirname(__DIR__) . '/config/config.php';
+
+require_once dirname(__DIR__) . '/app/models/user.php';
+require_once dirname(__DIR__) . '/app/models/book.php';
+
+require_once dirname(__DIR__) . '/app/controllers/authController.php';
+require_once dirname(__DIR__) . '/app/controllers/bookController.php';
+
 session_start();
 
-// 1. Load file cấu hình
-require_once __DIR__ . '/../config/config.php';
+$database = new Database();
+$db = $database->connect();
 
-// 2. KHỞI TẠO KẾT NỐI (Thiếu đoạn này)
-$db = new Database();
-$conn = $db->getConnection();
+$authController = new AuthController(new User($db));
+$bookController = new BookController($db);
 
-// Kiểm tra xem đã có biến $conn chưa
-if (!isset($conn)) {
-    die('❌ conn NOT FOUND in index.php');
-}
+$action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
 
-$action = $_GET['action'] ?? 'registerview';
-
-require_once __DIR__ . '/../app/controllers/authController.php';
-
-$auth = new AuthController();
 switch ($action) {
-
-    case 'registerview':
-
-        $auth->registerView();
-
-        break;
-
-
+    case 'register':
+       $authController->registerView();
+        break;   
 
     case 'doregister':
-
-        $auth->doRegister();
-
+        $authController->doRegister();
         break;
 
 
+    case 'login':
+        $authController->login();
+        break;
+
+    case 'logout':
+        $authController->logout();
+        break;
+
+    case 'home':
+    case 'listbook':
+        $bookController->showListBook();
+        break;
 
     default:
-
-        echo "Home";
-
+        header("Location: index.php?action=listbook");
+        exit();
 }
-
 ?>
+
+
+
