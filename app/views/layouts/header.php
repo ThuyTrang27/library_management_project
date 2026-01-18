@@ -60,7 +60,7 @@
                     <a href="index.php?action=login"
                         class="btn btn-outline-light btn-sm me-2">Login</a>
                     <a href="index.php?action=register"
-                        class="btn btn-primary btn-sm">Register</a>
+                        class="btn btn-outline-light btn-sm me-2">Register</a>
                 <?php endif; ?>
             </div>
 
