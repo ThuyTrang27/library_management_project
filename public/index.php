@@ -5,15 +5,14 @@
  */
 
 // 1. Load config để lấy các hằng số PATH và khởi chạy Session
-require_once dirname(__DIR__) . '/config/config.php';
+require_once __DIR__ . '/../config/config.php';
 
 // 2. Load Models
-require_once MODELS_PATH . '/user.php';
-require_once MODELS_PATH . '/book.php';
-
+require_once __DIR__ . '/../app/models/user.php';
+require_once __DIR__ . '/../app/models/book.php';
 // 3. Load Controllers
-require_once CONTROLLERS_PATH . '/authController.php';
-require_once CONTROLLERS_PATH . '/bookController.php';
+require_once __DIR__ . '/../app/controllers/authController.php';
+require_once __DIR__ . '/../app/controllers/bookController.php';
 
 // 4. Khởi tạo Database và Controllers
 try {
@@ -33,7 +32,7 @@ try {
             if (isset($_POST['login'])) {
                 $message = $authController->handleLogin($_POST['email'], $_POST['password'], $_POST['role']);
             }
-            include VIEWS_PATH . '/auth/login.php';
+            include __DIR__ . '/../app/views/auth/login.php';
             break;
 
         case 'forgot_password':
@@ -44,14 +43,14 @@ try {
                     exit();
                 }
             }
-            include VIEWS_PATH . '/auth/forgot_password.php';
+            include __DIR__ . '/../app/views/auth/forgot_password.php';
             break;
 
         case 'verify_otp':
             if (isset($_POST['verify'])) {
                 $message = $authController->handleVerifyOTP($_POST['otp_input']);
             }
-            include VIEWS_PATH . '/auth/verify_otp.php';
+            include __DIR__ . '/../app/views/auth/verify_otp.php';
             break;
 
         case 'reset_password':
@@ -61,7 +60,7 @@ try {
                     header("Refresh: 2; url=index.php?action=login");
                 }
             }
-            include VIEWS_PATH . '/auth/reset_password.php';
+            include __DIR__ . '/../app/views/auth/reset_password.php';
             break;
 
         case 'home':
