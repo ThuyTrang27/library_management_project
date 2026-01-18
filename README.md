@@ -39,6 +39,7 @@ Dự án được thực hiện theo hình thức làm việc nhóm gồm 4 thà
 - Công cụ quản lý: Git, GitHub, Jira
 
 ## Cấu trúc dự án 
+```
 library_management_project/
 ├── app/                          # Thư mục ứng dụng chính
 │   ├── core/                     # Các file cốt lõi
