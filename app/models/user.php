@@ -1,20 +1,32 @@
 <?php
-class User {
-    private $conn;
+class User
+{
+    private $db;
 
-    public function __construct($conn) {
-        if (!$conn) {
-            die('❌ conn NULL in model');
-        }
-        $this->conn = $conn;
+    public function __construct($db)
+    {
+        $this->db = $db;
     }
 
+    public function getUserByEmail($email)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = ?");
+        $stmt->execute([$email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updatePassword($email, $hashedPassword)
+    {
+        // Chỉ cập nhật cột password, vì OTP đã lưu trong Session
+        $stmt = $this->db->prepare("UPDATE users SET password = ? WHERE email = ?");
+        return $stmt->execute([$hashedPassword, $email]);
+    }
     public function checkUserExist($username, $email) {
         $sql = "SELECT user_id FROM users 
                 WHERE username = :username OR email = :email 
                 LIMIT 1";
 
-        $stmt = $this->conn->prepare($sql);
+        $stmt = $this->db->prepare($sql);
         $stmt->execute([
             ':username' => $username,
             ':email'    => $email
@@ -38,7 +50,7 @@ class User {
                     VALUES 
                     (:fullname, :username, :email, :phone, :password, :address, :gender, :date_of_birth)";
 
-            $stmt = $this->conn->prepare($sql);
+            $stmt = $this->db->prepare($sql);
             
             // Thực thi với mảng dữ liệu
             $result = $stmt->execute([
