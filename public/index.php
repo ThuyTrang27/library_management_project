@@ -1,4 +1,5 @@
 <?php
+// require_once __DIR__ . '/../config/config.php';
 require_once dirname(__DIR__) . '/config/config.php';
 
 require_once dirname(__DIR__) . '/app/models/user.php';
@@ -12,17 +13,24 @@ session_start();
 $database = new Database();
 $db = $database->connect();
 
-$authController = new AuthController(new UserModel($db));
+$authController = new AuthController(new User($db));
 $bookController = new BookController($db);
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
 
 switch ($action) {
+    case 'register':
+        $authController->registerView();
+        break;
+
+    case 'doregister':
+        $authController->doRegister();
+        break;
+
 
     case 'login':
         $authController->login();
         break;
-
 
     case 'logout':
         $authController->logout();
