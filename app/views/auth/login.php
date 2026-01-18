@@ -42,8 +42,6 @@
 
                 <button type="submit" name="login" class="btn-in">Sign In</button>
                 <button type="button" class="btn-reg">Register</button>
-
-                <a href="index.php?action=forgot_password" class="link">Forget your password?</a>
             </form>
         </div>
 
