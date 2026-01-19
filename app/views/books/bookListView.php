@@ -41,16 +41,16 @@
             setInterval(() => moveSlide(1), 5000);
         </script>
 
-      <div class="book-grid">
-    <?php foreach ($books as $book): ?>
-        <div class="book-item">            
-            <div class="book-img-container">
-            <?php 
-                $imageName = !empty($book['image_url']) ? trim($book['image_url']) : 'default-book.png';
-                $displayPath = "images/" . $imageName; 
-            ?>
-                <img src="<?php echo $displayPath; ?>" onerror="this.onerror=null; this.src='images/default-book.png';" alt="<?php echo htmlspecialchars($book['book_title']); ?>">
-                </div>
+        <div class="book-grid">
+            <?php foreach ($books as $book): ?>
+                <div class="book-item">
+                    <div class="book-img-container">
+                        <?php
+                        $imageName = !empty($book['image_url']) ? trim($book['image_url']) : 'default-book.png';
+                        $displayPath = "images/" . $imageName;
+                        ?>
+                        <img src="<?php echo $displayPath; ?>" onerror="this.onerror=null; this.src='images/default-book.png';" alt="<?php echo htmlspecialchars($book['book_title']); ?>">
+                    </div>
                     <h3><?php echo htmlspecialchars($book['book_title']); ?></h3>
                     <p><strong>Genre:</strong> <?php echo htmlspecialchars($book['categories_name'] ?? 'N/A'); ?></p>
                     <p><strong>Author:</strong> <?php echo htmlspecialchars($book['author']); ?></p>
@@ -61,14 +61,19 @@
 
         <div class="pagination">
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <a href="index.php?action=listbook&page=<?php echo $i; ?>"
+                <?php
+                // Nếu đang lọc theo category thì link phải giữ ID category đó
+                $url = isset($_GET['id'])
+                    ? "index.php?action=category&id=" . (int)$_GET['id'] . "&page=$i"
+                    : "index.php?action=listbook&page=$i";
+                ?>
+                <a href="<?php echo $url; ?>"
                     class="<?php echo ($i == $currentPage) ? 'active' : ''; ?>">
                     <?php echo $i; ?>
                 </a>
             <?php endfor; ?>
         </div>
-    </div>
-    <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+        <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
 </body>
 
 </html>

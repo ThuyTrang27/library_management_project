@@ -20,8 +20,8 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
 
 switch ($action) {
     case 'register':
-       $authController->registerView();
-        break;   
+        $authController->registerView();
+        break;
 
     case 'doregister':
         $authController->doRegister();
@@ -40,12 +40,11 @@ switch ($action) {
     case 'listbook':
         $bookController->showListBook();
         break;
+    case 'category':
+        $bookController->showByCategory();
+        break;
 
     default:
         header("Location: index.php?action=listbook");
         exit();
 }
-?>
-
-
-
