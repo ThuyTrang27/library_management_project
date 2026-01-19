@@ -1,5 +1,3 @@
-<?php
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +10,8 @@
     <link rel="stylesheet" href="../../../public/css/register.css">    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../../../public/js/script.js"></script>
+
 </head>
 <body>
 
@@ -80,17 +80,11 @@
 
             <hr>
 
-            <form action="login.php" class="back-to-login">
+            <form action="" class="back-to-login">
                 <p>Already have an account?</p>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
 
-            <?php if (!empty($_SESSION['error'])): ?>
-                <div class="alert alert-danger" style="margin-top: 20px;">
-                    <?= $_SESSION['error']; ?>
-                </div>
-                <?php unset($_SESSION['error']); ?>
-            <?php endif; ?>
         </div>
     </div>
 

@@ -15,12 +15,6 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function updatePassword($email, $hashedPassword)
-    {
-        // Chỉ cập nhật cột password, vì OTP đã lưu trong Session
-        $stmt = $this->db->prepare("UPDATE users SET password = ? WHERE email = ?");
-        return $stmt->execute([$hashedPassword, $email]);
-    }
     public function checkUserExist($username, $email) {
         $sql = "SELECT user_id FROM users 
                 WHERE username = :username OR email = :email 
@@ -65,10 +59,10 @@ class User
             ]);
 
             if ($result) {
-                return ['status' => true, 'message' => 'Đăng ký thành công!'];
+                return ['status' => true];
             }
             
-            return ['status' => false, 'message' => 'Không thể thêm dữ liệu.'];
+            return ['status' => false];
 
         } catch (PDOException $e) {
             return [

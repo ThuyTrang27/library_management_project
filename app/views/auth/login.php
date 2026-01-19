@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -40,7 +40,9 @@
                     <input type="radio" name="role" value=1> Admin
                 </div>
 
-                <button type="submit" name="login" class="btn-in">Sign In</button>
+                <button type="submit" name="login" class="btn-in">Sign In</button>                
+            </form>
+            <form action="?action=register" class="">
                 <button type="button" class="btn-reg">Register</button>
             </form>
         </div>
