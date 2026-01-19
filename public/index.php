@@ -35,10 +35,12 @@ switch ($action) {
     case 'logout':
         $authController->logout();
         break;
-
-    case 'home':
     case 'listbook':
         $bookController->showListBook();
+        break;
+
+    case 'search':
+        $bookController->search();
         break;
 
     default:

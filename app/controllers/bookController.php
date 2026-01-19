@@ -22,4 +22,15 @@ class BookController
 
         require_once __DIR__ . '/../views/books/bookListView.php';
     }
+
+    public function search()
+    {
+        $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
+        
+        // Gọi model để tìm kiếm
+        $books = $this->bookModel->searchBooks($keyword);
+
+        // Hiển thị kết quả ra view riêng
+        require_once __DIR__ . '/../views/books/searchResult.php';
+    }
 }
