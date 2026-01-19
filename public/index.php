@@ -8,8 +8,8 @@
 require_once dirname(__DIR__) . '/config/config.php';
 
 // 2. Load Models
-require_once dirname(__DIR__) . '/app/models/user.php';
-require_once dirname(__DIR__) . '/app/models/book.php';
+require_once MODELS_PATH . '/user.php';
+require_once MODELS_PATH . '/book.php';
 
 // 3. Load Controllers
 require_once CONTROLLERS_PATH . '/authController.php';
@@ -71,7 +71,9 @@ try {
             $bookController->showListBook();
             break;
         case 'logout':
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
             session_unset();
             session_destroy();
             header("Location: index.php?action=login");

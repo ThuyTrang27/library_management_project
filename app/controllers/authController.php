@@ -61,7 +61,7 @@ class AuthController
             $mail->addAddress($email);
             $mail->isHTML(true);
             $mail->Subject = 'OTP Reset Password from TVAN Library';
-            $mail->Body = "Hello $name, your OTP code is: <b>$otp</b>. Available in5 minutes.";
+            $mail->Body = "Hello $name, your OTP code is: <b>$otp</b>. Available in 5 minutes.";
             $mail->send();
             return "Our OTP code has been sent to your email address.";
         } catch (Exception $e) {

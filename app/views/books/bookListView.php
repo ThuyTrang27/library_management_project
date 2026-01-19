@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/bookListView.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/css/bookListView.css">
 </head>
 
 <body>
@@ -11,10 +11,10 @@
     <div class="container">
         <div class="slider-container">
             <div class="slider">
-                <div class="slide"><img src="images/slide1.jpg" alt="Banner 1"></div>
-                <div class="slide"><img src="images/slide2.jpeg" alt="Banner 2"></div>
-                <div class="slide"><img src="images/slide3.jpg" alt="Banner 3"></div>
-                <div class="slide"><img src="images/slide4.jpg" alt="Banner 4"></div>
+                <div class="slide"><img src="<?php echo BASE_URL; ?>/images/slide1.jpg" alt="Banner 1"></div>
+                <div class="slide"><img src="<?php echo BASE_URL; ?>/images/slide2.jpeg" alt="Banner 2"></div>
+                <div class="slide"><img src="<?php echo BASE_URL; ?>/images/slide3.jpg" alt="Banner 3"></div>
+                <div class="slide"><img src="<?php echo BASE_URL; ?>/images/slide4.jpg" alt="Banner 4"></div>
             </div>
 
             <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
@@ -44,9 +44,11 @@
                 <div class="book-item">
                     <?php
                     // Kiểm tra nếu image_url trống thì hiện ảnh mặc định
-                    $img = !empty($book['image_url']) ? $book['image_url'] : 'default-book.png';
+                    // Thêm đường dẫn thư mục images/ vào trước tên file
+                    $imgName = !empty($book['image_url']) ? $book['image_url'] : 'default-book.png';
+                    $imgSrc = BASE_URL . '/images/' . $imgName;
                     ?>
-                    <img src="<?php echo $img; ?>" alt="Book Cover">
+                    <img src="<?php echo $imgSrc; ?>" alt="Book Cover">
                     <h3><?php echo htmlspecialchars($book['book_title']); ?></h3>
                     <p><strong>Genre:</strong> <?php echo htmlspecialchars($book['categories_name'] ?? 'N/A'); ?></p>
                     <p><strong>Author:</strong> <?php echo htmlspecialchars($book['author']); ?></p>
