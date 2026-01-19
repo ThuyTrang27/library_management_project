@@ -110,7 +110,7 @@
                         <input type="hidden" name="action" value="search">
                         <input type="text" name="keyword"
                             class="form-control me-2"
-                            placeholder="Tìm sách...">
+                            placeholder="Search Book...">
                         <button class="btn btn-warning">
                             <i class="bi bi-search"></i>
                         </button>
