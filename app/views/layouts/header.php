@@ -42,11 +42,16 @@
                         <ul class="dropdown-menu dropdown-menu-end shadow">
                             <li>
                                 <a class="dropdown-item" href="index.php?action=profile">
-                                    <i class="bi bi-person me-2"></i>Profile
+                                    <i class="bi bi-person me-2"></i>My Profile
                                 </a>
                             </li>
                             <li>
-                                <hr class="dropdown-divider">
+                                <a class="dropdown-item" href="index.php?action=history">
+                                    <i class="bi bi-clock-history me-2"></i> My Borrowing History
+                                </a>
+                            </li>
+                            <li>
+                                <hr class=" dropdown-divider">
                             </li>
                             <li>
                                 <a class="dropdown-item text-danger fw-bold"
