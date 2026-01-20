@@ -17,7 +17,7 @@
 <body>
 
     <!-- TOP BAR -->
-    <nav class="navbar" style="background-color: #4c8cb4; padding: 12px 0;">
+    <nav class="navbar">
         <div class="container d-flex justify-content-between align-items-center">
 
             <!-- LOGO -->

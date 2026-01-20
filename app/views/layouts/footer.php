@@ -15,7 +15,7 @@
 <body>
 
 </body>
-<footer class="mt-5" style="background-color: #4c8cb4; color: white; padding: 45px 0 20px 0;">
+<footer class="mt-5">
     <div class="container">
         <div class="row g-4 border-bottom border-white border-opacity-25 pb-4 mb-3">
             <div class="col-md-6">

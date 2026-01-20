@@ -113,6 +113,9 @@
 .navbar {
     position: relative;
     z-index: 1100;
+    background-color: #4c8cb4; 
+    color: white; 
+    padding: 12px 0;
 }
 
 .dropdown-menu {
@@ -121,4 +124,12 @@
 
 .nav-link.active {
     color: #4093C0 !important;
+}
+.mt-5  {
+    margin-top: 20px !important;
+    background-color: #4c8cb4; 
+    color: white; 
+    padding: 45px 0 20px 0;
+    width: 100%;
+    
 }
