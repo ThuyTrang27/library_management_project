@@ -7,14 +7,22 @@ require_once dirname(__DIR__) . '/app/models/book.php';
 
 require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
+require_once dirname(__DIR__) . '/app/models/category.php';
+
+
 
 session_start();
 
 $database = new Database();
 $db = $database->connect();
+$categoryModel = new Category($db);
+$categories = $categoryModel->getAllCategories();
 
 $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
+require_once dirname(__DIR__) . '/app/models/category.php';
+
+
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
 
