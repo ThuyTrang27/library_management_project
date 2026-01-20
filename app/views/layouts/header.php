@@ -84,16 +84,41 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle fw-semibold"
                                 href="#"
-                                data-bs-toggle="dropdown">
+                                role="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
                                 Categories
                             </a>
+
                             <ul class="dropdown-menu shadow">
-                                <li><a class="dropdown-item" href="?action=category&id=1">Fantasy</a></li>
-                                <li><a class="dropdown-item" href="?action=category&id=2">Literature</a></li>
-                                <li><a class="dropdown-item" href="?action=category&id=3">Mystery</a></li>
-                                <li><a class="dropdown-item" href="?action=category&id=4">Romantic</a></li>
-                                <li><a class="dropdown-item" href="?action=category&id=5">Self-help</a></li>
-                                <li><a class="dropdown-item" href="?action=category&id=6">Text book</a></li>
+
+                                <!-- All books -->
+                                <li>
+                                    <a class="dropdown-item" href="index.php">
+                                        All books
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+
+                                <?php if (!empty($categories)): ?>
+                                    <?php foreach ($categories as $cat): ?>
+                                        <li>
+                                            <a class="dropdown-item"
+                                                href="index.php?action=category&id=<?= $cat['id'] ?>">
+                                                <?= htmlspecialchars($cat['name']) ?>
+                                            </a>
+                                        </li>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <li>
+                                        <span class="dropdown-item text-muted">
+                                            No categories
+                                        </span>
+                                    </li>
+                                <?php endif; ?>
                             </ul>
                         </li>
 
