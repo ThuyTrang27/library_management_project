@@ -94,7 +94,6 @@
                                 <li><a class="dropdown-item" href="?action=category&id=4">Romantic</a></li>
                                 <li><a class="dropdown-item" href="?action=category&id=5">Self-help</a></li>
                                 <li><a class="dropdown-item" href="?action=category&id=6">Text book</a></li>
-                                <li><a class="dropdown-item" href="?action=category&id=7">Sci-Fi</a></li>
                             </ul>
                         </li>
 
