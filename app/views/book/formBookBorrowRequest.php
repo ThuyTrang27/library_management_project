@@ -4,26 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book borrow information</title>
+    <link rel="stylesheet" href="../../../public/css/bookRequest.css" class="">
 </head>
 <body>
-    <form action="index.php?action=submit_borrow" method="POST">
-    <h3>Thông tin người nhận</h3>
-    <input type="text" name="name" placeholder="Họ tên" required>
-    <input type="text" name="phone" placeholder="Số điện thoại" required>
-    <textarea name="address" placeholder="Địa chỉ"></textarea>
-
-    <h3>Danh sách sách mượn</h3>
-    <table>
-        <?php foreach ($_SESSION['cart'] as $book): ?>
-        <tr>
-            <td><?php echo $book['title']; ?></td>
-            <td>ID: <?php echo $book['id']; ?></td>
-            <td>Số lượng: 1</td>
-        </tr>
-        <?php endforeach; ?>
-    </table>
+    <div class="borrow-container">
+    <h2 class="title-blue" style="text-align:center;">Book order information</h2>
     
-    <button type="submit">Gửi yêu cầu mượn</button>
+    <div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
+        <p><strong>Book Informations</strong></p>
+        
+        <?php foreach ($_SESSION['my_book_cart'] as $book): ?>
+        <div class="book-card">
+            <img src="<?php echo $book['image']; ?>" alt="Sách">
+            <div class="book-info">
+                <h4><?php echo $book['title']; ?></h4>
+                <p><strong>ID:</strong> <?php echo $book['id']; ?></p>
+                <p><strong>Author:</strong> <?php echo $book['author']; ?></p>
+                <div class="quantity-control">
+                    <strong>Quantity:</strong>
+                    <button class="btn-qty">+</button>
+                    <span>1</span>
+                    <button class="btn-qty">-</button>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <form action="index.php?action=submit_borrow" method="POST">
+        <div class="form-group">
+            <label>Borrow date:</label>
+            <input type="date" name="borrow_date" value="2026-01-12">
+        </div>
+        
+        <div class="form-group">
+            <label>Due date:</label>
+            <input type="date" name="due_date" value="2026-01-12">
+        </div>
+
+        <div class="form-group" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+            <label>Note:</label>
+            <textarea name="note" class="note-area"></textarea>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn-submit">Submit</button>
+            <button type="button" class="btn-cancel">Cancel</button>
+        </div>
+    </form>
+</div>
 </form>
 </body>
 </html>

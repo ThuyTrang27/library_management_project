@@ -1,33 +1,40 @@
-<h2>Sách đã chọn (My Book)</h2>
-
-<?php if (!empty($listBooks)): ?>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Hình ảnh</th>
-                <th>Tên sách</th>
-                <th>Tác giả</th>
-                <th>Số lượng</th>
-                <th>Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($listBooks as $book): ?>
-            <tr>
-                <td><img src="<?php echo $book['image']; ?>" width="50"></td>
-                <td><?php echo $book['title']; ?></td>
-                <td><?php echo $book['author']; ?></td>
-                <td><?php echo $book['quantity']; ?></td>
-                <td><a href="index.php?action=remove&id=<?php echo $book['id']; ?>">Xóa</a></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-
-    <br>
-    <a href="index.php?action=show_borrow_form" style="padding: 10px; background: blue; color: white; text-decoration: none;">Tiến hành mượn sách</a>
-
-<?php else: ?>
-    <p>Danh sách trống. Hãy quay lại chọn sách nhé!</p>
-    <a href="index.php">Quay lại danh sách sách</a>
-<?php endif; ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../public/css/bookRequest.css" class="">
+</head>
+<body>
+    <div class="borrow-container">
+    <h2 class="title-blue">My borrowing book list</h2>
+    <hr>
+    
+    <div class="book-list">
+        <?php foreach ($listBooks as $book): ?>
+        <div class="book-card">
+            <img src="<?php echo $book['image']; ?>" alt="Sách">
+            <div class="book-info">
+                <h4><?php echo $book['title']; ?></h4>
+                <p><strong>ID:</strong> <?php echo $book['id']; ?></p>
+                <p><strong>Author:</strong> <?php echo $book['author']; ?></p>
+                <div class="quantity-control">
+                    <strong>Quantity:</strong>
+                    <button class="btn-qty">+</button>
+                    <span>1</span>
+                    <button class="btn-qty">-</button>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="button-group">
+        <a href="index.php?action=show_borrow_form">
+            <button class="btn-submit">Borrow book</button>
+        </a>
+        <button class="btn-cancel">Cancel</button>
+    </div>
+</div>
+</body>
+</html>
