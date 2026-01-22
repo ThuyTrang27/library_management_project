@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.book-detail-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.book-detail-wrapper {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 40px;
+}
+
+/* Phần hình ảnh bên trái */
+.book-image-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.book-cover {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.book-price {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e74c3c;
+    text-align: center;
+    padding: 10px;
+    background-color: #fff3cd;
+    border-radius: 5px;
+}
+
+.book-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-add-to-cart,
+.btn-borrow {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-add-to-cart {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.btn-add-to-cart:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+}
+
+.btn-borrow {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-borrow:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+}
+
+.book-meta {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.book-meta p {
+    margin-bottom: 8px;
+}
+
+.book-meta strong {
+    color: #555;
+    min-width: 120px;
+    display: inline-block;
+}
+
+/* Phần nội dung bên phải */
+.book-content-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.book-title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.book-introduction h2 {
+    font-size: 24px;
+    color: #34495e;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+}
+
+.book-description {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #555;
+    text-align: justify;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .book-detail-wrapper {
+        grid-template-columns: 1fr;
+    }
+    
+    .book-image-section {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .book-title {
+        font-size: 28px;
+    }
+    
+    .book-introduction h2 {
+        font-size: 20px;
+    }
+}

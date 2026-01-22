@@ -1,28 +1,33 @@
 <?php
-require_once 'models/BorrowRequest.php';
 
-class BorrowController {
+require_once __DIR__ . '/../models/borrowRequest.php';
+
+class BorrowController
+{
     private $db;
     private $requestModel;
 
-    public function __construct($database) {
-        $this->db = $database->connect();
+   public function __construct($dbConnection) {
+        // Nhận biến kết nối từ index.php truyền sang
+        $this->db = $dbConnection; 
         $this->requestModel = new BorrowRequest($this->db);
     }
 
-    public function addToMyBook($bookId, $bookTitle, $author, $image) {
-        // Nếu chưa có mảng trong session thì tạo mới
+    /**
+     * Thêm sách vào danh sách chờ mượn (Session)
+     */
+    public function addToMyBook($bookId, $bookTitle, $author, $image)
+    {
         if (!isset($_SESSION['my_book_cart'])) {
             $_SESSION['my_book_cart'] = [];
         }
 
-        // Kiểm tra xem sách đã có trong danh sách chưa để tránh trùng lặp
         if (!isset($_SESSION['my_book_cart'][$bookId])) {
             $_SESSION['my_book_cart'][$bookId] = [
-                'id' => $bookId,
-                'title' => $bookTitle,
-                'author' => $author,
-                'image' => $image,
+                'id'       => $bookId,
+                'title'    => $bookTitle,
+                'author'   => $author,
+                'image'    => $image,
                 'quantity' => 1
             ];
             echo "<script>alert('Đã thêm vào My Book!'); window.history.back();</script>";
@@ -31,25 +36,42 @@ class BorrowController {
         }
     }
 
-    // Hiển thị trang myBook.php
-    public function showMyBook() {
-        $listBooks = isset($_SESSION['my_book_cart']) ? $_SESSION['my_book_cart'] : [];
-        include 'views/myBook.php';
+    /**
+     * Hiển thị Form điền thông tin mượn
+     */
+    public function showFormBookRequest()
+    {
+        require_once __DIR__ . '/../views/books/formBookBorrowRequest.php';
     }
-    // Xử lý khi ấn Submit Form mượn
-    public function submitRequest() {
+
+    /**
+     * Hiển thị trang danh sách sách đã chọn
+     */
+    public function showMyBook()
+    {
+        $listBooks = isset($_SESSION['my_book_cart']) ? $_SESSION['my_book_cart'] : [];
+        require_once __DIR__ . '/../views/books/myBook.php';
+    }
+
+    /**
+     * Xử lý gửi yêu cầu mượn vào Database
+     */
+   public function submitRequest() {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $userId = $_SESSION['user_id']; // Giả sử đã login
+            // Lưu ý: Phải có login mới có user_id
+            $userId = $_SESSION['user_id'] ?? 1; // Tạm để 1 nếu chưa làm login
             $name = $_POST['name'];
             $phone = $_POST['phone'];
             $address = $_POST['address'];
-            $books = $_SESSION['cart']; // Lấy sách từ giỏ hàng tạm
+            
+            // SỬA TẠI ĐÂY: Dùng đúng tên session đã lưu ở hàm addToMyBook
+            $books = $_SESSION['my_book_cart'] ?? []; 
 
-            if ($this->requestModel->createRequest($userId, $name, $phone, $address, $books)) {
-                unset($_SESSION['cart']); // Xóa giỏ hàng sau khi gửi thành công
+            if (!empty($books) && $this->requestModel->createRequest($userId, $name, $phone, $address, $books)) {
+                unset($_SESSION['my_book_cart']); // Xóa giỏ sau khi thành công
                 echo "<script>alert('Gửi yêu cầu mượn thành công!'); window.location.href='index.php';</script>";
             } else {
-                echo "Có lỗi xảy ra.";
+                echo "<script>alert('Có lỗi xảy ra hoặc danh sách sách trống!');</script>";
             }
         }
     }

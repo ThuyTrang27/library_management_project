@@ -22,5 +22,15 @@ class BookController
 
         require_once __DIR__ . '/../views/books/bookListView.php';
     }
+     // Hiển thị chi tiết sách
+    public function viewDetail($bookId) {
+        $book = $this->bookModel->getBookById($bookId);
+        
+        if ($book) {
+            require_once __DIR__ . '/../views/books/viewBookDetail.php';
+        } else {
+            echo "Không tìm thấy sách!";
+        }
+    }
 }
 
