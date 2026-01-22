@@ -12,18 +12,18 @@ class BookController
         $this->categoryModel = new Category($db);
     }  
     
-       public function showListBook()
+    public function showListBook()
     {
-        // 1. Lấy categories cho header
+        // 1. Get categories for header menu
         $categories = $this->categoryModel->getAllCategories();
 
-        // 2. Phân trang
+        // 2. Pagination setup
         $limit = 20;
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         if ($currentPage < 1) $currentPage = 1;
         $offset = ($currentPage - 1) * $limit;
 
-        // 3. Lấy sách
+        // 3. Get books
         $books = $this->bookModel->getBooksPagination($limit, $offset);
         $totalBooks = $this->bookModel->getTotalBooks();
         $totalPages = ceil($totalBooks / $limit);
@@ -39,19 +39,19 @@ class BookController
         if ($book) {
             require_once __DIR__ . '/../views/books/viewBookDetail.php';
         } else {
-            echo "Không tìm thấy sách!";
+            echo "Book not found!";
         }
     }
 
     public function showByCategory()
     {
-        // Categories cho header
+        // Get categories for header
         $categories = $this->categoryModel->getAllCategories();
 
-        // ID thể loại
+        // Category ID from request
         $categoryId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-        // Lấy tên thể loại đang chọn
+        // Find selected category info
         $selectedCategory = null;
         foreach ($categories as $cat) {
             if ($cat['id'] == $categoryId) {
@@ -60,38 +60,36 @@ class BookController
             }
         }
 
-        // Nếu không tìm thấy category → quay về trang chính
+        // If category not found → redirect to home page
         if ($selectedCategory === null) {
             header("Location: index.php");
             exit();
         }
 
-        // Phân trang
+        // Pagination setup
         $limit = 20;
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         if ($currentPage < 1) $currentPage = 1;
         $offset = ($currentPage - 1) * $limit;
 
-        // Lọc sách theo category
+        // Get books by category
         $books = $this->categoryModel->getBooksByCategory($categoryId, $limit, $offset);
         $totalBooks = $this->categoryModel->getTotalBooksByCategory($categoryId);
         $totalPages = ceil($totalBooks / $limit);
 
         require_once __DIR__ . '/../views/books/filterBook.php';
     }
-   public function search()
+
+    public function search()
     {
         $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
         $categories = $this->categoryModel->getAllCategories();
         
-        // Gọi model để tìm kiếm
+        // Call model to search books
         $books = $this->bookModel->searchBooks($keyword);
 
-        // Hiển thị kết quả ra view riêng
+        // Show result in a separate view
         require_once __DIR__ . '/../views/books/searchResult.php';
     }
 }
-   
 ?>
-
- 
