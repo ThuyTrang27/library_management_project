@@ -40,6 +40,11 @@ switch ($action) {
     case 'listbook':
         $bookController->showListBook();
         break;
+    
+    case 'bookdetail':
+        $id = $_GET['id'] ?? null;
+        $bookController->viewDetail($id);
+        break;    
 
     default:
         header("Location: index.php?action=listbook");

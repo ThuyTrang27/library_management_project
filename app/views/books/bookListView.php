@@ -41,23 +41,27 @@
             setInterval(() => moveSlide(1), 5000);
         </script>
 
-      <div class="book-grid">
+    <div class="book-grid">
     <?php foreach ($books as $book): ?>
-        <div class="book-item">            
-            <div class="book-img-container">
-            <?php 
-                $imageName = !empty($book['image_url']) ? trim($book['image_url']) : 'default-book.png';
-                $displayPath = "images/" . $imageName; 
-            ?>
-                <img src="<?php echo $displayPath; ?>" onerror="this.onerror=null; this.src='images/default-book.png';" alt="<?php echo htmlspecialchars($book['book_title']); ?>">
+        <div class="book-item"> 
+            <a href="index.php?action=bookdetail&id=<?php echo $book['book_id']; ?>" style="text-decoration: none; color: inherit;">
+                <div class="book-img-container">
+                    <?php 
+                        $imageName = !empty($book['image_url']) ? trim($book['image_url']) : 'default-book.png';
+                        $displayPath = "images/" . $imageName; 
+                    ?>
+                    <img src="<?php echo $displayPath; ?>" onerror="this.onerror=null; this.src='images/default-book.png';" alt="<?php echo htmlspecialchars($book['book_title']); ?>">
                 </div>
-                    <h3><?php echo htmlspecialchars($book['book_title']); ?></h3>
-                    <p><strong>Genre:</strong> <?php echo htmlspecialchars($book['categories_name'] ?? 'N/A'); ?></p>
-                    <p><strong>Author:</strong> <?php echo htmlspecialchars($book['author']); ?></p>
-                    <p><strong>Stock:</strong> <?php echo (int)$book['stock_quantity']; ?></p>
-                </div>
-            <?php endforeach; ?>
+                <h3><?php echo htmlspecialchars($book['book_title']); ?></h3>
+            </a>
+            <p><strong>Genre:</strong> <?php echo htmlspecialchars($book['categories_name'] ?? 'N/A'); ?></p>
+            <p><strong>Author:</strong> <?php echo htmlspecialchars($book['author']); ?></p>
+            <p><strong>Stock:</strong> <?php echo (int)$book['stock_quantity']; ?></p>
+            
+            <!-- <a href="index.php?action=bookdetail&id=<?php echo $book['book_id']; ?>" class="btn-detail">View Detail</a> -->
         </div>
+    <?php endforeach; ?>
+</div>
 
         <div class="pagination">
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>

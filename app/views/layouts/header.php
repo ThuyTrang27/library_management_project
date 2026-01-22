@@ -100,6 +100,7 @@
 
                         <li class="nav-item"><a class="nav-link fw-semibold" href="#">About</a></li>
                         <li class="nav-item"><a class="nav-link fw-semibold" href="#">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link fw-semibold" href="#">My book</a></li>
                     </ul>
                 </div>
 
