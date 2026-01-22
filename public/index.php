@@ -1,20 +1,52 @@
-<?php 
-    switch ($action) {
-    case 'add_to_mybook':
-        $controller->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
+<?php
+// require_once __DIR__ . '/../config/config.php';
+require_once dirname(__DIR__) . '/config/config.php';
+
+require_once dirname(__DIR__) . '/app/models/user.php';
+require_once dirname(__DIR__) . '/app/models/book.php';
+
+require_once dirname(__DIR__) . '/app/controllers/authController.php';
+require_once dirname(__DIR__) . '/app/controllers/bookController.php';
+require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
+
+session_start();
+
+$database = new Database();
+$db = $database->connect();
+// $authController = new AuthController(new User($db));
+$bookController = new BookController($db);
+$borrowController = new BorrowController($db);
+$action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
+
+switch ($action) {
+     case 'add_to_mybook':
+        $borrowController->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
         break;
         
     case 'mybook':
-        $controller->showMyBook();
+        $borrowController->showMyBook();
         break;
         
     case 'show_borrow_form':
         // Hiển thị file formBorrowRequest.php
-        include 'views/formBorrowRequest.php'; 
+        $borrowController->showFormBookRequest();
         break;
         
     case 'submit_borrow':
-        $controller->submitRequest(); // Hàm mình viết ở câu trả lời trước
+        $borrowController->submitRequest(); // Hàm mình viết ở câu trả lời trước
         break;
+
+    case 'bookdetail':
+        $id = $_GET['id'] ?? null;
+        $bookController->viewDetail($id);
+        break;
+
+    case 'home':
+    case 'listbook':
+        $bookController->showListBook();
+        break;
+
+    default:
+        header("Location: index.php?action=listbook");
+        exit();
 }
-?>
