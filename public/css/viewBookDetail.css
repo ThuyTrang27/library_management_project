@@ -25,7 +25,6 @@ body {
     gap: 40px;
 }
 
-/* Phần hình ảnh bên trái */
 .book-image-section {
     display: flex;
     flex-direction: column;
@@ -54,6 +53,7 @@ body {
     flex-direction: column;
     gap: 10px;
 }
+
 .book-actions {
     display: flex;
     flex-direction: row;
@@ -61,6 +61,7 @@ body {
     margin-left: 20px;
     margin-top: 10px;
 }
+
 .btn-add-to-cart,
 .btn-borrow {
     padding: 12px 20px;
@@ -112,7 +113,6 @@ body {
     display: inline-block;
 }
 
-/* Phần nội dung bên phải */
 .book-content-section {
     display: flex;
     flex-direction: column;
@@ -141,7 +141,6 @@ body {
     text-align: justify;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .book-detail-wrapper {
         grid-template-columns: 1fr;
@@ -160,4 +159,3 @@ body {
         font-size: 20px;
     }
 }
-
