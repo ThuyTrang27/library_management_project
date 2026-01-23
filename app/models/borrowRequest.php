@@ -6,22 +6,23 @@ class BorrowRequest {
         $this->conn = $db;
     }
 
-    public function createRequest($userId, $name, $phone, $address, $books) {
-        try {
-            $this->conn->beginTransaction();
+    public function createRequest($userId, $name, $phone, $address, $borrowDate, $returnDate, $books) {
+    try {
+        $this->conn->beginTransaction();
 
-            // 1. Chèn vào bảng borrow_request
-            $query = "INSERT INTO borrow_request (user_id, full_name, phone, address, status, created_at) 
-                      VALUES (:user_id, :name, :phone, :address, 'Pending', NOW())";
-            $stmt = $this->conn->prepare($query);
-            $stmt->execute([
-                ':user_id' => $userId,
-                ':name' => $name,
-                ':phone' => $phone,
-                ':address' => $address
-            ]);
+        $query = "INSERT INTO borrow_request (user_id, full_name, phone, address, borrow_date, return_date, status) 
+                  VALUES (:user_id, :name, :phone, :address, :b_date, :r_date, 'Pending')";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute([
+            ':user_id' => $userId,
+            ':name'    => $name,
+            ':phone'   => $phone,
+            ':address' => $address,
+            ':b_date'  => $borrowDate,
+            ':r_date'  => $returnDate
+        ]);
 
-            $requestId = $this->conn->lastInsertId();
+        $requestId = $this->conn->lastInsertId();
 
             // 2. Chèn danh sách sách vào borrow_request_book
             $queryBook = "INSERT INTO borrow_request_book (request_id, book_id, quantity) 

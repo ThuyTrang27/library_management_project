@@ -32,26 +32,40 @@
     </div>
 
     <form action="index.php?action=submit_borrow" method="POST">
-        <div class="form-group">
-            <label>Borrow date:</label>
-            <input type="date" name="borrow_date" value="2026-01-12">
-        </div>
-        
-        <div class="form-group">
-            <label>Due date:</label>
-            <input type="date" name="due_date" value="2026-01-12">
-        </div>
+    <div class="form-group">
+        <label>Full Name:</label>
+        <input type="text" name="name" required placeholder="Nhập tên người mượn">
+    </div>
 
-        <div class="form-group" style="flex-direction: column; align-items: flex-start; gap: 10px;">
-            <label>Note:</label>
-            <textarea name="note" class="note-area"></textarea>
-        </div>
+    <div class="form-group">
+        <label>Phone Number:</label>
+        <input type="text" name="phone" required placeholder="Nhập số điện thoại">
+    </div>
 
-        <div class="button-group">
-            <button type="submit" class="btn-submit">Submit</button>
-            <button type="button" class="btn-cancel">Cancel</button>
-        </div>
-    </form>
+    <div class="form-group">
+        <label>Address:</label>
+        <input type="text" name="address" required placeholder="Địa chỉ người mượn">
+    </div>
+
+    <div class="form-group">
+        <label>Borrow date:</label>
+        <input type="date" name="borrow_date" value="<?php echo date('Y-m-d'); ?>">
+    </div>
+    
+    <div class="form-group">
+        <label>Return date:</label> <input type="date" name="return_date" required>
+    </div>
+
+    <div class="form-group" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+        <label>Note:</label>
+        <textarea name="note" class="note-area"></textarea>
+    </div>
+
+    <div class="button-group">
+        <button type="submit" class="btn-submit">Submit</button>
+        <button type="button" class="btn-cancel" onclick="window.history.back()">Cancel</button>
+    </div>
+</form>
 </div>
 </form>
 </body>
