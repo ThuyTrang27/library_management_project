@@ -65,7 +65,13 @@
 
         <div class="pagination">
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <a href="index.php?action=listbook&page=<?php echo $i; ?>"
+                <?php
+                // Nếu đang lọc theo category thì link phải giữ ID category đó
+                $url = isset($_GET['id'])
+                    ? "index.php?action=category&id=" . (int)$_GET['id'] . "&page=$i"
+                    : "index.php?action=listbook&page=$i";
+                ?>
+                <a href="<?php echo $url; ?>"
                     class="<?php echo ($i == $currentPage) ? 'active' : ''; ?>">
                     <?php echo $i; ?>
                 </a>
