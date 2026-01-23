@@ -52,8 +52,6 @@ switch ($action) {
         $bookController->showByCategory();
         break;
 
-
-
     default:
         header("Location: index.php?action=listbook");
         exit();

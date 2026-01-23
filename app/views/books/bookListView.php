@@ -10,17 +10,20 @@
 <body>
     <?php require_once __DIR__ . '/../layouts/header.php'; ?>
     <div class="container">
-        <div class="slider-container">
-            <div class="slider">
-                <div class="slide"><img src="../../../public/images/slide1.jpg" alt="Banner 1"></div>
-                <div class="slide"><img src="../../../public/images/slide2.jpeg" alt="Banner 2"></div>
-                <div class="slide"><img src="../../../public/images/slide3.jpg" alt="Banner 3"></div>
-                <div class="slide"><img src="../../../public/images/slide4.jpg" alt="Banner 4"></div>
-            </div>
+        <?php if (!isset($_GET['id'])): ?>
+            <div class="slider-container">
+                <div class="slider">
+                    <div class="slide"><img src="../../../public/images/slide1.jpg"></div>
+                    <div class="slide"><img src="../../../public/images/slide2.jpeg"></div>
+                    <div class="slide"><img src="../../../public/images/slide3.jpg"></div>
+                    <div class="slide"><img src="../../../public/images/slide4.jpg"></div>
+                </div>
 
-            <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
-            <button class="next" onclick="moveSlide(1)">&#10095;</button>
-        </div>
+                <button class="prev" onclick="moveSlide(-1)">&#10094;</button>
+                <button class="next" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+        <?php endif; ?>
+
 
 
         <script>
@@ -40,8 +43,17 @@
             // Tự động chuyển slide sau 5 giây
             setInterval(() => moveSlide(1), 5000);
         </script>
+        <?php if (isset($selectedCategory)): ?>
+            <h2 class="mt-4 mb-3">
+                Result for category:
+                <span>
+                    <?= htmlspecialchars($selectedCategory['name']) ?>
+                </span>
+            </h2>
+        <?php endif; ?>
 
-        <div class="book-grid">
+
+        <div class=" book-grid">
             <?php foreach ($books as $book): ?>
                 <div class="book-item">
                     <div class="book-img-container">
