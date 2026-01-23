@@ -38,19 +38,28 @@ class BookController
 
     public function showByCategory()
     {
-        // 1. Categories cho header
+        // Categories cho header
         $categories = $this->categoryModel->getAllCategories();
 
-        // 2. ID thể loại
+        // ID thể loại
         $categoryId = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-        // 3. Phân trang
+        // Lấy tên thể loại đang chọn
+        $selectedCategory = null;
+        foreach ($categories as $cat) {
+            if ($cat['id'] == $categoryId) {
+                $selectedCategory = $cat;
+                break;
+            }
+        }
+
+        // Phân trang
         $limit = 20;
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
         if ($currentPage < 1) $currentPage = 1;
         $offset = ($currentPage - 1) * $limit;
 
-        // 4. Lọc sách
+        // Lọc sách theo category
         $books = $this->bookModel->getBooksByCategory($categoryId, $limit, $offset);
         $totalBooks = $this->bookModel->getTotalBooksByCategory($categoryId);
         $totalPages = ceil($totalBooks / $limit);
