@@ -40,11 +40,14 @@
                     <input type="radio" name="role" value=1> Admin
                 </div>
 
-                <button type="submit" name="login" class="btn-in">Sign In</button>                
+                <button type="submit" name="login" class="btn-in">Sign In</button>
             </form>
-            <form action="?action=register" class="">
-                <button type="button" class="btn-reg">Register</button>
+            <form action="index.php" method="get">
+                <input type="hidden" name="action" value="register">
+                <button type="submit" class="btn-reg">Register</button>
             </form>
+
+
         </div>
 
         <div class="right-img" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66');">
