@@ -16,8 +16,16 @@ class BorrowController
     /**
      * Thêm sách vào danh sách chờ mượn (Session)
      */
+    private function checkLogin() {
+    if (!isset($_SESSION['user_id'])) {
+        header("Location: index.php?action=login");
+        exit();
+    }
+}
     public function addToMyBook($bookId, $bookTitle, $author, $image)
     {
+            $this->checkLogin();
+
         if (!isset($_SESSION['my_book_cart'])) {
             $_SESSION['my_book_cart'] = [];
         }
@@ -66,8 +74,10 @@ class BorrowController
             
             // SỬA TẠI ĐÂY: Dùng đúng tên session đã lưu ở hàm addToMyBook
             $books = $_SESSION['my_book_cart'] ?? []; 
+            $borrowDate = $_POST['borrow_date'];
+            $returnDate = $_POST['return_date'];
 
-            if (!empty($books) && $this->requestModel->createRequest($userId, $name, $phone, $address, $books)) {
+            if (!empty($books) && $this->requestModel->createRequest($userId, $name, $phone, $address, $borrowDate, $returnDate, $books)) {
                 unset($_SESSION['my_book_cart']); // Xóa giỏ sau khi thành công
                 echo "<script>alert('Gửi yêu cầu mượn thành công!'); window.location.href='index.php';</script>";
             } else {
