@@ -54,7 +54,13 @@ body {
     flex-direction: column;
     gap: 10px;
 }
-
+.book-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
 .btn-add-to-cart,
 .btn-borrow {
     padding: 12px 20px;
