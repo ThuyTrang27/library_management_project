@@ -69,7 +69,6 @@ switch ($action) {
         break;
         
     case 'show_borrow_form':
-        // Hiển thị file formBorrowRequest.php
         $borrowController->showFormBookRequest();
         break;
         
@@ -77,23 +76,13 @@ switch ($action) {
         $borrowController->submitRequest(); // Hàm mình viết ở câu trả lời trước
         break;
     
-    // Trong index.php, thêm case này vào switch ($action)
     case 'remove_from_cart':
-        $id = $_GET['id'] ?? null;
-        if ($id && isset($_SESSION['my_book_cart'][$id])) {
-            unset($_SESSION['my_book_cart'][$id]); // Xóa bỏ phần tử khỏi session
-        }
-        echo "Success"; // Phản hồi cho fetch ở JS
-        break;
+    $borrowController->removeFromCart();
+    break;
 
     case 'update_cart_qty':
-        $id = $_GET['id'] ?? null;
-        $qty = $_GET['qty'] ?? 1;
-        if ($id && isset($_SESSION['my_book_cart'][$id])) {
-            $_SESSION['my_book_cart'][$id]['quantity'] = $qty;
-        }
-        echo "Updated";
-        break;   
+        $borrowController->updateCartQty();
+        break;
 
     default:
         header("Location: index.php?action=listbook");
