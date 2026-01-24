@@ -26,10 +26,6 @@
                     style="text-decoration: none;">
                         <button class="btn-add-to-cart">Add to my book</button>
                     </a>
-                     <a href="index.php?action=show_borrow_form&id=<?php echo $book['book_id']; ?>&title=<?php echo urlencode($book['book_title']); ?>&author=<?php echo urlencode($book['author']); ?>&img=<?php echo urlencode($book['image_url']); ?>" 
-                    style="text-decoration: none;">
-                         <button class="btn-borrow">Borrow</button>
-                    </a>
                    
                 </div>
                 

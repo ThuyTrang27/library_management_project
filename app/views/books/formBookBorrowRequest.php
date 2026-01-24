@@ -35,17 +35,17 @@
     <form action="index.php?action=submit_borrow" method="POST">
     <div class="form-group">
         <label>Full Name:</label>
-        <input type="text" name="name" required placeholder="Nhập tên người mượn">
+        <input type="text" name="name" required placeholder="Full name">
     </div>
 
     <div class="form-group">
         <label>Phone Number:</label>
-        <input type="text" name="phone" required placeholder="Nhập số điện thoại">
+        <input type="text" name="phone" required placeholder="Phone number">
     </div>
 
     <div class="form-group">
         <label>Address:</label>
-        <input type="text" name="address" required placeholder="Địa chỉ người mượn">
+        <input type="text" name="address" required placeholder="Address">
     </div>
 
     <div class="form-group">
