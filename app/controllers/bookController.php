@@ -4,17 +4,15 @@ class BookController
     private $bookModel;
     private $categoryModel;
 
-
     public function __construct($db)
     {
         require_once __DIR__ . '/../models/book.php';
         require_once __DIR__ . '/../models/category.php';
-
         $this->bookModel = new Book($db);
         $this->categoryModel = new Category($db);
-    }
-
-    public function showListBook()
+    }  
+    
+       public function showListBook()
     {
         // 1. Lấy categories cho header
         $categories = $this->categoryModel->getAllCategories();
@@ -34,7 +32,16 @@ class BookController
         require_once __DIR__ . '/../views/books/bookListView.php';
     }
 
+    public function viewDetail($bookId) {
+        $book = $this->bookModel->getBookById($bookId);
+        $categories = $this->categoryModel->getAllCategories();
 
+        if ($book) {
+            require_once __DIR__ . '/../views/books/viewBookDetail.php';
+        } else {
+            echo "Không tìm thấy sách!";
+        }
+    }
 
     public function showByCategory()
     {
@@ -66,14 +73,7 @@ class BookController
 
         require_once __DIR__ . '/../views/books/bookListView.php';
     }
-    public function viewDetail($bookId) {
-            $book = $this->bookModel->getBookById($bookId);
-            
-            if ($book) {
-                require_once __DIR__ . '/../views/books/viewBookDetail.php';
-            } else {
-                echo "Không tìm thấy sách!";
-            }
-        }
+   
 }
+
 ?>

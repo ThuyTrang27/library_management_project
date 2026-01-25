@@ -7,6 +7,7 @@ require_once dirname(__DIR__) . '/app/models/book.php';
 
 require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
+require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
 require_once dirname(__DIR__) . '/app/models/category.php';
 
 
@@ -20,6 +21,7 @@ $categories = $categoryModel->getAllCategories();
 
 $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
+$borrowController = new BorrowController($db);
 require_once dirname(__DIR__) . '/app/models/category.php';
 
 
@@ -48,17 +50,44 @@ switch ($action) {
     case 'listbook':
         $bookController->showListBook();
         break;
+
     case 'category':
-        $bookController->showByCategory();
+    $catId = $_GET['id'] ?? null;
+    $bookController->showListBook($catId); // Gọi hàm listBooks và truyền ID vào để lọc
+    break;
+
+     case 'add_to_mybook':
+        $borrowController->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
         break;
 
-    
     case 'bookdetail':
         $id = $_GET['id'] ?? null;
         $bookController->viewDetail($id);
-        break;    
+        break;      
+        
+    case 'mybook':
+        $borrowController->showMyBook();
+        break;
+        
+    case 'show_borrow_form':
+        $borrowController->showFormBookRequest();
+        break;
+        
+    case 'submit_borrow':
+        $borrowController->submitRequest(); // Hàm mình viết ở câu trả lời trước
+        break;
+    
+    case 'remove_from_cart':
+    $borrowController->removeFromCart();
+    break;
+
+    case 'update_cart_qty':
+        $borrowController->updateCartQty();
+        break;
 
     default:
         header("Location: index.php?action=listbook");
         exit();
 }
+
+?>
