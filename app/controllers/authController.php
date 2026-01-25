@@ -45,6 +45,7 @@ class AuthController
         require_once __DIR__ . '/../views/auth/register.php';
     }
 
+
     public function doRegister()
     {
         $data = [
@@ -72,6 +73,8 @@ class AuthController
     {
         session_destroy();
         header("Location: index.php?action=listbook");
+        exit();
+        header("Location: " . $_SERVER['HTTP_REFERER']);
         exit();
     }
 }

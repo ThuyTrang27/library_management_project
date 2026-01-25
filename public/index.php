@@ -24,12 +24,10 @@ require_once dirname(__DIR__) . '/app/models/category.php';
 */
 require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
+require_once dirname(__DIR__) . '/app/models/category.php';
 
-/*
-|--------------------------------------------------------------------------
-| DATABASE CONNECTION
-|--------------------------------------------------------------------------
-*/
+require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
+
 $database = new Database();
 $db = $database->connect();
 
@@ -40,12 +38,10 @@ $db = $database->connect();
 */
 $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
+$borrowController = new BorrowController($db);
 
-/*
-|--------------------------------------------------------------------------
-| ROUTING
-|--------------------------------------------------------------------------
-*/
+
+
 $action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
 
 switch ($action) {
@@ -71,6 +67,38 @@ switch ($action) {
 
     case 'category':
         $bookController->showByCategory();
+        $bookController->showByCategory();
+        break;
+
+    case 'add_to_mybook':
+        $borrowController->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
+        break;
+
+    case 'bookdetail':
+        $id = $_GET['id'] ?? null;
+        $bookController->viewDetail($id);
+        break;
+
+    case 'mybook':
+        $borrowController->showMyBook();
+        break;
+
+    case 'show_borrow_form':
+        $borrowController->showFormBookRequest();
+        break;
+
+    case 'submit_borrow':
+        $borrowController->submitRequest();
+        break;
+
+    case 'remove_from_cart':
+        $borrowController->removeFromCart();
+        break;
+
+    case 'update_cart_qty':
+        $borrowController->updateCartQty();
+        break;
+
     case 'search':
         $bookController->search();
         break;

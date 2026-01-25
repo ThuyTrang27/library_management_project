@@ -21,35 +21,44 @@
         </div>
     <?php else: ?>
         <!-- Lưới hiển thị sách -->
-        <div class="book-grid">
-            <?php foreach ($books as $book): ?>
-                <div class="book-item book-card">
-                    <div class="book-image-wrapper">
-                        <img src="images/<?= htmlspecialchars($book['image_url']) ?>"
-                            alt="<?= htmlspecialchars($book['book_title']) ?>"
-                            class="book-image">
-                    </div>
+       <div class="book-grid">
+    <?php foreach ($books as $book): ?>
+        <div class="book-item book-card">
+            <a href="index.php?action=bookdetail&id=<?= $book['book_id'] ?>" style="text-decoration: none; color: inherit;">
+                <div class="book-image-wrapper">
+                    <img src="images/<?= htmlspecialchars($book['image_url']) ?>"
+                         onerror="this.onerror=null; this.src='images/default-book.png';"
+                         alt="<?= htmlspecialchars($book['book_title']) ?>"
+                         class="book-image">
+                </div>
 
-                    <div class="card-body p-2">
-                        <h3 class="book-title" title="<?= htmlspecialchars($book['book_title']) ?>">
-                            <?= htmlspecialchars($book['book_title']) ?>
-                        </h3>
+                <div class="card-body p-2">
+                    <h3 class="book-title" title="<?= htmlspecialchars($book['book_title']) ?>">
+                        <?= htmlspecialchars($book['book_title']) ?>
+                    </h3>
+            </a> <p class="book-info mb-1">
+                        <strong>Author:</strong> <?= htmlspecialchars($book['author']) ?>
+                    </p>
 
-                        <p class="book-info mb-1">
-                            <i class="bi bi-person-fill me-1"></i><?= htmlspecialchars($book['author']) ?>
-                        </p>
+                    <p class="book-info">
+                        <strong>Genre:</strong> <?= htmlspecialchars($book['categories_name']) ?>
+                    </p>
+                    
+                    <p class="book-info">
+                        <strong>Stock:</strong> <?= htmlspecialchars($book['stock_quantity']) ?>
+                    </p>
 
-                        <p class="book-info">
-                            <i class="bi bi-tag-fill me-1"></i><?= htmlspecialchars($book['categories_name']) ?>
-                        </p>
-                        <p class="book-info">
-                            <i class="bi bi-tag-fill me-1"></i><?= htmlspecialchars($book['stock_quantity']) ?>
-                        </p>
+                    <div class="mt-2 text-center">
+                        <a href="index.php?action=bookdetail&id=<?= $book['book_id'] ?>" 
+                           class="btn btn-sm btn-outline-primary w-100" 
+                           style="text-decoration: none;">
+                           View Detail
                         </a>
                     </div>
                 </div>
-            <?php endforeach; ?>
         </div>
+    <?php endforeach; ?>
+</div>
     <?php endif; ?>
 </div>
 
