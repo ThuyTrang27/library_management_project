@@ -71,9 +71,9 @@ switch ($action) {
         $bookController->showListBook();
         break;
 
-    // case 'category':
-    //     $bookController->showByCategory();
-    //     break;
+    case 'category':
+        $bookController->showByCategory();
+        break;
 
     default:
         header("Location: index.php?action=listbook");
