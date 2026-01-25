@@ -98,38 +98,30 @@
                             <ul class="dropdown-menu shadow">
 
                                 <!-- All books -->
-                                <li>
-                                    <a class="dropdown-item" href="index.php">
-                                        All books
-                                    </a>
+                              <li>
+                                <a class="dropdown-item" href="index.php?action=home">All books</a>
                                 </li>
-
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
+                                <li><hr class="dropdown-divider"></li>
 
                                 <?php if (!empty($categories)): ?>
                                     <?php foreach ($categories as $cat): ?>
                                         <li>
-                                            <a class="dropdown-item"
-                                                href="index.php?action=category&id=<?= $cat['id'] ?>">
+                                            <a class="dropdown-item" href="index.php?action=home&category_id=<?= $cat['id'] ?>">
                                                 <?= htmlspecialchars($cat['name']) ?>
                                             </a>
                                         </li>
                                     <?php endforeach; ?>
                                 <?php else: ?>
-                                    <li>
-                                        <span class="dropdown-item text-muted">
-                                            No categories
-                                        </span>
-                                    </li>
+                                    <li><span class="dropdown-item text-muted">No categories</span></li>
                                 <?php endif; ?>
                             </ul>
                         </li>
 
                         <li class="nav-item"><a class="nav-link fw-semibold" href="#">About</a></li>
                         <li class="nav-item"><a class="nav-link fw-semibold" href="#">Contact</a></li>
-                        <li class="nav-item"><a class="nav-link fw-semibold" href="#">My book</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold" href="index.php?action=mybook">My book</a>
+                        </li>
                     </ul>
                 </div>
 

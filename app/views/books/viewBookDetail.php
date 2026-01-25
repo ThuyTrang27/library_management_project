@@ -26,7 +26,7 @@
                     style="text-decoration: none;">
                         <button class="btn-add-to-cart">Add to my book</button>
                     </a>
-                    <button class="btn-borrow">Borrow</button>
+                   
                 </div>
                 
                 <div class="book-meta">
@@ -54,12 +54,12 @@
     
     <?php  require_once __DIR__ . '/../layouts/footer.php';?>
     
-    <script>
-        // Xử lý nút Add to my book
-        document.querySelector('.btn-add-to-cart').addEventListener('click', function() {
-            alert('Đã thêm vào danh sách của bạn!');
-            // Thêm logic AJAX để thêm vào giỏ sách
-        });
+     <script>
+        // // Xử lý nút Add to my book
+        // document.querySelector('.btn-add-to-cart').addEventListener('click', function() {
+        //     alert('Đã thêm vào danh sách của bạn!');
+        //     // Thêm logic AJAX để thêm vào giỏ sách
+        // }); 
         
         // Xử lý nút Borrow
         document.querySelector('.btn-borrow').addEventListener('click', function() {
@@ -72,4 +72,3 @@
     </script>
 </body>
 </html>
-
