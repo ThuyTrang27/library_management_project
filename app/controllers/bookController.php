@@ -53,6 +53,12 @@ class BookController
             }
         }
 
+        // Nếu không tìm thấy category → quay về trang chính
+        if ($selectedCategory === null) {
+            header("Location: index.php");
+            exit();
+        }
+
         // Phân trang
         $limit = 20;
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -64,6 +70,6 @@ class BookController
         $totalBooks = $this->bookModel->getTotalBooksByCategory($categoryId);
         $totalPages = ceil($totalBooks / $limit);
 
-        require_once __DIR__ . '/../views/books/bookListView.php';
+        require_once __DIR__ . '/../views/books/filterBook.php';
     }
 }
