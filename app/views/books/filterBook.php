@@ -22,6 +22,7 @@
             <?php foreach ($books as $book): ?>
                 <div class="book-item">
 
+
                     <div class="book-img-container">
                         <?php
                         $imageName = !empty($book['image_url'])
@@ -57,6 +58,7 @@
         </div>
 
         <!-- PAGINATION -->
+
         <?php if ($totalPages > 1): ?>
             <div class="pagination">
                 <?php for ($i = 1; $i <= $totalPages; $i++): ?>
