@@ -1,44 +1,58 @@
 <?php
-// require_once __DIR__ . '/../config/config.php';
+session_start();
+
+/*
+|--------------------------------------------------------------------------
+| CONFIG & DATABASE
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/config/config.php';
 
+/*
+|--------------------------------------------------------------------------
+| MODELS
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/app/models/user.php';
 require_once dirname(__DIR__) . '/app/models/book.php';
-
-require_once dirname(__DIR__) . '/app/controllers/authController.php';
-require_once dirname(__DIR__) . '/app/controllers/bookController.php';
-require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
 require_once dirname(__DIR__) . '/app/models/category.php';
 
+/*
+|--------------------------------------------------------------------------
+| CONTROLLERS
+|--------------------------------------------------------------------------
+*/
+require_once dirname(__DIR__) . '/app/controllers/authController.php';
+require_once dirname(__DIR__) . '/app/controllers/bookController.php';
+require_once dirname(__DIR__) . '/app/models/category.php';
 
-
-session_start();
+require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
 
 $database = new Database();
 $db = $database->connect();
-$categoryModel = new Category($db);
-$categories = $categoryModel->getAllCategories();
 
+/*
+|--------------------------------------------------------------------------
+| CONTROLLER INSTANCES
+|--------------------------------------------------------------------------
+*/
 $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
 $borrowController = new BorrowController($db);
-require_once dirname(__DIR__) . '/app/models/category.php';
 
 
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
 
 switch ($action) {
+
     case 'register':
-        $authController->registerView();
-        break;
         $authController->registerView();
         break;
 
     case 'doregister':
         $authController->doRegister();
         break;
-
 
     case 'login':
         $authController->login();
@@ -52,9 +66,8 @@ switch ($action) {
         break;
 
     case 'category':
-    $catId = $_GET['id'] ?? null;
-    $bookController->showListBook($catId); 
-    break;
+        $bookController->showByCategory(); 
+        break;
 
      case 'add_to_mybook':
         $borrowController->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
