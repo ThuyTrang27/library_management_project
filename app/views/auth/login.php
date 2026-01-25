@@ -41,6 +41,8 @@
                 </div>
 
                 <button type="submit" name="login" class="btn-in">Sign In</button>
+                <a href="index.php?action=register" class="btn-reg">Register</a>
+
             </form>
             <form action="index.php" method="get">
                 <input type="hidden" name="action" value="register">

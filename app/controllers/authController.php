@@ -1,5 +1,6 @@
 <?php
-class AuthController {
+class AuthController
+{
     private $model;
 
     public function __construct($model)
@@ -39,17 +40,19 @@ class AuthController {
         return "You have entered the wrong password/email";
     }
 
-    public function registerView() {
-            require_once __DIR__ . '/../views/auth/register.php';
-        }
+    public function registerView()
+    {
+        require_once __DIR__ . '/../views/auth/register.php';
+    }
 
-    public function doRegister() {
+    public function doRegister()
+    {
         $data = [
             'fullname'      => $_POST['fullname'] ?? '',
             'username'      => $_POST['username'] ?? '',
             'email'         => $_POST['email'] ?? '',
             'phone'         => $_POST['phone'] ?? '',
-            'password'      => $_POST['pwd'] ?? '', 
+            'password'      => $_POST['pwd'] ?? '',
             'address'       => $_POST['address'] ?? '',
             'gender'        => $_POST['gender'] ?? 0,
             'date_of_birth' => $_POST['date_of_birth'] ?? '',
@@ -61,15 +64,14 @@ class AuthController {
             exit();
         } else {
             $_SESSION['error'] = $result['message'];
-            header("Location: " . $_SERVER['HTTP_REFERER']); 
+            header("Location: " . $_SERVER['HTTP_REFERER']);
             exit();
         }
     }
-        public function logout()
-        {
-            session_destroy();
-            header("Location: index.php?action=listbook");
-            exit();
-        }
+    public function logout()
+    {
+        session_destroy();
+        header("Location: index.php?action=listbook");
+        exit();
+    }
 }
-?>
