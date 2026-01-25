@@ -66,8 +66,8 @@ class BookController
         $offset = ($currentPage - 1) * $limit;
 
         // Lọc sách theo category
-        $books = $this->bookModel->getBooksByCategory($categoryId, $limit, $offset);
-        $totalBooks = $this->bookModel->getTotalBooksByCategory($categoryId);
+        $books = $this->categoryModel->getBooksByCategory($categoryId, $limit, $offset);
+        $totalBooks = $this->categoryModel->getTotalBooksByCategory($categoryId);
         $totalPages = ceil($totalBooks / $limit);
 
         require_once __DIR__ . '/../views/books/filterBook.php';
