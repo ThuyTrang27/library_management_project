@@ -72,6 +72,22 @@ class Book
         $stmt->execute();
         return $stmt->fetchColumn();
     }
-    
+    // Tìm kiếm sách theo tên hoặc tác giả
+    public function searchBooks($keyword)
+    {
+        $keyword = "%" . $keyword . "%";
+        $sql = "SELECT b.book_id, b.book_title, b.author, b.stock_quantity, b.image_url, c.categories_name 
+            FROM books b
+            LEFT JOIN categories c ON b.categories_id = c.categories_id 
+            WHERE b.book_title LIKE :keyword OR b.author LIKE :keyword";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':keyword', $keyword, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 } 
+
+
+    
 ?>

@@ -1,5 +1,6 @@
 <?php
-class AuthController {
+class AuthController
+{
     private $model;
 
     public function __construct($model)
@@ -39,9 +40,10 @@ class AuthController {
         return "You have entered the wrong password/email";
     }
 
-    public function registerView() {
-            require_once __DIR__ . '/../views/auth/register.php';
-        }
+    public function registerView()
+    {
+        require_once __DIR__ . '/../views/auth/register.php';
+    }
 
     public function doRegister() {
         $data = [
@@ -72,4 +74,3 @@ class AuthController {
             exit();
         }
 }
-?>

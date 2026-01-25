@@ -32,6 +32,8 @@ switch ($action) {
     case 'register':
         $authController->registerView();
         break;
+        $authController->registerView();
+        break;
 
     case 'doregister':
         $authController->doRegister();
@@ -45,15 +47,13 @@ switch ($action) {
     case 'logout':
         $authController->logout();
         break;
-
-    case 'home':
     case 'listbook':
         $bookController->showListBook();
         break;
 
     case 'category':
     $catId = $_GET['id'] ?? null;
-    $bookController->showListBook($catId); // Gọi hàm listBooks và truyền ID vào để lọc
+    $bookController->showListBook($catId); 
     break;
 
      case 'add_to_mybook':
@@ -74,7 +74,7 @@ switch ($action) {
         break;
         
     case 'submit_borrow':
-        $borrowController->submitRequest(); // Hàm mình viết ở câu trả lời trước
+        $borrowController->submitRequest(); 
         break;
     
     case 'remove_from_cart':
@@ -83,6 +83,10 @@ switch ($action) {
 
     case 'update_cart_qty':
         $borrowController->updateCartQty();
+        break;
+
+    case 'search':
+        $bookController->search();
         break;
 
     default:

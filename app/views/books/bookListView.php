@@ -70,7 +70,7 @@
                         <h3><?php echo htmlspecialchars($book['book_title']); ?></h3>
                     </a> <p><strong>Genre:</strong> <?php echo htmlspecialchars($book['categories_name'] ?? 'N/A'); ?></p>
                     <p><strong>Author:</strong> <?php echo htmlspecialchars($book['author']); ?></p>
-                    <p><strong>Stock:</strong> <?php echo (int)$book['stock_quantity']; ?></p>
+                    <p><strong>Stock quantity:</strong> <?php echo (int)$book['stock_quantity']; ?></p>
                     
                     </div>
             <?php endforeach; ?>

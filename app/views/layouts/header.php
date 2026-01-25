@@ -12,6 +12,7 @@
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="css/bookListView.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
@@ -131,7 +132,7 @@
                         <input type="hidden" name="action" value="search">
                         <input type="text" name="keyword"
                             class="form-control me-2"
-                            placeholder="Tìm sách...">
+                            placeholder="Search Book...">
                         <button class="btn btn-warning">
                             <i class="bi bi-search"></i>
                         </button>
