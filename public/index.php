@@ -1,27 +1,17 @@
 <?php
 session_start();
 
-/*
-|--------------------------------------------------------------------------
-| CONFIG & DATABASE
-|--------------------------------------------------------------------------
-*/
-require_once dirname(__DIR__) . '/config/config.php';
 
-/*
-|--------------------------------------------------------------------------
-| MODELS
-|--------------------------------------------------------------------------
-*/
+//  CONFIG & DATABASE
+
+require_once dirname(__DIR__) . '/config/config.php';
+require_once dirname(__DIR__) . '/app/core/Auth.php';
+// Models
 require_once dirname(__DIR__) . '/app/models/user.php';
 require_once dirname(__DIR__) . '/app/models/book.php';
 require_once dirname(__DIR__) . '/app/models/category.php';
 
-/*
-|--------------------------------------------------------------------------
-| CONTROLLERS
-|--------------------------------------------------------------------------
-*/
+/*CONTROLLERS*/
 require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
 require_once dirname(__DIR__) . '/app/models/category.php';
@@ -66,33 +56,33 @@ switch ($action) {
         break;
 
     case 'category':
-        $bookController->showByCategory(); 
+        $bookController->showByCategory();
         break;
 
-     case 'add_to_mybook':
+    case 'add_to_mybook':
         $borrowController->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
         break;
 
     case 'bookdetail':
         $id = $_GET['id'] ?? null;
         $bookController->viewDetail($id);
-        break;      
-        
+        break;
+
     case 'mybook':
         $borrowController->showMyBook();
         break;
-        
+
     case 'show_borrow_form':
         $borrowController->showFormBookRequest();
         break;
-        
+
     case 'submit_borrow':
-        $borrowController->submitRequest(); 
+        $borrowController->submitRequest();
         break;
-    
+
     case 'remove_from_cart':
-    $borrowController->removeFromCart();
-    break;
+        $borrowController->removeFromCart();
+        break;
 
     case 'update_cart_qty':
         $borrowController->updateCartQty();
@@ -106,5 +96,3 @@ switch ($action) {
         header("Location: index.php?action=listbook");
         exit();
 }
-
-?>
