@@ -1,83 +1,51 @@
 <?php
-class BorrowRequest {
-    private $conn;
+class BorrowRequest
+{
+    private $db;
 
-    public function __construct($db) {
-        $this->conn = $db;
+    public function __construct()
+    {
+        $database = new Database();
+        $this->db = $database->connect();
     }
 
-   public function createRequest($userId, $name, $phone, $address, $borrowDate, $returnDate, $books) {
-        try {
-            $this->conn->beginTransaction();
-
-            // 1. Tính tổng số lượng sách
-            $totalQty = $this->calculateTotalQuantity($books);
-
-            // 2. Chèn đơn mượn chính và lấy ID
-            $requestId = $this->insertBorrowRequest($userId, $name, $phone, $address, $borrowDate, $returnDate, $totalQty);
-
-            // 3. Xử lý từng cuốn sách (Lưu chi tiết & Trừ kho)
-            foreach ($books as $book) {
-                $this->insertRequestDetail($requestId, $book['id'], $book['quantity']);
-                $this->updateBookStock($book['id'], $book['quantity']);
-            }
-
-            $this->conn->commit();
-            return true;
-        } catch (Exception $e) {
-            $this->conn->rollBack();
-            // Ghi log lỗi hoặc die để debug nếu cần
-            // error_log($e->getMessage());
-            return false;
-        }
+    public function getAll()
+    {
+        $sql = "SELECT br.*, u.full_name, u.phone, u.address
+                FROM borrow_requests br
+                JOIN users u ON br.user_id = u.user_id
+                ORDER BY br.id DESC";
+        return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // --- Các hàm hỗ trợ riêng biệt (Private Helpers) ---
-
-    private function calculateTotalQuantity($books) {
-        $total = 0;
-        foreach ($books as $book) {
-            $total += $book['quantity'];
-        }
-        return $total;
+    public function getById($id)
+    {
+        $sql = "SELECT br.*, u.full_name, u.phone, u.address
+                FROM borrow_requests br
+                JOIN users u ON br.user_id = u.user_id
+                WHERE br.id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    private function insertBorrowRequest($userId, $name, $phone, $address, $bDate, $rDate, $totalQty) {
-        $query = "INSERT INTO borrow_requests (user_id, full_name, phone, address, request_date, schedule_return_date, quantity, request_status) 
-                  VALUES (:user_id, :name, :phone, :address, :b_date, :r_date, :total_qty, 'Pending')";
-        
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute([
-            ':user_id' => $userId, ':name' => $name, ':phone' => $phone,
-            ':address' => $address, ':b_date' => $bDate, ':r_date' => $rDate,
-            ':total_qty' => $totalQty
-        ]);
-
-        return $this->conn->lastInsertId();
+    public function getItems($id)
+    {
+        $sql = "SELECT b.book_title, b.author, c.name AS category, i.quantity
+                FROM borrow_request_items i
+                JOIN books b ON i.book_id = b.book_id
+                JOIN categories c ON b.categories_id = c.id
+                WHERE i.request_id = ?";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([$id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    private function insertRequestDetail($requestId, $bookId, $qty) {
-        $query = "INSERT INTO borrow_request_books (borrow_request_id, book_id, quantity) 
-                  VALUES (:request_id, :book_id, :qty)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute([
-            ':request_id' => $requestId,
-            ':book_id'    => $bookId,
-            ':qty'         => $qty
-        ]);
-    }
-
-    private function updateBookStock($bookId, $qty) {
-        $query = "UPDATE books SET stock_quantity = stock_quantity - :qty 
-                  WHERE book_id = :id AND stock_quantity >= :qty";
-        $stmt = $this->conn->prepare($query);
-        $stmt->execute([':qty' => $qty, ':id' => $bookId]);
-
-        // Nếu rowCount == 0 nghĩa là không tìm thấy sách hoặc kho không đủ để trừ
-        if ($stmt->rowCount() == 0) {
-            throw new Exception("Sách ID $bookId không đủ số lượng trong kho.");
-        }
+    public function updateStatus($id, $status)
+    {
+        $stmt = $this->db->prepare(
+            "UPDATE borrow_requests SET status=? WHERE id=?"
+        );
+        $stmt->execute([$status, $id]);
     }
 }
-
-?>
