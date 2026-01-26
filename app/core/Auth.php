@@ -1,4 +1,5 @@
 <?php
+
 class Auth
 {
     public static function check()
@@ -9,19 +10,19 @@ class Auth
         }
     }
 
-    public static function isAdmin()
+    public static function admin()
     {
         self::check();
-        if ($_SESSION['user']['role'] != 1) {
+        if ((int)$_SESSION['user']['role'] !== 1) {
             header("Location: index.php?action=listbook");
             exit();
         }
     }
 
-    public static function isUser()
+    public static function user()
     {
         self::check();
-        if ($_SESSION['user']['role'] != 0) {
+        if ((int)$_SESSION['user']['role'] !== 0) {
             header("Location: index.php?action=listbook");
             exit();
         }

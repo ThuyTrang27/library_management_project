@@ -1,23 +1,39 @@
 <?php
 session_start();
 
-
-//  CONFIG & DATABASE
-
+/*
+|--------------------------------------------------------------------------
+| CONFIG & CORE
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/config/config.php';
 require_once dirname(__DIR__) . '/app/core/Auth.php';
-// Models
+
+/*
+|--------------------------------------------------------------------------
+| MODELS
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/app/models/user.php';
 require_once dirname(__DIR__) . '/app/models/book.php';
-require_once dirname(__DIR__) . '/app/models/category.php';
+require_once dirname(__DIR__)  . '/app/models/category.php';
+require_once dirname(__DIR__)  . '/app/models/borrowRequest.php';
 
-/*CONTROLLERS*/
+/*
+|--------------------------------------------------------------------------
+| CONTROLLERS
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
-require_once dirname(__DIR__) . '/app/models/category.php';
+require_once dirname(__DIR__)  . '/app/controllers/borrowController.php';
+require_once dirname(__DIR__)  . '/app/controllers/adminController.php';
 
-require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
-
+/*
+|--------------------------------------------------------------------------
+| DATABASE
+|--------------------------------------------------------------------------
+*/
 $database = new Database();
 $db = $database->connect();
 
@@ -26,15 +42,28 @@ $db = $database->connect();
 | CONTROLLER INSTANCES
 |--------------------------------------------------------------------------
 */
-$authController = new AuthController(new User($db));
-$bookController = new BookController($db);
+$authController   = new AuthController(new User($db));
+$bookController   = new BookController($db);
 $borrowController = new BorrowController($db);
+$adminController  = new AdminController($db);
 
-
-
-$action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
+/*
+|--------------------------------------------------------------------------
+| ROUTER
+|--------------------------------------------------------------------------
+*/
+$action = $_GET['action'] ?? 'listbook';
 
 switch ($action) {
+
+    /* ========= AUTH ========= */
+    case 'login':
+        $authController->login();
+        break;
+
+    case 'logout':
+        $authController->logout();
+        break;
 
     case 'register':
         $authController->registerView();
@@ -44,13 +73,7 @@ switch ($action) {
         $authController->doRegister();
         break;
 
-    case 'login':
-        $authController->login();
-        break;
-
-    case 'logout':
-        $authController->logout();
-        break;
+    /* ========= USER ========= */
     case 'listbook':
         $bookController->showListBook();
         break;
@@ -59,17 +82,25 @@ switch ($action) {
         $bookController->showByCategory();
         break;
 
-    case 'add_to_mybook':
-        $borrowController->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
+    case 'bookdetail':
+        $bookController->viewDetail($_GET['id'] ?? 0);
         break;
 
-    case 'bookdetail':
-        $id = $_GET['id'] ?? null;
-        $bookController->viewDetail($id);
+    case 'search':
+        $bookController->search();
         break;
 
     case 'mybook':
         $borrowController->showMyBook();
+        break;
+
+    case 'add_to_mybook':
+        $borrowController->addToMyBook(
+            $_GET['id'],
+            $_GET['title'],
+            $_GET['author'],
+            $_GET['img']
+        );
         break;
 
     case 'show_borrow_form':
@@ -88,8 +119,25 @@ switch ($action) {
         $borrowController->updateCartQty();
         break;
 
-    case 'search':
-        $bookController->search();
+    /* ========= ADMIN ========= */
+    case 'admin_borrow_list':
+        Auth::admin();
+        $adminController->list();
+        break;
+
+    case 'admin_borrow_detail':
+        Auth::admin();
+        $adminController->detail((int)($_GET['id'] ?? 0));
+        break;
+
+    case 'admin_borrow_accept':
+        Auth::admin();
+        $adminController->updateStatus((int)$_GET['id'], 'Approved');
+        break;
+
+    case 'admin_borrow_refuse':
+        Auth::admin();
+        $adminController->updateStatus((int)$_GET['id'], 'Rejected');
         break;
 
     default:
