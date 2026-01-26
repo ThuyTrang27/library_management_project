@@ -1,32 +1,37 @@
 <?php
-require_once 'app/core/Auth.php';
-require_once 'app/models/borrowRequest.php';
+
+require_once dirname(__DIR__, 2) . '/app/core/Auth.php';
+require_once dirname(__DIR__, 2) . '/app/models/borrowRequest.php';
 
 class AdminController
 {
+    private $model;
 
-    public static function list()
+    public function __construct($db)
     {
-        Auth::admin();
-        $model = new BorrowRequest();
-        $requests = $model->getAll();
-        require 'app/views/admin/borrowList.php';
+        $this->model = new BorrowRequest($db);
     }
 
-    public static function detail($id)
+    public function list()
     {
         Auth::admin();
-        $model = new BorrowRequest();
-        $request = $model->getById($id);
-        $items = $model->getItems($id);
-        require 'app/views/admin/borrowDetail.php';
+        $requests = $this->model->getAll();
+        require dirname(__DIR__, 2) . '/app/views/admin/borrowList.php';
     }
 
-    public static function updateStatus($id, $status)
+    public function detail($id)
     {
         Auth::admin();
-        $model = new BorrowRequest();
-        $model->updateStatus($id, $status);
+        $request = $this->model->getById($id);
+        $items   = $this->model->getItems($id);
+        require dirname(__DIR__, 2) . '/app/views/admin/borrowDetail.php';
+    }
+
+    public function updateStatus($id, $status)
+    {
+        Auth::admin();
+        $this->model->updateStatus($id, $status);
         header("Location: index.php?action=admin_borrow_list");
+        exit;
     }
 }
