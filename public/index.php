@@ -1,82 +1,106 @@
 <?php
 session_start();
 
+/*
+|--------------------------------------------------------------------------
+| CONFIG & DATABASE
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/config/config.php';
-require_once dirname(__DIR__) . '/app/core/Auth.php';
 
-// MODELS
+/*
+|--------------------------------------------------------------------------
+| MODELS
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/app/models/user.php';
 require_once dirname(__DIR__) . '/app/models/book.php';
 require_once dirname(__DIR__) . '/app/models/category.php';
-require_once dirname(__DIR__) . '/app/models/borrowRequest.php';
 
-// CONTROLLERS
+/*
+|--------------------------------------------------------------------------
+| CONTROLLERS
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
+require_once dirname(__DIR__) . '/app/models/category.php';
+
 require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
-require_once dirname(__DIR__) . '/app/controllers/adminController.php';
 
 $database = new Database();
 $db = $database->connect();
 
-// Khởi tạo các Controller
-$authController   = new AuthController(new User($db));
-$bookController   = new BookController($db);
+/*
+|--------------------------------------------------------------------------
+| CONTROLLER INSTANCES
+|--------------------------------------------------------------------------
+*/
+$authController = new AuthController(new User($db));
+$bookController = new BookController($db);
 $borrowController = new BorrowController($db);
-$adminController  = new AdminController($db);
 
-$action = $_GET['action'] ?? 'listbook';
+
+
+$action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
 
 switch ($action) {
-    /* ========= AUTH ========= */
-    case 'login':
-        $authController->login();
-        break;
-    case 'logout':
-        $authController->logout();
-        break;
+
     case 'register':
         $authController->registerView();
         break;
+
     case 'doregister':
         $authController->doRegister();
         break;
 
-    /* ========= USER ========= */
+    case 'login':
+        $authController->login();
+        break;
+
+    case 'logout':
+        $authController->logout();
+        break;
     case 'listbook':
         $bookController->showListBook();
         break;
-    case 'bookdetail':
-        $bookController->viewDetail($_GET['id'] ?? 0);
+
+    case 'category':
+        $bookController->showByCategory();
+        $bookController->showByCategory();
         break;
+
+    case 'add_to_mybook':
+        $borrowController->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
+        break;
+
+    case 'bookdetail':
+        $id = $_GET['id'] ?? null;
+        $bookController->viewDetail($id);
+        break;
+
     case 'mybook':
         $borrowController->showMyBook();
         break;
+
+    case 'show_borrow_form':
+        $borrowController->showFormBookRequest();
+        break;
+
     case 'submit_borrow':
         $borrowController->submitRequest();
         break;
 
-    /* ========= ADMIN (Quản lý mượn sách) ========= */
-    case 'admin_borrow_list':
-        Auth::admin();
-        $adminController->list();
+    case 'remove_from_cart':
+        $borrowController->removeFromCart();
         break;
 
-    case 'admin_borrow_detail':
-        Auth::admin();
-        $adminController->detail((int)($_GET['id'] ?? 0));
+    case 'update_cart_qty':
+        $borrowController->updateCartQty();
         break;
 
-    case 'admin_borrow_accept':
-        Auth::admin();
-        // Gọi hàm update với status 'Accepted' để trừ kho
-        $adminController->updateStatus((int)$_GET['id'], 'Accepted');
-        break;
-
-    case 'admin_borrow_refuse':
-        Auth::admin();
-        // Gọi hàm update với status 'Refused'
-        $adminController->updateStatus((int)$_GET['id'], 'Refused');
+    case 'search':
+        $bookController->search();
         break;
 
     default:

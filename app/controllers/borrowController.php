@@ -19,11 +19,13 @@ class BorrowController
      */
     private function checkLogin()
     {
-        if (!isset($_SESSION['user_id'])) {
+        if (!isset($_SESSION['user'])) {
             header("Location: index.php?action=login");
             exit();
         }
     }
+
+
     public function addToMyBook($bookId, $bookTitle, $author, $image)
     {
         // 1. Kiểm tra quyền truy cập
@@ -111,14 +113,12 @@ class BorrowController
 
         // 4. Gọi Model thực hiện lưu vào Database
         $isSuccess = $this->requestModel->createRequest(
-            $borrowData['userId'],
-            $borrowData['name'],
-            $borrowData['phone'],
-            $borrowData['address'],
+            $_SESSION['user']['user_id'],
             $borrowData['borrowDate'],
             $borrowData['returnDate'],
             $books
         );
+
 
         // 5. Xử lý kết quả
         if ($isSuccess) {
@@ -134,7 +134,7 @@ class BorrowController
     private function getBorrowFormData()
     {
         return [
-            'userId'     => $_SESSION['user_id'] ?? 1,
+            'userId' => $_SESSION['user']['user_id'],
             'name'       => $_POST['name'] ?? '',
             'phone'      => $_POST['phone'] ?? '',
             'address'    => $_POST['address'] ?? '',
