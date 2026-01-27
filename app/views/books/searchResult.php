@@ -4,7 +4,7 @@
     <!-- Tiêu đề kết quả -->
     <div class="d-flex align-items-center mb-4">
         <h4 class="text-primary m-0">
-            <i class="bi bi-search me-2"></i>Search result for: "<?= htmlspecialchars($keyword) ?>"
+            <i class="bi bi-search me-2"></i>Search results for: "<?= htmlspecialchars($keyword) ?>"
         </h4>
         <span class="badge bg-secondary ms-3"><?= count($books) ?> Results</span>
     </div>
