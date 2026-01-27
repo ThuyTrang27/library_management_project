@@ -60,6 +60,12 @@ class BookController
             }
         }
 
+        // Nếu không tìm thấy category → quay về trang chính
+        if ($selectedCategory === null) {
+            header("Location: index.php");
+            exit();
+        }
+
         // Phân trang
         $limit = 20;
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -67,11 +73,11 @@ class BookController
         $offset = ($currentPage - 1) * $limit;
 
         // Lọc sách theo category
-        $books = $this->bookModel->getBooksByCategory($categoryId, $limit, $offset);
-        $totalBooks = $this->bookModel->getTotalBooksByCategory($categoryId);
+        $books = $this->categoryModel->getBooksByCategory($categoryId, $limit, $offset);
+        $totalBooks = $this->categoryModel->getTotalBooksByCategory($categoryId);
         $totalPages = ceil($totalBooks / $limit);
 
-        require_once __DIR__ . '/../views/books/bookListView.php';
+        require_once __DIR__ . '/../views/books/filterBook.php';
     }
    public function search()
     {

@@ -78,4 +78,16 @@ class User
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function lockUser($userId)
+    {
+        $stmt = $this->db->prepare("UPDATE users SET is_locked = 1 WHERE user_id = ?");
+        return $stmt->execute([$userId]);
+    }
+
+    public function unlockUser($userId)
+    {
+        $stmt = $this->db->prepare("UPDATE users SET is_locked = 0 WHERE user_id = ?");
+        return $stmt->execute([$userId]);
+    }
 }
