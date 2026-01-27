@@ -17,14 +17,15 @@ class AuthController
         if (isset($_POST['login'])) {
             $message = $this->handleLogin(
                 $_POST['email'],
-                $_POST['password']
+                $_POST['password'],
+                $_POST['role']
             );
         }
 
         require dirname(__DIR__) . '/views/auth/login.php';
     }
 
-    private function handleLogin($email, $password)
+    private function handleLogin($email, $password, $role)
     {
         $user = $this->model->getUserByEmail($email);
 
@@ -36,14 +37,13 @@ class AuthController
             return "Wrong email or password!";
         }
 
-        //  ROLE LẤY TỪ DATABASE
         $_SESSION['user'] = [
             'id'       => $user['user_id'],
             'username' => $user['username'],
             'role'     => (int)$user['role']
         ];
 
-        //  ĐIỀU HƯỚNG THEO ROLE
+        // Điều hướng theo role
         if ((int)$user['role'] === 1) {
             header("Location: index.php?action=admin_borrow_list");
         } else {
@@ -51,6 +51,7 @@ class AuthController
         }
         exit();
     }
+
 
     /* ================= REGISTER ================= */
 

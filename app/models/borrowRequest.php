@@ -32,14 +32,14 @@ class BorrowRequest
 
     public function getItems($id)
     {
+        // Lưu ý: Tên bảng trong SQL của bạn là book_coopies (sai chính tả)
         $sql = "SELECT b.book_id, b.book_title, b.author, brb.quantity, c.categories_name AS category, 
-                   MIN(bc.barcode) AS barcode -- Lấy mã vạch đầu tiên tìm thấy
-            FROM borrow_request_books brb
-            JOIN books b ON brb.book_id = b.book_id
-            JOIN categories c ON b.categories_id = c.categories_id
-            LEFT JOIN book_coopies bc ON b.book_id = bc.book_id 
-            WHERE brb.borrow_request_id = ?
-            GROUP BY b.book_id"; // Group để mỗi đầu sách chỉ hiện 1 dòng
+                       bc.barcode
+                FROM borrow_request_books brb
+                JOIN books b ON brb.book_id = b.book_id
+                JOIN categories c ON b.categories_id = c.categories_id
+                LEFT JOIN book_coopies bc ON b.book_id = bc.book_id 
+                WHERE brb.borrow_request_id = ?";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

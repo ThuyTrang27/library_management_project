@@ -37,7 +37,8 @@
                             data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <i class="bi bi-person-circle"></i>
-                            <?= htmlspecialchars($_SESSION['full_name'] ?? $_SESSION['username']) ?>
+                            <?= htmlspecialchars($_SESSION['user']['username']) ?>
+
                         </button>
 
                         <ul class="dropdown-menu dropdown-menu-end shadow">
@@ -99,16 +100,18 @@
                             <ul class="dropdown-menu shadow">
 
                                 <!-- All books -->
-                              <li>
-                                <a class="dropdown-item" href="index.php?action=home">All books</a>
+                                <li>
+                                    <a class="dropdown-item" href="index.php?action=home">All books</a>
                                 </li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
 
                                 <?php if (!empty($categories)): ?>
                                     <?php foreach ($categories as $cat): ?>
                                         <li>
                                             <a class="dropdown-item" href="index.php?action=category&id=<?= $cat['id'] ?>">
-                                            <?= htmlspecialchars($cat['name']) ?>
+                                                <?= htmlspecialchars($cat['name']) ?>
                                             </a>
                                         </li>
                                     <?php endforeach; ?>
