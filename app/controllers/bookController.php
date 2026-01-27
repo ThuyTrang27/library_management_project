@@ -10,9 +10,9 @@ class BookController
         require_once __DIR__ . '/../models/category.php';
         $this->bookModel = new Book($db);
         $this->categoryModel = new Category($db);
-    }  
-    
-       public function showListBook()
+    }
+
+    public function showListBook()
     {
         // 1. Lấy categories cho header
         $categories = $this->categoryModel->getAllCategories();
@@ -32,7 +32,8 @@ class BookController
         require_once __DIR__ . '/../views/books/bookListView.php';
     }
 
-    public function viewDetail($bookId) {
+    public function viewDetail($bookId)
+    {
         $book = $this->bookModel->getBookById($bookId);
         $categories = $this->categoryModel->getAllCategories();
 
@@ -79,18 +80,18 @@ class BookController
 
         require_once __DIR__ . '/../views/books/filterBook.php';
     }
-   public function search()
+    public function search()
     {
         $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
-        
+
+        // Lấy dữ liệu categories để truyền vào header.php
+        $categories = $this->categoryModel->getAllCategories();
+        // ------------------------
+
         // Gọi model để tìm kiếm
         $books = $this->bookModel->searchBooks($keyword);
 
-        // Hiển thị kết quả ra view riêng
+        // Hiển thị kết quả ra view
         require_once __DIR__ . '/../views/books/searchResult.php';
     }
 }
-   
-?>
-
- 
