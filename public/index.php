@@ -8,6 +8,7 @@ require_once dirname(__DIR__) . '/app/models/book.php';
 require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
 require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
+require_once dirname(__DIR__) . '/app/controllers/admin.Controller.php';
 require_once dirname(__DIR__) . '/app/models/category.php';
 
 
@@ -22,6 +23,7 @@ $categories = $categoryModel->getAllCategories();
 $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
 $borrowController = new BorrowController($db);
+$adminController = new AdminController($db);
 require_once dirname(__DIR__) . '/app/models/category.php';
 
 
@@ -29,6 +31,14 @@ require_once dirname(__DIR__) . '/app/models/category.php';
 $action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
 
 switch ($action) {
+    case 'user_management':
+        if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+            $adminController->userManagement();
+        } else {
+            header("Location: index.php?action=listbook");
+            exit();
+        }
+        break;
     case 'register':
         $authController->registerView();
         break;
