@@ -99,42 +99,51 @@ class BorrowController
      */
     public function submitRequest()
     {
-        // 1. Chỉ xử lý nếu là request POST
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') return;
+        $this->checkLogin();
 
-        // 2. Thu thập dữ liệu
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header("Location: index.php?action=mybook");
+            exit();
+        }
+
         $borrowData = $this->getBorrowFormData();
         $books = $_SESSION['my_book_cart'] ?? [];
 
-        // 3. Kiểm tra điều kiện cơ bản
         if (empty($books)) {
             $this->showMessage('Your borrowed book list is empty!', true);
         }
 
-        // 4. Gọi Model thực hiện lưu vào Database
         $isSuccess = $this->requestModel->createRequest(
-            $_SESSION['user']['user_id'],
+            $borrowData['userId'],
+            $borrowData['name'],
+            $borrowData['phone'],
+            $borrowData['address'],
             $borrowData['borrowDate'],
             $borrowData['returnDate'],
             $books
         );
 
-
-        // 5. Xử lý kết quả
         if ($isSuccess) {
             unset($_SESSION['my_book_cart']);
-            $this->showMessage('Your request to borrow has been submitted!', false, 'index.php?action=home');
+            $this->showMessage(
+                'Your request to borrow has been submitted!',
+                false,
+                'index.php?action=listbook'
+            );
         } else {
             $this->showMessage('Failed to save data. Please try again!', true);
         }
     }
+
+
+
 
     // --- Các hàm hỗ trợ (Private Helper Methods) ---
 
     private function getBorrowFormData()
     {
         return [
-            'userId' => $_SESSION['user']['user_id'],
+            'userId' => $_SESSION['user']['id'],
             'name'       => $_POST['name'] ?? '',
             'phone'      => $_POST['phone'] ?? '',
             'address'    => $_POST['address'] ?? '',

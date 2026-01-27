@@ -70,38 +70,29 @@ class BorrowRequest
             return false;
         }
     }
-    public function createRequest($userId, $borrowDate, $returnDate, $books)
+    public function createRequest($userId, $name, $phone, $address, $borrowDate, $returnDate, $books)
     {
         try {
             $this->db->beginTransaction();
 
-            // 1. Tổng số lượng
+            // 1. Tính tổng số lượng sách
             $totalQty = $this->calculateTotalQuantity($books);
 
-            // 2. Insert borrow_requests (KHÔNG name/phone/address)
-            $query = "INSERT INTO borrow_requests 
-                  (user_id, request_date, schedule_return_date, quantity, request_status)
-                  VALUES (?, ?, ?, ?, 'Pending')";
+            // 2. Chèn đơn mượn chính và lấy ID
+            $requestId = $this->insertBorrowRequest($userId, $name, $phone, $address, $borrowDate, $returnDate, $totalQty);
 
-            $stmt = $this->db->prepare($query);
-            $stmt->execute([
-                $userId,
-                $borrowDate,
-                $returnDate,
-                $totalQty
-            ]);
-
-            $requestId = $this->db->lastInsertId();
-
-            // 3. Insert chi tiết sách
+            // 3. Xử lý từng cuốn sách (Lưu chi tiết & Trừ kho)
             foreach ($books as $book) {
                 $this->insertRequestDetail($requestId, $book['id'], $book['quantity']);
+                $this->updateBookStock($book['id'], $book['quantity']);
             }
 
             $this->db->commit();
             return true;
         } catch (Exception $e) {
             $this->db->rollBack();
+            // Ghi log lỗi hoặc die để debug nếu cần
+            // error_log($e->getMessage());
             return false;
         }
     }
