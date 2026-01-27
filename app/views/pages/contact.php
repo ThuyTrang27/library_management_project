@@ -11,31 +11,39 @@
                <a href="#" class="icon"><i class="bi bi-youtube"></i></a>
             </div>
 
-            <h2 class="contact-title">TVAN LIBRARY</h2>
+            <h2 class="contact-title">Connect With TVAN Library</h2>
 
             <div class="info-item">
-                <p>99 To Hien Thanh, An Hai ward, Son Tra, Da Nang</p>
+                <p>📍 Address: 99 To Hien Thanh Street, An Hai Ward, Son Tra District, Da Nang City</p>
             </div>
+
             <div class="info-item">
-                 <p>Phone number: 0900707555</p>
+                 <p>📞 Hotline: (+84) 900 707 555</p>
             </div>
+
             <div class="info-item">
-                <p>Email: Tvanlibraryhappy@gmail.com</p>
+                <p>📧 Email Support: support@tvanlibrary.com</p>
             </div>
+
             <div class="info-item">
-                <p>Instargaram: Tvanlibraryhappy.everyday</p>
+                <p>📷 Instagram: @tvanlibrary.readinghub</p>
             </div>
-             <div class="info-item">
-                <p>Youtube: Tvan library</p>
+
+            <div class="info-item">
+                <p>▶ YouTube Channel: TVAN Library Official</p>
+            </div>
+
+            <div class="info-item">
+                <p>⏰ Opening Hours: 08:00 – 21:00 | Monday – Sunday</p>
             </div>
         </div>
 
         <div class="contact-images">
              <div class="img-wrapper mb-2">
-                 <img src="images/slide1.jpg" alt="Library Interior 1">
+                 <img src="images/slide1.jpg" alt="Library Space">
              </div>
              <div class="img-wrapper">
-                 <img src="images/slide1.jpg" alt="Library Interior 2">
+                 <img src="images/slide1.jpg" alt="Reading Area">
              </div>
         </div>
     </div>

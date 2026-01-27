@@ -19,15 +19,15 @@
     <!-- Text Section -->
     <div class="about-text-box">
         <p class="intro-text">
-            TVAN LIBRARY is an online library that allows users to borrow books easily.
-            It offers a wide variety of books for learning and entertainment.
-            Readers can access knowledge anytime, anywhere.
+            TVAN LIBRARY is a modern digital library platform designed to make reading and borrowing books simple, fast, and accessible for everyone.  
+            Our collection covers a wide range of genres — from academic resources to inspiring stories — supporting both learning and relaxation.  
+            With just a few clicks, readers can discover new titles, explore knowledge, and enjoy reading wherever they are.
         </p>
 
         <p class="quote-text text-end mt-4">
-            Reading is more than a habit; it is a journey of the mind.<br>
-            Each book opens a new world, expands our thinking, and helps us understand life more deeply.<br>
-            Through reading, we grow wiser, more creative, and more connected to the world around us.
+            Reading is not just about finishing pages — it is about expanding perspectives. <br>
+            Every book carries ideas, experiences, and voices that can change how we see the world. <br>
+            The more we read, the more we grow — in knowledge, empathy, and imagination.
         </p>
     </div>
 </div>
