@@ -107,8 +107,8 @@
                                 <?php if (!empty($categories)): ?>
                                     <?php foreach ($categories as $cat): ?>
                                         <li>
-                                            <a class="dropdown-item" href="index.php?action=home&category_id=<?= $cat['id'] ?>">
-                                                <?= htmlspecialchars($cat['name']) ?>
+                                            <a class="dropdown-item" href="index.php?action=category&id=<?= $cat['id'] ?>">
+                                            <?= htmlspecialchars($cat['name']) ?>
                                             </a>
                                         </li>
                                     <?php endforeach; ?>

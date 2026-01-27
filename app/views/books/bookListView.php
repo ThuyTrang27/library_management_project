@@ -44,15 +44,8 @@
             // Tự động chuyển slide sau 5 giây
             setInterval(() => moveSlide(1), 5000);
         </script>
-        <?php if (isset($selectedCategory)): ?>
-            <h2 class="mt-4 mb-3">
-                Result for category:
-                <span>
-                    <?= htmlspecialchars($selectedCategory['name']) ?>
-                </span>
-            </h2>
-        <?php endif; ?>
-            <div class="book-grid">
+
+        <div class=" book-grid">
             <?php foreach ($books as $book): ?>
                 <div class="book-item">
                     <a href="index.php?action=bookdetail&id=<?php echo $book['book_id']; ?>" class="book-link">
@@ -80,15 +73,9 @@
 
         <div class="pagination">
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <?php
-                // Nếu đang lọc theo category thì link phải giữ ID category đó
-                $url = isset($_GET['id'])
-                    ? "index.php?action=category&id=" . (int)$_GET['id'] . "&page=$i"
-                    : "index.php?action=listbook&page=$i";
-                ?>
-                <a href="<?php echo $url; ?>"
-                    class="<?php echo ($i == $currentPage) ? 'active' : ''; ?>">
-                    <?php echo $i; ?>
+                <a class="<?= ($i == $currentPage) ? 'active' : '' ?>"
+                    href="index.php?controller=book&action=showListBook&page=<?= $i ?>">
+                    <?= $i ?>
                 </a>
             <?php endfor; ?>
         </div>

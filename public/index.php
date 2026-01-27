@@ -1,30 +1,46 @@
 <?php
-// require_once __DIR__ . '/../config/config.php';
+session_start();
+
+/*
+|--------------------------------------------------------------------------
+| CONFIG & DATABASE
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/config/config.php';
 
+/*
+|--------------------------------------------------------------------------
+| MODELS
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/app/models/user.php';
 require_once dirname(__DIR__) . '/app/models/book.php';
-
-require_once dirname(__DIR__) . '/app/controllers/authController.php';
-require_once dirname(__DIR__) . '/app/controllers/bookController.php';
-require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
-require_once dirname(__DIR__) . '/app/controllers/admin.Controller.php';
 require_once dirname(__DIR__) . '/app/models/category.php';
 
 
+/*
+|--------------------------------------------------------------------------
+| CONTROLLERS
+|--------------------------------------------------------------------------
+*/
+require_once dirname(__DIR__) . '/app/controllers/authController.php';
+require_once dirname(__DIR__) . '/app/controllers/bookController.php';
+require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
+require_once dirname(__DIR__) . '/app/controllers/adminController.php';
 
-session_start();
 
 $database = new Database();
 $db = $database->connect();
-$categoryModel = new Category($db);
-$categories = $categoryModel->getAllCategories();
 
+/*
+|--------------------------------------------------------------------------
+| CONTROLLER INSTANCES
+|--------------------------------------------------------------------------
+*/
 $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
 $borrowController = new BorrowController($db);
 $adminController = new AdminController($db);
-require_once dirname(__DIR__) . '/app/models/category.php';
 
 
 
@@ -39,16 +55,32 @@ switch ($action) {
             exit();
         }
         break;
-    case 'register':
-        $authController->registerView();
+
+    case 'lock_user':
+        if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+            $adminController->lockUser();
+        } else {
+            header("Location: index.php?action=listbook");
+            exit();
+        }
         break;
+
+    case 'unlock_user':
+        if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+            $adminController->unlockUser();
+        } else {
+            header("Location: index.php?action=listbook");
+            exit();
+        }
+        break;
+
+    case 'register':
         $authController->registerView();
         break;
 
     case 'doregister':
         $authController->doRegister();
         break;
-
 
     case 'login':
         $authController->login();
@@ -62,34 +94,33 @@ switch ($action) {
         break;
 
     case 'category':
-    $catId = $_GET['id'] ?? null;
-    $bookController->showListBook($catId); 
-    break;
+        $bookController->showByCategory();
+        break;
 
-     case 'add_to_mybook':
+    case 'add_to_mybook':
         $borrowController->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
         break;
 
     case 'bookdetail':
         $id = $_GET['id'] ?? null;
         $bookController->viewDetail($id);
-        break;      
-        
+        break;
+
     case 'mybook':
         $borrowController->showMyBook();
         break;
-        
+
     case 'show_borrow_form':
         $borrowController->showFormBookRequest();
         break;
-        
+
     case 'submit_borrow':
-        $borrowController->submitRequest(); 
+        $borrowController->submitRequest();
         break;
-    
+
     case 'remove_from_cart':
-    $borrowController->removeFromCart();
-    break;
+        $borrowController->removeFromCart();
+        break;
 
     case 'update_cart_qty':
         $borrowController->updateCartQty();
@@ -103,5 +134,3 @@ switch ($action) {
         header("Location: index.php?action=listbook");
         exit();
 }
-
-?>
