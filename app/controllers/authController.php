@@ -73,6 +73,7 @@ class AuthController
             'address'       => $_POST['address'] ?? '',
             'gender'        => $_POST['gender'] ?? 0,
             'date_of_birth' => $_POST['date_of_birth'] ?? '',
+            'role'          => 0
         ];
 
         $result = $this->model->register($data);
