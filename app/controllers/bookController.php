@@ -4,6 +4,7 @@ class BookController
     private $bookModel;
     private $categoryModel;
 
+
     public function __construct($db)
     {
         require_once __DIR__ . '/../models/book.php';
@@ -14,6 +15,8 @@ class BookController
 
     public function showListBook()
     {
+        Auth::user();
+
         // 1. Lấy categories cho header
         $categories = $this->categoryModel->getAllCategories();
 
@@ -34,6 +37,8 @@ class BookController
 
     public function viewDetail($bookId)
     {
+        Auth::user();
+
         $book = $this->bookModel->getBookById($bookId);
         $categories = $this->categoryModel->getAllCategories();
 
@@ -47,6 +52,8 @@ class BookController
     public function showByCategory()
     {
         // Categories cho header
+        Auth::user();
+
         $categories = $this->categoryModel->getAllCategories();
 
         // ID thể loại
@@ -63,7 +70,7 @@ class BookController
 
         // Nếu không tìm thấy category → quay về trang chính
         if ($selectedCategory === null) {
-            header("Location: index.php");
+            header("Location: listbook.php");
             exit();
         }
 
@@ -82,6 +89,8 @@ class BookController
     }
     public function search()
     {
+        Auth::user();
+
         $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
 
         // Lấy dữ liệu categories để truyền vào header.php

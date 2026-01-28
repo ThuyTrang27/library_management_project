@@ -1,155 +1,152 @@
-/* body { 
-    font-family: Arial; 
-    margin:0 }
-.topbar { 
-    background:#4b96c7; 
-    color:white; 
-    padding:15px; 
-    display:flex; 
-    justify-content:space-between }
-.menu { 
-    padding:10px }
-.menu a { 
-    margin-right:10px; 
-    padding:8px 14px; 
-    border:1px solid #ccc;
-     text-decoration:none }
-.menu .active { 
-    background:#4b96c7; 
-    color:white }
-
-table { 
-    width:100%; 
-    border-collapse:collapse; 
-    margin-top:20px }
-th,td { 
-    border:1px solid #ccc; 
-    padding:10px }
-tr:hover { 
-    background:#f2f2f2; 
-    cursor:pointer }
-
-.actions a { 
-    padding:10px 20px; 
-    margin:10px; 
-    color:white; 
-    text-decoration:none }
-.accept { 
-    background:green }
-.refuse { 
-    background:red } */
-
-    /* Tổng thể trang Admin */
+/* ===== GLOBAL ===== */
 body {
-    background-color: #f8f9fa;
+    background-color: #f4f6f9;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
 }
 
-/* Tùy chỉnh Container */
+/* ===== CONTAINER ===== */
 .container {
     max-width: 1200px;
     margin-top: 30px;
+    margin-bottom: 60px;
 }
 
-/* Card thông tin yêu cầu (Request Information) */
+/* ===== REQUEST INFORMATION CARD ===== */
 .card-info {
     background: #ffffff;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 25px;
+    border-radius: 12px;
+    padding: 25px 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .card-info h3 {
-    color: #4f8fb8; /* Màu xanh thương hiệu TVAN */
-    font-weight: bold;
+    color: #2f7fbf;
+    font-weight: 700;
     margin-bottom: 20px;
     border-bottom: 2px solid #e9ecef;
     padding-bottom: 10px;
 }
 
 .card-info p {
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-size: 15px;
-    color: #333;
 }
 
-/* Tùy chỉnh Table */
+.card-info strong {
+    color: #555;
+}
+
+/* ===== TABLE ===== */
 .table {
-    background: #fff;
-    border-radius: 8px;
+    background-color: #fff;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .table thead {
-    background-color: #d1d1f0; /* Màu tím nhạt như trong ảnh mẫu */
+    background-color: #dcdcf5;
 }
 
-.table th {
-    border: none;
+.table thead th {
     font-weight: 600;
+    text-align: center;
     color: #444;
-    text-align: center;
+    border: none;
+    padding: 14px;
 }
 
-.table td {
+.table tbody td {
+    text-align: center;
     vertical-align: middle;
-    text-align: center;
+    padding: 12px;
 }
 
-/* Hiển thị Mã vạch (Barcode) */
+.table tbody tr:hover {
+    background-color: #f5f7ff;
+}
+
+/* ===== BARCODE ===== */
 .barcode-text {
     font-family: 'Courier New', Courier, monospace;
     font-weight: bold;
-    background: #f1f1f1;
-    padding: 4px 8px;
-    border-radius: 4px;
-    border: 1px dashed #999;
+    background: #f1f3f5;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px dashed #aaa;
 }
 
-/* Nút bấm (Buttons) */
+/* ===== STATUS BADGE ===== */
+.badge {
+    padding: 6px 14px;
+    font-size: 13px;
+    border-radius: 20px;
+}
+
+.badge-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.badge-accepted {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.badge-refused {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* ===== ACTION BUTTONS ===== */
 .btn-group-actions {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-    margin-bottom: 50px;
+    gap: 25px;
+    margin-top: 40px;
 }
 
 .btn-accept {
     background-color: #28a745;
-    color: white;
-    border-radius: 25px;
-    padding: 10px 40px;
-    font-weight: bold;
+    color: #fff;
+    padding: 12px 50px;
+    border-radius: 30px;
+    font-weight: 600;
     border: none;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .btn-accept:hover {
     background-color: #218838;
     transform: translateY(-2px);
-    color: white;
 }
 
 .btn-refuse {
     background-color: #f26d6d;
-    color: white;
-    border-radius: 25px;
-    padding: 10px 40px;
-    font-weight: bold;
+    color: #fff;
+    padding: 12px 50px;
+    border-radius: 30px;
+    font-weight: 600;
     border: none;
-    transition: 0.3s;
+    transition: all 0.3s ease;
 }
 
 .btn-refuse:hover {
     background-color: #d9534f;
     transform: translateY(-2px);
-    color: white;
 }
 
-/* Badge trạng thái */
-.badge-pending { background-color: #ffc107; color: #000; }
-.badge-accepted { background-color: #28a745; }
-.badge-refused { background-color: #dc3545; }
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .btn-group-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-accept,
+    .btn-refuse {
+        width: 100%;
+    }
+}

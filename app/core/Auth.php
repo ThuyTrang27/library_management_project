@@ -13,7 +13,7 @@ class Auth
     {
         self::check();
         if ($_SESSION['user']['role'] != 1) {
-            header("Location: index.php?action=mybook");
+            header("Location: index.php?action=listbook");
             exit;
         }
     }
@@ -22,7 +22,7 @@ class Auth
     {
         self::check();
         if ($_SESSION['user']['role'] != 0) {
-            header("Location: index.php?action=adminBorrowList");
+            header("Location: index.php?action=admin_borrow_list");
             exit;
         }
     }

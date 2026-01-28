@@ -99,6 +99,8 @@ class BorrowController
      */
     public function submitRequest()
     {
+        Auth::user();
+
         $this->checkLogin();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -142,6 +144,8 @@ class BorrowController
 
     private function getBorrowFormData()
     {
+        Auth::user();
+
         return [
             'userId' => $_SESSION['user']['id'],
             'name'       => $_POST['name'] ?? '',
@@ -154,6 +158,8 @@ class BorrowController
 
     private function showMessage($msg, $isBack = true, $redirectUrl = '')
     {
+        Auth::user();
+
         echo "<script>alert('$msg');";
         if ($isBack) {
             echo "window.history.back();";
@@ -169,6 +175,8 @@ class BorrowController
      */
     public function removeFromCart()
     {
+        Auth::user();
+
         $id = $_GET['id'] ?? null;
         if ($id && isset($_SESSION['my_book_cart'][$id])) {
             unset($_SESSION['my_book_cart'][$id]);
@@ -184,6 +192,8 @@ class BorrowController
      */
     public function updateCartQty()
     {
+        Auth::user();
+
         $id = $_GET['id'] ?? null;
         $qty = $_GET['qty'] ?? 1;
 
