@@ -1,7 +1,6 @@
 <?php
 class AuthController
 {
-
     private $model;
 
     public function __construct($model)
@@ -16,16 +15,15 @@ class AuthController
 
         if (isset($_POST['login'])) {
             $message = $this->handleLogin(
-                $_POST['email'],
-                $_POST['password'],
-                $_POST['role']
+                $_POST['email'] ?? '',
+                $_POST['password'] ?? ''
             );
         }
 
         require dirname(__DIR__) . '/views/auth/login.php';
     }
 
-    private function handleLogin($email, $password, $role)
+    private function handleLogin($email, $password)
     {
         $user = $this->model->getUserByEmail($email);
 
@@ -43,7 +41,7 @@ class AuthController
             'role'     => (int)$user['role']
         ];
 
-        // Điều hướng theo role
+        // Redirect theo role
         if ((int)$user['role'] === 1) {
             header("Location: index.php?action=admin_borrow_list");
         } else {
@@ -51,6 +49,15 @@ class AuthController
         }
         exit();
     }
+
+    /* ================= LOGOUT ================= */
+    public function logout()
+    {
+        session_destroy();
+        header("Location: index.php?action=listbook");
+        exit();
+    }
+
 
 
     /* ================= REGISTER ================= */
@@ -73,7 +80,6 @@ class AuthController
             'address'       => $_POST['address'] ?? '',
             'gender'        => $_POST['gender'] ?? 0,
             'date_of_birth' => $_POST['date_of_birth'] ?? '',
-            'role'          => 0
         ];
 
         $result = $this->model->register($data);
@@ -85,11 +91,5 @@ class AuthController
             header("Location: " . $_SERVER['HTTP_REFERER']);
             exit();
         }
-    }
-    public function logout()
-    {
-        session_destroy();
-        header("Location: index.php?action=listbook");
-        exit();
     }
 }
