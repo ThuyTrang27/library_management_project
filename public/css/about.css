@@ -1,0 +1,44 @@
+.about-img-wrapper {
+    height: 300px;
+    /* Adjust height as needed */
+    overflow: hidden;
+    border-radius: 2px;
+}
+
+.about-img-wrapper img {
+    object-position: center;
+}
+
+.about-text-box {
+    background: #fff;
+    /* Or keep transparent as per design, design looks white/transparent on light bg */
+    padding: 30px;
+    border: 1px solid #eee;
+    /* Slight border based on design box look */
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    /* To create the 'box' effect from the image */
+}
+
+.intro-text {
+    font-style: italic;
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 2rem;
+}
+
+.quote-text {
+    font-size: 0.9rem;
+    color: #333;
+    line-height: 1.6;
+    text-align: right;
+    font-style: italic;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .about-img-wrapper {
+        height: 200px;
+    }
+}

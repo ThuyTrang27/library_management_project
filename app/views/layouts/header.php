@@ -118,8 +118,8 @@
                             </ul>
                         </li>
 
-                        <li class="nav-item"><a class="nav-link fw-semibold" href="#">About</a></li>
-                        <li class="nav-item"><a class="nav-link fw-semibold" href="#">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link fw-semibold" href="index.php?action=about">About</a></li>
+                        <li class="nav-item"><a class="nav-link fw-semibold" href="index.php?action=contact">Contact</a></li>
                         <li class="nav-item">
                             <a class="nav-link fw-semibold" href="index.php?action=mybook">My book</a>
                         </li>
@@ -145,7 +145,3 @@
 
     <!-- Bootstrap JS (BẮT BUỘC – ĐẶT CUỐI BODY) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
-
-</html>

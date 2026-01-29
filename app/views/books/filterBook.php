@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../../public/css/bookListView.css">
-</head>
-
-<body>
-
     <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
     <div class="container">
@@ -72,6 +62,3 @@
 
     <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
 
-</body>
-
-</html>

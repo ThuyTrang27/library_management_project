@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($book['book_title']); ?> - TVAN Library</title>
-    <link rel="stylesheet" href="../../../public/css/viewBookDetail.css">
-</head>
-<body>
     <?php  require_once __DIR__ . '/../layouts/header.php';?>
+    <link rel="stylesheet" href="css/viewBookDetail.css">
     
     <div class="book-detail-container">
         <div class="book-detail-wrapper">
@@ -70,5 +62,3 @@
             <?php endif; ?>
         });
     </script>
-</body>
-</html>

@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../../../public/css/bookListView.css" class="">
-    <link rel="stylesheet" href="../../../public/css/style.css" class="">
-    <link rel="stylesheet" href="../../../public/js/slide.js" class="">
-</head>
-
-<body>
     <?php require_once __DIR__ . '/../layouts/header.php'; ?>
     <div class="container">
         <?php if (!isset($_GET['id'])): ?>
@@ -81,6 +70,4 @@
         </div>
     </div>
     <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
-</body>
 
-</html>

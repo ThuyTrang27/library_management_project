@@ -82,6 +82,7 @@ class BookController
    public function search()
     {
         $keyword = isset($_GET['keyword']) ? trim($_GET['keyword']) : '';
+        $categories = $this->categoryModel->getAllCategories();
         
         // Gọi model để tìm kiếm
         $books = $this->bookModel->searchBooks($keyword);
