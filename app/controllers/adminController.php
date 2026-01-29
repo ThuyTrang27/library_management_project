@@ -6,7 +6,7 @@ class AdminController
 {
     private $userModel;
     private $categoryModel;
-
+    public $users;
     public function __construct($db)
     {
         $this->userModel = new User($db);

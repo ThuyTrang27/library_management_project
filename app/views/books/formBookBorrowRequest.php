@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book borrow information</title>
-    <link rel="stylesheet" href="../../../public/css/bookRequest.css" class="">
-</head>
-<body>
     <?php  require_once __DIR__ . '/../layouts/header.php';?>
+    <link rel="stylesheet" href="css/bookRequest.css">
     <div class="borrow-container">
     <h2 class="title-blue" style="text-align:center;">Book order information</h2>
     
@@ -71,5 +63,3 @@
 </div>
 </form>
  <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
-</body>
-</html>
