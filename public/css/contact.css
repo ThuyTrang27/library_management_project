@@ -1,5 +1,5 @@
 .contact-container {
-    background-image: url('../images/slide3.jpg'); /* Using an existing image as background */
+    background-image: url('../images/slide3.jpg');
     background-size: cover;
     background-position: center;
     min-height: 80vh;
@@ -10,7 +10,6 @@
     position: relative;
 }
 
-/* Dark overlay for better readability if needed, though design shows clear image */
 .contact-container::before {
     content: "";
     position: absolute;
@@ -79,7 +78,6 @@
     border-radius: 2px;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .contact-card {
         flex-direction: column;
