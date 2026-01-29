@@ -73,4 +73,7 @@ class AuthController
             header("Location: index.php?action=listbook");
             exit();
         }
+
+   
 }
+?>
