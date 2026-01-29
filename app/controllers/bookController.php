@@ -89,6 +89,8 @@ class BookController
         // Hiển thị kết quả ra view riêng
         require_once __DIR__ . '/../views/books/searchResult.php';
     }
+
+    
 }
    
 ?>

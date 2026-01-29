@@ -27,6 +27,7 @@ require_once dirname(__DIR__) . '/app/controllers/bookController.php';
 require_once dirname(__DIR__) . '/app/models/category.php';
 
 require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
+require_once dirname(__DIR__) . '/app/controllers/adminController.php';
 
 $database = new Database();
 $db = $database->connect();
@@ -39,10 +40,11 @@ $db = $database->connect();
 $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
 $borrowController = new BorrowController($db);
+$adminController = new AdminController($db);
 
 
 
-$action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
+$action = isset($_GET['action']) ? $_GET['action'] : 'admin_dashboard';
 
 switch ($action) {
 
@@ -101,7 +103,17 @@ switch ($action) {
     case 'search':
         $bookController->search();
         break;
+    
+    case 'show_form_add_book':
+        $adminController->showAddBookForm();
+        break;
+    case 'addbook':
+        $adminController->doAddBook();
+        break;
 
+    case 'admin_dashboard':
+        $adminController->showAdminDashboard();
+        break;
     default:
         header("Location: index.php?action=listbook");
         exit();
