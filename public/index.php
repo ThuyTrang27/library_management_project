@@ -86,6 +86,7 @@ switch ($action) {
 
     case 'login':
         $authController->login();
+        // $adminController->userManagement();
         break;
 
     case 'logout':
@@ -135,7 +136,7 @@ switch ($action) {
     case 'about':
         $siteController->about();
         break;
-        
+
     case 'contact':
         $siteController->contact();
         break;

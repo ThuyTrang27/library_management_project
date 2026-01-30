@@ -17,7 +17,7 @@ class AdminController
     {
         $users = $this->userModel->getAllUsers();
         $categories = $this->categoryModel->getAllCategories();
-        require __DIR__ . '/../views/admin/userManagement.php';
+        require_once __DIR__ . '/../views/admin/userManagement.php';
     }
 
     public function lockUser()
