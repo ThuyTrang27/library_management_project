@@ -1,6 +1,7 @@
 <?php
 // Tái sử dụng header
 require_once __DIR__ . '/../layouts/header.php';
+
 ?>
 
 <link rel="stylesheet" href="/public/css/admin.css">
