@@ -1,27 +1,16 @@
 <?php
 session_start();
 
-/*
-|--------------------------------------------------------------------------
-| CONFIG & DATABASE
-|--------------------------------------------------------------------------
-*/
+/* CONFIG*/
 require_once dirname(__DIR__) . '/config/config.php';
 
-/*
-|--------------------------------------------------------------------------
-| MODELS
-|--------------------------------------------------------------------------
-*/
+/* MODELS*/
 require_once dirname(__DIR__) . '/app/models/user.php';
 require_once dirname(__DIR__) . '/app/models/book.php';
 require_once dirname(__DIR__) . '/app/models/category.php';
+require_once dirname(__DIR__) . '/app/models/borrowRequest.php';
 
-/*
-|--------------------------------------------------------------------------
-| CONTROLLERS
-|--------------------------------------------------------------------------
-*/
+/*CONTROLLERS*/
 require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
 require_once dirname(__DIR__) . '/app/controllers/adminController.php';
@@ -31,11 +20,7 @@ require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
 $database = new Database();
 $db = $database->connect();
 
-/*
-|--------------------------------------------------------------------------
-| CONTROLLER INSTANCES
-|--------------------------------------------------------------------------
-*/
+/* CONTROLLER INSTANCES*/
 $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
 $borrowController = new BorrowController($db);

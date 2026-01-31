@@ -1,4 +1,14 @@
 <?php
+
+require_once __DIR__ . '/../core/lib/PHPMailer/src/Exception.php';
+require_once __DIR__ . '/../core/lib/PHPMailer/src/PHPMailer.php';
+require_once __DIR__ . '/../core/lib/PHPMailer/src/SMTP.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+
+
 class BorrowRequest
 {
     private $db;
@@ -32,37 +42,64 @@ class BorrowRequest
 
     public function getItems($id)
     {
-        // Lưu ý: Tên bảng trong SQL của bạn là book_coopies (sai chính tả)
-        $sql = "SELECT b.book_id, b.book_title, b.author, brb.quantity, c.categories_name AS category, 
-                       bc.barcode
-                FROM borrow_request_books brb
-                JOIN books b ON brb.book_id = b.book_id
-                JOIN categories c ON b.categories_id = c.categories_id
-                LEFT JOIN book_coopies bc ON b.book_id = bc.book_id 
-                WHERE brb.borrow_request_id = ?";
+        $sql = "SELECT 
+                b.book_id,
+                b.book_title,
+                b.author,
+                brb.quantity,
+                c.categories_name AS category,
+                MIN(bc.barcode) AS barcode
+            FROM borrow_request_books brb
+            JOIN books b ON brb.book_id = b.book_id
+            JOIN categories c ON b.categories_id = c.categories_id
+            LEFT JOIN book_coopies bc ON b.book_id = bc.book_id
+            WHERE brb.borrow_request_id = ?
+            GROUP BY 
+                b.book_id, b.book_title, b.author, brb.quantity, c.categories_name";
+
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
     public function updateStatus($id, $status)
     {
         try {
             $this->db->beginTransaction();
 
-            // Cập nhật trạng thái (Approved/Rejected/Pending/Returned)
+            // 1. Update status
             $sql = "UPDATE borrow_requests SET request_status = ? WHERE borrow_request_id = ?";
             $this->db->prepare($sql)->execute([$status, $id]);
 
-            // Nếu Duyệt (Approved), trừ kho ở bảng books
+            // 2. Trừ kho nếu Approved
             if ($status === 'Approved') {
                 $items = $this->getItems($id);
                 foreach ($items as $item) {
-                    $sqlStock = "UPDATE books SET stock_quantity = stock_quantity - ? 
-                                 WHERE book_id = ? AND stock_quantity >= ?";
-                    $this->db->prepare($sqlStock)->execute([$item['quantity'], $item['book_id'], $item['quantity']]);
+                    $sqlStock = "UPDATE books 
+                             SET stock_quantity = stock_quantity - ? 
+                             WHERE book_id = ? AND stock_quantity >= ?";
+                    $this->db->prepare($sqlStock)
+                        ->execute([$item['quantity'], $item['book_id'], $item['quantity']]);
                 }
             }
+
+            // 3. Lấy email user
+            $sqlUser = "SELECT u.email, u.full_name
+                    FROM borrow_requests br
+                    JOIN users u ON br.user_id = u.user_id
+                    WHERE br.borrow_request_id = ?";
+            $stmt = $this->db->prepare($sqlUser);
+            $stmt->execute([$id]);
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            // 4. Gửi mail
+            if ($user && in_array($status, ['Approved', 'Rejected'])) {
+                $this->sendBorrowStatusEmail(
+                    $user['email'],
+                    $user['full_name'],
+                    $status
+                );
+            }
+
             $this->db->commit();
             return true;
         } catch (Exception $e) {
@@ -70,6 +107,53 @@ class BorrowRequest
             return false;
         }
     }
+
+    private function sendBorrowStatusEmail($email, $name, $status)
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'ngocanhqb123end@gmail.com';
+            $mail->Password = 'bcox uaxi ntpv txri'; // app password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port = 587;
+            $mail->CharSet = 'UTF-8';
+
+            $mail->setFrom('ngocanhqb123end@gmail.com', 'TVAN Library');
+            $mail->addAddress($email, $name);
+
+            $mail->isHTML(true);
+
+            if ($status === 'Approved') {
+                $mail->Subject = 'Borrow Request Approved';
+                $mail->Body = "
+                <p>Hello <b>$name</b>,</p>
+                <p>Your book borrowing request has been 
+                <b style='color:green;'>APPROVED</b>.</p>
+                <p>Please come to the library to collect your books.</p>
+                <p>— TVAN Library</p>
+            ";
+            } elseif ($status === 'Rejected') {
+                $mail->Subject = 'Borrow Request Rejected';
+                $mail->Body = "
+                <p>Hello <b>$name</b>,</p>
+                <p>Your book borrowing request has been 
+                <b style='color:red;'>REJECTED</b>.</p>
+                <p>Please contact the library for more details.</p>
+                <p>— TVAN Library</p>
+            ";
+            }
+
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     public function createRequest($userId, $name, $phone, $address, $borrowDate, $returnDate, $books)
     {
         try {
