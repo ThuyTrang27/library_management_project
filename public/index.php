@@ -104,16 +104,32 @@ switch ($action) {
         $bookController->search();
         break;
     
-    case 'show_form_add_book':
-        $adminController->showAddBookForm();
-        break;
-    case 'addbook':
-        $adminController->doAddBook();
-        break;
-
     case 'admin_dashboard':
         $adminController->showAdminDashboard();
         break;
+    
+    case 'show_form_add_book':
+        $adminController->showAddBookForm();
+        break;
+
+    case 'addbook':
+        $adminController->doAddBook();
+        break;
+    
+    case 'edit_book':
+        $id = $_GET['id'] ?? null;
+        $adminController->showEditBookForm($id);
+    break;
+
+    case 'do_edit_book':
+        $adminController->doEditBook();
+        break;
+    
+    case 'delete_book':
+        $id = $_GET['id'] ?? null;
+        $adminController->doDeleteBook($id);
+        break;
+
     default:
         header("Location: index.php?action=listbook");
         exit();
