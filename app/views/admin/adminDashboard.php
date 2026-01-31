@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
@@ -55,8 +56,8 @@
                                 
                                 <td><?php echo $book['stock_quantity']; ?></td>
                                 <td>
-                                    <a href="index.php?action=edit_book&id=<?php echo $book['book_id']; ?>" class="btn btn-primary btn-sm">Edit</a>
-                                    <a href="index.php?action=delete_book&id=<?php echo $book['book_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');">Delete</a>
+                                    <a href="index.php?action=edit_book&id=<?php echo $book['book_id']; ?>" class="btn btn-primary btn-sm"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a href="index.php?action=delete_book&id=<?php echo $book['book_id']; ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?');"><i class="fa-solid fa-trash-can"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -73,7 +74,7 @@
     <ul class="pagination">
     <?php for ($i = 1; $i <= $totalPages; $i++): ?>
         <li class="<?php echo ($i == $currentPage) ? 'active' : ''; ?>">
-            <a href="index.php?action=listbook&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+            <a href="index.php?action=admin_dashboard&page=<?php echo $i; ?>"><?php echo $i; ?></a>
         </li>
     <?php endfor; ?>
 </ul>

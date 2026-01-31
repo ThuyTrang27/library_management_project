@@ -105,6 +105,50 @@ class Book
         }
 
     }
+    public function updateBook($id, $data) {
+        try {
+            $sql = "UPDATE books SET 
+                        book_title = :book_title,
+                        author = :author,
+                        categories_id = :categories_id,
+                        publisher = :publisher,
+                        publish_year = :publish_year,
+                        price = :price,
+                        stock_quantity = :stock_quantity,
+                        image_url = :image_url,
+                        content = :content
+                    WHERE book_id = :book_id";
+            $stmt = $this->conn->prepare($sql);
+            $result = $stmt->execute([
+                ':book_title'      => $data['book_title'],
+                ':author'          => $data['author'],
+                ':categories_id'   => $data['categories_id'],
+                ':publisher'       => $data['publisher'],
+                ':publish_year'    => $data['publish_year'],
+                ':price'           => $data['price'],
+                ':stock_quantity'  => $data['stock_quantity'],
+                ':image_url'       => $data['image_url'],
+                ':content'         => $data['content'],
+                ':book_id'        => $id
+            ]);
+            if ($result) {
+                return ['status' => true];
+            }
+            return ['status' => false];
+        } catch (Exception $e) {
+            return [
+                'status' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function deleteBook($id) {
+    $sql = "DELETE FROM books WHERE book_id = :id";
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    return $stmt->execute();
+}
 }
 
 

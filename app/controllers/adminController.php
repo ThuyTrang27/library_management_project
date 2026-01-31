@@ -76,8 +76,67 @@ class AdminController
         // Hiện lỗi ra để bạn biết sai ở đâu (ví dụ: sai tên cột, sai ID...)
         die("Lỗi Database: " . ($result['message'] ?? 'Unknown Error'));
     } else {
-        header("Location: index.php?action=listbook");
+        header("Location: index.php?action=admin_dashboard");
         exit();
     }
 }
+    public function showEditBookForm($id) {
+    // Nếu $id truyền vào bị rỗng hoặc false, thử lấy trực tiếp từ $_GET lần nữa để chắc chắn
+    if (!$id) {
+        $id = $_GET['id'] ?? 0;
+    }
+
+    $book = $this->bookModel->getBookById($id);
+
+    if (!$book) {
+        // Debug nếu vẫn lỗi
+        echo "Không tìm thấy sách với ID: " . $id; 
+        die();
+    }
+
+    $categories = $this->categoryModel->getAllCategories();
+    require_once __DIR__ . '/../views/admin/formEditBook.php';
 }
+
+    public function doEditBook() {
+        $id = $_POST['book_id'] ?? 0;
+        $oldBook = $this->bookModel->getBookById($id);
+        $img_url = $oldBook['image_url'];
+
+        if (isset($_FILES['book_image'])&& $_FILES['book_image']['error']==0){
+            $filename = time() . "_" . $_FILES['book_image']['name'];
+            if (move_uploaded_file($_FILES['book_image']['tmp_name'], "public/images/".$filename)){
+                $img_url = $filename;
+            }
+        }
+        $data = [
+            "book_id"       => $id,
+            "book_title"    => $_POST['book_title'] ?? '',
+            "author"        => $_POST['author'] ?? '',
+            "categories_id" => $_POST['categories_id'] ?? '',
+            "price"         => $_POST['price'] ?? 0,
+            "stock_quantity"=> $_POST['stock_quantity'] ?? 0,
+            "publisher"     => $_POST['publisher'] ?? '',
+            "publish_year"  => $_POST['publish_year'] ?? '',
+            "image_url"     => $img_url,
+            "content"       => $_POST['content'] ?? ''
+        ];
+
+        $updateResult = $this->bookModel->updateBook($id, $data);
+        if ($updateResult['status']) { // Kiểm tra key 'status' bên trong mảng
+            header("Location: index.php?action=admin_dashboard");
+            exit();
+        } else {
+            die("Error: " . $updateResult['message']);
+        }
+            }
+        public function doDeleteBook($id) {
+        if ($id) {
+            $this->bookModel->deleteBook($id);
+        }
+        header("Location: index.php?action=admin_dashboard"); // Xóa xong quay về danh sách
+        exit();
+}
+}
+    
+?>
