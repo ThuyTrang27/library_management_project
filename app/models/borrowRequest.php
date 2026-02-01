@@ -52,7 +52,7 @@ class BorrowRequest
             FROM borrow_request_books brb
             JOIN books b ON brb.book_id = b.book_id
             JOIN categories c ON b.categories_id = c.categories_id
-            LEFT JOIN book_coopies bc ON b.book_id = bc.book_id
+            LEFT JOIN book_copies bc ON b.book_id = bc.book_id
             WHERE brb.borrow_request_id = ?
             GROUP BY 
                 b.book_id, b.book_title, b.author, brb.quantity, c.categories_name";

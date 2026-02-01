@@ -14,10 +14,7 @@ require_once dirname(__DIR__) . '/app/models/borrowRequest.php';
 require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
 require_once dirname(__DIR__) . '/app/controllers/adminController.php';
-
 require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
-require_once dirname(__DIR__) . '/app/controllers/adminController.php';
-
 $database = new Database();
 $db = $database->connect();
 
@@ -143,6 +140,11 @@ switch ($action) {
     case 'do_import_book':
         $adminController->doImportBook();
         break;
+
+    case 'admin_user_list':
+        $adminController->userManagement();
+        break;
+    
     default:
         header("Location: index.php?action=listbook");
         exit();
