@@ -92,7 +92,7 @@ switch ($action) {
         $bookController->search();
         break;
 
-    case 'admin_dashboard':
+    case 'book_management':
         $adminController->showAdminDashboard();
         break;
 

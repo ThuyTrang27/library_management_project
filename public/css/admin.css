@@ -150,3 +150,55 @@ body {
         width: 100%;
     }
 }
+
+/* Tổng thể danh sách phân trang */
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: 5px; /* Khoảng cách giữa các ô */
+}
+
+/* Style cho từng ô số */
+.pagination li a {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 8px; /* Bo tròn giống form của bạn */
+    transition: all 0.3s ease;
+}
+
+/* Hiệu ứng khi di chuột qua */
+.pagination li a:hover {
+    background-color: #e3f2fd;
+}
+
+/* --- QUAN TRỌNG: Style cho trang đang được chọn (Active) --- */
+.pagination li.active a {
+    background-color: #2196f3; /* Màu xanh đậm */
+    color: white;              /* Chữ trắng */
+    border-color: #2196f3;
+    font-weight: bold;
+    cursor: default;
+}
+.select-add-book {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: flex-end;
+    margin-bottom: 15px;
+}
+.select-add-book button {
+    background-color:#2196f3;
+    color: white;
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;    
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+    border: 1px solid #1938d6;
+}

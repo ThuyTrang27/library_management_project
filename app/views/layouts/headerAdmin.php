@@ -16,7 +16,7 @@ Auth::admin();
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="public/css/headerAdmin.css">
 </head>
 
 <body>
@@ -43,29 +43,36 @@ Auth::admin();
         </div>
     </nav>
 
-    <div class="bg-light border-bottom">
-        <div class="container py-2">          
+   <?php
+// Lấy action hiện tại từ URL để so sánh
+$current_action = isset($_GET['action']) ? $_GET['action'] : '';
+?>
 
-            <a class="btn btn-outline-secondary me-2" href="index.php?action=admin_dashboard">
-                Book Management
-            </a>
+<div class="bg-light border-bottom">
+    <div class="container py-2">          
 
-            <a class="btn btn-outline-secondary me-2" href="index.php?action=admin_user_list">
-                User Management
-            </a>
+        <a class="btn <?php echo ($current_action == 'book_management' || $current_action == 'do_import_book' || $current_action == 'import_book_by_excel') ? 'btn-outline-primary' : 'btn-outline-secondary'; ?> me-2" 
+           href="index.php?action=book_management">
+            Book Management
+        </a>
 
-            <a class="btn btn-outline-primary me-2"
-                href="index.php?action=admin_borrow_list">
-                Borrowing Management
-            </a>
-            
-            <a class="btn btn-outline-secondary" href="index.php?action=admin_statistics">
-                Statistics
-            </a>
+        <a class="btn <?php echo ($current_action == 'admin_user_list') ? 'btn-outline-primary' : 'btn-outline-secondary'; ?> me-2" 
+           href="index.php?action=admin_user_list">
+            User Management
+        </a>
 
+        <a class="btn <?php echo ($current_action == 'admin_borrow_list') ? 'btn-outline-primary' : 'btn-outline-secondary'; ?> me-2" 
+           href="index.php?action=admin_borrow_list">
+            Borrowing Management
+        </a>
+        
+        <a class="btn <?php echo ($current_action == 'admin_statistics') ? 'btn-outline-primary' : 'btn-outline-secondary'; ?>" 
+           href="index.php?action=admin_statistics">
+            Statistics
+        </a>
              
-        </div>
     </div>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 

@@ -54,7 +54,7 @@ class AdminController
         $totalBooks = $this->bookModel->getTotalBooks();
         $totalPages = ceil($totalBooks / $limit);
 
-        require_once __DIR__ . '/../views/admin/adminDashboard.php';
+        require_once __DIR__ . '/../views/admin/bookManagement.php';
     }                                                                   
 
     public function showAddBookForm() {
@@ -96,7 +96,7 @@ class AdminController
         // Hiện lỗi ra để bạn biết sai ở đâu (ví dụ: sai tên cột, sai ID...)
         die("Lỗi Database: " . ($result['message'] ?? 'Unknown Error'));
     } else {
-        header("Location: index.php?action=admin_dashboard");
+        header("Location: index.php?action=book_management");
         exit();
     }
     }
@@ -145,7 +145,7 @@ class AdminController
 
         $updateResult = $this->bookModel->updateBook($id, $data);
         if ($updateResult['status']) { // Kiểm tra key 'status' bên trong mảng
-            header("Location: index.php?action=admin_dashboard");
+            header("Location: index.php?action=book_management");
             exit();
         } else {
             die("Error: " . $updateResult['message']);
@@ -155,7 +155,7 @@ class AdminController
         if ($id) {
             $this->bookModel->deleteBook($id);
         }
-        header("Location: index.php?action=admin_dashboard"); // Xóa xong quay về danh sách
+        header("Location: index.php?action=book_management"); // Xóa xong quay về danh sách
         }
     public function updateStatus($id, $status)
     {
@@ -220,7 +220,7 @@ class AdminController
             ];
 
                 // Header bây giờ ngắn gọn như ý bạn
-            header("Location: index.php?action=admin_dashboard");
+            header("Location: index.php?action=book_management");
             exit();
 
         } catch (Exception $e) {
