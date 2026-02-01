@@ -80,7 +80,7 @@
     <ul class="pagination">
         <?php for ($i = 1; $i <= $totalPages; $i++): ?>
             <li class="<?php echo ($i == $currentPage) ? 'active' : ''; ?>">
-                <a href="index.php?action=admin_dashboard&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                <a href="index.php?action=book_management&page=<?php echo $i; ?>"><?php echo $i; ?></a>
             </li>
         <?php endfor; ?>
     </ul>

@@ -1,0 +1,26 @@
+/* Style chung cho các nút */
+.nav-btn {
+    display: inline-block;
+    padding: 8px 20px;
+    margin-right: 10px;
+    text-decoration: none;
+    color: #555; /* Màu chữ mặc định xám */
+    border: 1px solid #777; /* Viền xám */
+    border-radius: 8px;
+    background-color: #fff;
+    transition: all 0.3s;
+}
+
+/* Style khi nút được ACTIVE (Đang ở trang đó) */
+.nav-btn.active {
+    border: 1.5px solid #007bff; /* Viền xanh dương */
+    background-color: #fff;
+    font-weight: 500;
+}
+
+/* Hiệu ứng hover cho chuyên nghiệp */
+.nav-btn:hover:not(.active) {
+    background-color: #f8f9fa;
+    border-color: #007bff;
+    color: #007bff;
+}

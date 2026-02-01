@@ -122,8 +122,8 @@ if (session_status() === PHP_SESSION_NONE) {
                             </ul>
                         </li>
 
-                        <li class="nav-item"><a class="nav-link fw-semibold" href="#">About</a></li>
-                        <li class="nav-item"><a class="nav-link fw-semibold" href="#">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link fw-semibold" href="index.php?action=about">About</a></li>
+                        <li class="nav-item"><a class="nav-link fw-semibold" href="index.php?action=action">Contact</a></li>
                         <li class="nav-item">
                             <a class="nav-link fw-semibold" href="index.php?action=mybook">My book</a>
                         </li>

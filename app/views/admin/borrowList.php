@@ -8,9 +8,9 @@
 </head>
 
 <body>
-
     <?php
-    require __DIR__ . '/../layouts/headerAdmin.php'; ?><table class="table table-bordered table-hover">
+    require __DIR__ . '/../layouts/headerAdmin.php'; ?>
+    <table class="table table-bordered table-hover">
         <thead class="table-light">
             <tr>
                 <th>Request ID</th>
