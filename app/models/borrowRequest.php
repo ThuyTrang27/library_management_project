@@ -19,7 +19,6 @@ class BorrowRequest
 
     public function getAll()
     {
-        // Đổi return_date thành schedule_return_date
         $sql = "SELECT br.borrow_request_id AS id, u.full_name, u.address, u.phone, 
                        br.request_date, br.schedule_return_date, br.request_status AS status
                 FROM borrow_requests br
