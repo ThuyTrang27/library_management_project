@@ -3,15 +3,15 @@ require __DIR__ . '/../layouts/headerAdmin.php'; ?>
 
 <div class="container mt-4">
     <div class="card-info">
-        <h3>Request Information</h3>
-        <p><strong>Borrowing ID:</strong> <?= $request['id'] ?></p>
-        <p><strong>Full name:</strong> <?= $request['full_name'] ?></p>
-        <p><strong>Phone:</strong> <?= $request['phone'] ?></p>
-        <p><strong>Address:</strong> <?= $request['address'] ?></p>
-        <p><strong>Borrow date:</strong> <?= $request['request_date'] ?></p>
-        <p><strong>Return date:</strong> <?= $request['schedule_return_date'] ?></p>
-        <p><strong>Status:</strong><?= $request['status'] ?></span></p>
-    </div>
+    <h3>Request Information</h3>
+    <p><strong>Borrowing ID:</strong> <?= $request['id'] ?? '' ?></p>
+    <p><strong>Full name:</strong> <?= $request['full_name'] ?? '' ?></p>
+    <p><strong>Phone:</strong> <?= $request['phone'] ?? '' ?></p>
+    <p><strong>Address:</strong> <?= $request['address'] ?? '' ?></p>
+    <p><strong>Borrow date:</strong> <?= $request['request_date'] ?? '' ?></p>
+    <p><strong>Return date:</strong> <?= $request['schedule_return_date'] ?? '' ?></p>
+    <p><strong>Status:</strong> <?= $request['status'] ?? '' ?></p>
+</div>
 </div>
 </div>
 
@@ -47,7 +47,7 @@ require __DIR__ . '/../layouts/headerAdmin.php'; ?>
 <?php if ($request['status'] === 'Pending'): ?>
     <div class="d-flex justify-content-center gap-3 mt-5">
         <a href="index.php?action=admin_update_borrow_status&id=<?= $request['id'] ?>&status=Approved"
-            class=" btn btn-success btn-lg px-5 shadow" onclick="return confirm('Xác nhận cho mượn và trừ kho?')">
+            class=" btn btn-success btn-lg px-5 shadow" onclick="return confirm('Confirm and minus in stock?')">
             Accept
         </a>
         <a href="index.php?action=admin_update_borrow_status&id=<?= $request['id'] ?>&status=Rejected"

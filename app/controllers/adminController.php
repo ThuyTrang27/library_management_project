@@ -228,6 +228,33 @@ class AdminController
         }
     }
 }
+    
+    public function userManagement()
+    {
+        $users = $this->userModel->getAllUsers();
+        $categories = $this->categoryModel->getAllCategories();
+        require_once __DIR__ . '/../views/admin/userManagement.php';
+    }
+
+    public function lockUser()
+    {
+        if (isset($_GET['id'])) {
+            $this->userModel->lockUser($_GET['id']);
+        }
+        header('Location: index.php?action=user_management');
+        exit();
+    }
+
+    public function unlockUser()
+    {
+        if (isset($_GET['id'])) {
+            $this->userModel->unlockUser($_GET['id']);
+        }
+        header('Location: index.php?action=user_management');
+        exit();
+    }
+
+
 }
    
 
