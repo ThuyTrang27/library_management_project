@@ -68,33 +68,33 @@ switch ($action) {
         break;
 
     case 'category':
-        $bookController->showByCategory(); 
+        $bookController->showByCategory();
         break;
 
-     case 'add_to_mybook':
+    case 'add_to_mybook':
         $borrowController->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
         break;
 
     case 'bookdetail':
         $id = $_GET['id'] ?? null;
         $bookController->viewDetail($id);
-        break;      
-        
+        break;
+
     case 'mybook':
         $borrowController->showMyBook();
         break;
-        
+
     case 'show_borrow_form':
         $borrowController->showFormBookRequest();
         break;
-        
+
     case 'submit_borrow':
-        $borrowController->submitRequest(); 
+        $borrowController->submitRequest();
         break;
-    
+
     case 'remove_from_cart':
-    $borrowController->removeFromCart();
-    break;
+        $borrowController->removeFromCart();
+        break;
 
     case 'update_cart_qty':
         $borrowController->updateCartQty();
@@ -103,11 +103,11 @@ switch ($action) {
     case 'search':
         $bookController->search();
         break;
-    
+
     case 'admin_dashboard':
         $adminController->showAdminDashboard();
         break;
-    
+
     case 'show_form_add_book':
         $adminController->showAddBookForm();
         break;
@@ -115,24 +115,29 @@ switch ($action) {
     case 'addbook':
         $adminController->doAddBook();
         break;
-    
+
     case 'edit_book':
         $id = $_GET['id'] ?? null;
         $adminController->showEditBookForm($id);
-    break;
+        break;
 
     case 'do_edit_book':
         $adminController->doEditBook();
         break;
-    
+
     case 'delete_book':
         $id = $_GET['id'] ?? null;
         $adminController->doDeleteBook($id);
         break;
 
+    case 'import_book_by_excel':
+        $adminController->show_form_import();
+        break;
+
+    case 'do_import_book':
+        $adminController->doImportBook();
+        break;
     default:
         header("Location: index.php?action=listbook");
         exit();
 }
-
-?>
