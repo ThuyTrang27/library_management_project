@@ -15,6 +15,7 @@ require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
 require_once dirname(__DIR__) . '/app/controllers/adminController.php';
 require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
+require_once dirname(__DIR__) . '/app/controllers/SiteController.php';
 $database = new Database();
 $db = $database->connect();
 
@@ -23,6 +24,7 @@ $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
 $borrowController = new BorrowController($db);
 $adminController = new AdminController($db);
+$siteController = new SiteController($db);
 
 
 
@@ -53,7 +55,15 @@ switch ($action) {
     case 'category':
         $bookController->showByCategory();
         break;
-
+    
+    case 'about':
+        $siteController->about();
+        break;
+    
+    case 'contact':
+        $siteController->contact();
+        break;
+        
     case 'add_to_mybook':
         $borrowController->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
         break;

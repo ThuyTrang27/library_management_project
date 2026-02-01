@@ -1,17 +1,21 @@
 <?php
 
 require_once __DIR__ . '/../models/borrowRequest.php';
+require_once __DIR__ . '/../models/category.php';
 
 class BorrowController
 {
     private $db;
     private $requestModel;
 
+    private $categoryModel;
+
     public function __construct($dbConnection)
     {
         // Nhận biến kết nối từ index.php truyền sang
         $this->db = $dbConnection;
         $this->requestModel = new BorrowRequest($this->db);
+        $this->categoryModel = new Category($this->db);
     }
 
     /**
@@ -91,6 +95,7 @@ class BorrowController
     public function showMyBook()
     {
         $listBooks = isset($_SESSION['my_book_cart']) ? $_SESSION['my_book_cart'] : [];
+        $categories = $this->categoryModel->getAllCategories();
         require_once __DIR__ . '/../views/books/myBook.php';
     }
 
