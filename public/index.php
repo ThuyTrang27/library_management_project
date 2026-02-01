@@ -16,6 +16,7 @@ require_once dirname(__DIR__) . '/app/controllers/bookController.php';
 require_once dirname(__DIR__) . '/app/controllers/adminController.php';
 
 require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
+require_once dirname(__DIR__) . '/app/controllers/adminController.php';
 
 $database = new Database();
 $db = $database->connect();
@@ -28,7 +29,7 @@ $adminController = new AdminController($db);
 
 
 
-$action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
+$action = isset($_GET['action']) ? $_GET['action'] : 'login';
 
 switch ($action) {
 
@@ -88,11 +89,37 @@ switch ($action) {
     case 'search':
         $bookController->search();
         break;
+    
+    case 'admin_dashboard':
+        $adminController->showAdminDashboard();
+        break;
+    
+    case 'show_form_add_book':
+        $adminController->showAddBookForm();
+        break;
+
+    case 'addbook':
+        $adminController->doAddBook();
+        break;
+    
+    case 'edit_book':
+        $id = $_GET['id'] ?? null;
+        $adminController->showEditBookForm($id);
+    break;
+
+    case 'do_edit_book':
+        $adminController->doEditBook();
+        break;
+    
+    case 'delete_book':
+        $id = $_GET['id'] ?? null;
+        $adminController->doDeleteBook($id);
+        break;
 
     case 'admin_borrow_list':
         $adminController->list();
         break;
-        
+
     case 'admin_borrow_detail':
         $id = $_GET['id'] ?? null;
         $adminController->detail($id);
