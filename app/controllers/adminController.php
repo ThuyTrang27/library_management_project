@@ -1,4 +1,6 @@
 <?php
+use PhpOffice\PhpSpreadsheet\IOFactory;
+require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../models/user.php';
 require_once __DIR__ . '/../models/book.php';
 require_once __DIR__ . '/../models/category.php';
@@ -136,6 +138,65 @@ class AdminController
         }
         header("Location: index.php?action=admin_dashboard"); // Xóa xong quay về danh sách
         exit();
+}
+    public function show_form_import() {
+        require_once __DIR__ . '/../views/admin/formImportBook.php';
+    }
+    public function doImportBook() {
+    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['excel_file'])) {
+        $filePath = $_FILES['excel_file']['tmp_name'];
+
+        try {
+            $spreadsheet = IOFactory::load($filePath);
+            $data = $spreadsheet->getActiveSheet()->toArray();
+
+        if (empty($data)) {
+            die("Lỗi: Không đọc được dữ liệu từ file Excel!");
+        }
+
+            $success = 0;
+            $skipped = 0;
+
+            foreach ($data as $index => $row) {
+                if ($index == 0) continue; // Bỏ qua dòng tiêu đề
+
+                // Kiểm tra nếu dòng này trống (ví dụ check book_id rỗng)
+                if (empty($row[1])) continue;
+
+                // Chuẩn bị mảng dữ liệu theo đúng cấu trúc bảng
+                $bookData = [
+                    'book_title'     => $row[1], // Cột B
+                    'price'          => $row[2], // Cột C
+                    'author'         => $row[3], // Cột D
+                    'publisher'      => $row[4], // Cột E
+                    'publish_year'   => $row[5], // Cột F
+                    'stock_quantity' => $row[6], // Cột G
+                    'categories_id'  => $row[7], // Cột H
+                    'content'        => $row[8], // Cột I
+                    'image_url'      => $row[9]  // Cột J
+                ];
+
+                // Gọi Model để xử lý logic
+                if ($this->bookModel->importBook($bookData)) {
+                    $success++;
+                } else {
+                    $skipped++;
+                }
+            }
+            // Điều hướng về trang danh sách kèm thông báo
+           $_SESSION['import_result'] = [
+                'success' => $success,
+                'skipped' => $skipped
+            ];
+
+                // Header bây giờ ngắn gọn như ý bạn
+            header("Location: index.php?action=admin_dashboard");
+            exit();
+
+        } catch (Exception $e) {
+            die("Error loading file: " . $e->getMessage());
+        }
+    }
 }
 }
     

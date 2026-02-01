@@ -149,6 +149,39 @@ class Book
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
     return $stmt->execute();
 }
+
+    //import book
+    public function importBook($data) {
+    // Tạm thời bỏ qua bước CHECK trùng để test xem có INSERT được không
+    $sql = "INSERT INTO books (book_title, price, author, publisher, publish_year, stock_quantity, categories_id, content, image_url) 
+            VALUES (:book_title, :price, :author, :publisher, :publish_year, :stock_quantity, :categories_id, :content, :image_url)";
+    
+    $stmt = $this->conn->prepare($sql);
+    
+    $result = $stmt->execute([
+        ':book_title'     => $data['book_title'],
+        ':price'          => $data['price'],
+        ':author'         => $data['author'],
+        ':publisher'      => $data['publisher'],
+        ':publish_year'   => $data['publish_year'],
+        ':stock_quantity' => $data['stock_quantity'],
+        ':categories_id'  => $data['categories_id'],
+        ':content'        => $data['content'],
+        ':image_url'      => $data['image_url']
+    ]);
+
+    if (!$result) {
+        // LỆNH NÀY SẼ HIỆN RA LỖI THẬT SỰ (Ví dụ: sai tên cột, sai khóa ngoại...)
+        echo "<pre>";
+        print_r($stmt->errorInfo());
+        echo "Dữ liệu đang chèn: ";
+        print_r($data);
+        echo "</pre>";
+        die(); 
+    }
+
+    return $result;
+}
 }
 
 
