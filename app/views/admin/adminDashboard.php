@@ -9,8 +9,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
-</head>
 <body>
+    <?php require_once __DIR__ . '/../layouts/headerAdmin.php'; ?>
     <div class="container">
         <div class="select-add-book">
             <a href="index.php?action=import_book_by_excel">
