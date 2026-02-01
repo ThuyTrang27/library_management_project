@@ -50,14 +50,6 @@ class AuthController
         exit();
     }
 
-    /* ================= LOGOUT ================= */
-    public function logout()
-    {
-        session_destroy();
-        header("Location: index.php?action=listbook");
-        exit();
-    }
-
 
 
     /* ================= REGISTER ================= */
@@ -92,4 +84,11 @@ class AuthController
             exit();
         }
     }
+        public function logout()
+        {
+            session_destroy();
+            header("Location: index.php?action=listbook");
+            exit();
+        }
 }
+?>

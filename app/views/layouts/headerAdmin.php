@@ -46,11 +46,11 @@ Auth::admin();
     <div class="bg-light border-bottom">
         <div class="container py-2">          
 
-            <a class="btn btn-outline-secondary me-2" href="#">
+            <a class="btn btn-outline-secondary me-2" href="index.php?action=admin_dashboard">
                 Book Management
             </a>
 
-            <a class="btn btn-outline-secondary me-2" href="#">
+            <a class="btn btn-outline-secondary me-2" href="index.php?action=admin_user_list">
                 User Management
             </a>
 
@@ -59,7 +59,7 @@ Auth::admin();
                 Borrowing Management
             </a>
             
-            <a class="btn btn-outline-secondary" href="#">
+            <a class="btn btn-outline-secondary" href="index.php?action=admin_statistics">
                 Statistics
             </a>
 
