@@ -153,8 +153,6 @@ class Book
     //import book
     public function importBook($data) {
     // Tạm thời bỏ qua bước CHECK trùng để test xem có INSERT được không
-    // Đảm bảo tuyệt đối KHÔNG có book_id trong mảng này trước khi INSERT
-    unset($data['book_id']);
     $sql = "INSERT INTO books (book_title, price, author, publisher, publish_year, stock_quantity, categories_id, content, image_url) 
             VALUES (:book_title, :price, :author, :publisher, :publish_year, :stock_quantity, :categories_id, :content, :image_url)";
     
