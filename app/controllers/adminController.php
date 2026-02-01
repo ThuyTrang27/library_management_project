@@ -188,24 +188,23 @@ class AdminController
             $skipped = 0;
 
             foreach ($data as $index => $row) {
-                if ($index == 0) continue; 
+                if ($index == 0) continue; // Bỏ qua dòng tiêu đề
 
-                    // 2. Kiểm tra nếu Tên sách (Cột B) trống thì bỏ qua dòng này
-                    // Sử dụng $row[1] vì cột A (book_id) đang để trống trong file Excel của bạn
-                    if (empty($row[1])) continue;
+                // Kiểm tra nếu dòng này trống (ví dụ check book_id rỗng)
+                if (empty($row[1])) continue;
 
-                    // 3. Chuẩn bị mảng dữ liệu khớp với các tham số trong Model
-                    $bookData = [
-                        'book_title'     => $row[1], // Cột B trong Excel
-                        'price'          => $row[2], // Cột C
-                        'author'         => $row[3], // Cột D
-                        'publisher'      => $row[4], // Cột E
-                        'publish_year'   => $row[5], // Cột F
-                        'stock_quantity' => $row[6], // Cột G
-                        'categories_id'  => $row[7], // Cột H
-                        'content'        => $row[8], // Cột I
-                        'image_url'      => $row[9]  // Cột J
-                    ];
+                // Chuẩn bị mảng dữ liệu theo đúng cấu trúc bảng
+                $bookData = [
+                    'book_title'     => $row[1], // Cột B
+                    'price'          => $row[2], // Cột C
+                    'author'         => $row[3], // Cột D
+                    'publisher'      => $row[4], // Cột E
+                    'publish_year'   => $row[5], // Cột F
+                    'stock_quantity' => $row[6], // Cột G
+                    'categories_id'  => $row[7], // Cột H
+                    'content'        => $row[8], // Cột I
+                    'image_url'      => $row[9]  // Cột J
+                ];
 
                 // Gọi Model để xử lý logic
                 if ($this->bookModel->importBook($bookData)) {
