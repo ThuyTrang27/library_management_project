@@ -92,10 +92,12 @@ switch ($action) {
     case 'admin_borrow_list':
         $adminController->list();
         break;
+        
     case 'admin_borrow_detail':
         $id = $_GET['id'] ?? null;
         $adminController->detail($id);
         break;
+
     case 'admin_update_borrow_status':
         $id = $_GET['id'] ?? null;
         $status = $_GET['status'] ?? null;
