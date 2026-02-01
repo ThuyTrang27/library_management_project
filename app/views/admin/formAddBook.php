@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../../../public/css/formAddBook.css" class="">
 </head>
 <body>
-    <?php  require_once __DIR__ . '/../layouts/header.php';?>
+    <?php  require_once __DIR__ . '/../layouts/headerAdmin.php';?>
     <div class="add-book-container">
     <h2 class="title-blue" style="text-align:center;">Add new book</h2>  
    
