@@ -36,7 +36,9 @@
     font-style: italic;
 }
 
+
 /* Responsiveness */
+
 @media (max-width: 768px) {
     .about-img-wrapper {
         height: 200px;

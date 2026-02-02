@@ -35,11 +35,6 @@
 
                 </div>
 
-                <div class="role-group" style="margin-bottom: 20px;">
-                    <input type="radio" name="role" value=0 checked> User
-                    <input type="radio" name="role" value=1> Admin
-                </div>
-
                 <button type="submit" name="login" class="btn-in">Sign In</button>
             </form>
             <form action="index.php" method="get">

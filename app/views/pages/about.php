@@ -6,12 +6,12 @@
     <div class="row mb-5">
         <div class="col-md-6 mb-3 mb-md-0">
             <div class="about-img-wrapper">
-                 <img src="images/slide3.jpg" alt="Library View 1" class="img-fluid w-100 h-100 object-fit-cover">
+                <img src="images/slide3.jpg" alt="Library View 1" class="img-fluid w-100 h-100 object-fit-cover">
             </div>
         </div>
         <div class="col-md-6">
             <div class="about-img-wrapper">
-                 <img src="images/slide1.jpg" alt="Library View 2" class="img-fluid w-100 h-100 object-fit-cover">
+                <img src="images/slide1.jpg" alt="Library View 2" class="img-fluid w-100 h-100 object-fit-cover">
             </div>
         </div>
     </div>

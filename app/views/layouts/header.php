@@ -1,3 +1,8 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -30,20 +35,19 @@
 
             <!-- USER -->
             <div class="d-flex align-items-center">
-                <?php if (isset($_SESSION['user_id'])): ?>
+                <?php if (isset($_SESSION['user'])): ?>
                     <div class="dropdown">
                         <button class="btn btn-light dropdown-toggle"
                             type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false">
+                            data-bs-toggle="dropdown">
                             <i class="bi bi-person-circle"></i>
-                            <?= htmlspecialchars($_SESSION['full_name'] ?? $_SESSION['username']) ?>
+                            <?= htmlspecialchars($_SESSION['user']['username']) ?>
                         </button>
 
                         <ul class="dropdown-menu dropdown-menu-end shadow">
                             <li>
                                 <a class="dropdown-item" href="index.php?action=profile">
-                                    <i class="bi bi-person me-2"></i>My Profile
+                                    <i class="bi bi-person me-2"></i> My Profile
                                 </a>
                             </li>
                             <li>
@@ -52,21 +56,19 @@
                                 </a>
                             </li>
                             <li>
-                                <hr class=" dropdown-divider">
+                                <hr class="dropdown-divider">
                             </li>
                             <li>
                                 <a class="dropdown-item text-danger fw-bold"
                                     href="index.php?action=logout">
-                                    <i class="bi bi-box-arrow-right me-2"></i>Log out
+                                    <i class="bi bi-box-arrow-right me-2"></i> Log out
                                 </a>
                             </li>
                         </ul>
                     </div>
                 <?php else: ?>
-                    <a href="?action=login"
-                        class="btn btn-outline-light btn-sm me-2">Login</a>
-                    <a href="?action=register"
-                        class="btn btn-outline-light btn-sm me-2">Register</a>
+                    <a href="?action=login" class="btn btn-outline-light btn-sm me-2">Login</a>
+                    <a href="?action=register" class="btn btn-outline-light btn-sm me-2">Register</a>
                 <?php endif; ?>
             </div>
 
@@ -99,16 +101,18 @@
                             <ul class="dropdown-menu shadow">
 
                                 <!-- All books -->
-                              <li>
-                                <a class="dropdown-item" href="index.php?action=home">All books</a>
+                                <li>
+                                    <a class="dropdown-item" href="index.php?action=home">All books</a>
                                 </li>
-                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
 
                                 <?php if (!empty($categories)): ?>
                                     <?php foreach ($categories as $cat): ?>
                                         <li>
                                             <a class="dropdown-item" href="index.php?action=category&id=<?= $cat['id'] ?>">
-                                            <?= htmlspecialchars($cat['name']) ?>
+                                                <?= htmlspecialchars($cat['name']) ?>
                                             </a>
                                         </li>
                                     <?php endforeach; ?>

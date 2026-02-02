@@ -15,7 +15,8 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function checkUserExist($username, $email) {
+    public function checkUserExist($username, $email)
+    {
         $sql = "SELECT user_id FROM users 
                 WHERE username = :username OR email = :email 
                 LIMIT 1";
@@ -29,7 +30,8 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function register($data) {
+    public function register($data)
+    {
         // 1. Kiểm tra tồn tại
         if ($this->checkUserExist($data['username'], $data['email'])) {
             return [
@@ -45,7 +47,7 @@ class User
                     (:fullname, :username, :email, :phone, :password, :address, :gender, :date_of_birth)";
 
             $stmt = $this->db->prepare($sql);
-            
+
             // Thực thi với mảng dữ liệu
             $result = $stmt->execute([
                 ':fullname'      => $data['fullname'],
@@ -61,12 +63,11 @@ class User
             if ($result) {
                 return ['status' => true];
             }
-            
-            return ['status' => false];
 
+            return ['status' => false];
         } catch (PDOException $e) {
             return [
-                'status' => false, 
+                'status' => false,
                 'message' => 'Lỗi Database: ' . $e->getMessage()
             ];
         }
@@ -74,7 +75,7 @@ class User
 
     public function getAllUsers()
     {
-        $stmt = $this->db->prepare("SELECT * FROM users");
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE role = 0");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

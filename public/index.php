@@ -1,43 +1,25 @@
 <?php
 session_start();
 
-/*
-|--------------------------------------------------------------------------
-| CONFIG & DATABASE
-|--------------------------------------------------------------------------
-*/
+/* CONFIG*/
 require_once dirname(__DIR__) . '/config/config.php';
 
-/*
-|--------------------------------------------------------------------------
-| MODELS
-|--------------------------------------------------------------------------
-*/
+/* MODELS*/
 require_once dirname(__DIR__) . '/app/models/user.php';
 require_once dirname(__DIR__) . '/app/models/book.php';
 require_once dirname(__DIR__) . '/app/models/category.php';
+require_once dirname(__DIR__) . '/app/models/borrowRequest.php';
 
-
-/*
-|--------------------------------------------------------------------------
-| CONTROLLERS
-|--------------------------------------------------------------------------
-*/
+/*CONTROLLERS*/
 require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
-require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
 require_once dirname(__DIR__) . '/app/controllers/adminController.php';
+require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
 require_once dirname(__DIR__) . '/app/controllers/SiteController.php';
-
-
 $database = new Database();
 $db = $database->connect();
 
-/*
-|--------------------------------------------------------------------------
-| CONTROLLER INSTANCES
-|--------------------------------------------------------------------------
-*/
+/* CONTROLLER INSTANCES*/
 $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
 $borrowController = new BorrowController($db);
@@ -46,7 +28,7 @@ $siteController = new SiteController($db);
 
 
 
-$action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
+$action = isset($_GET['action']) ? $_GET['action'] : 'login';
 
 switch ($action) {
     case 'user_management':
@@ -92,12 +74,21 @@ switch ($action) {
     case 'logout':
         $authController->logout();
         break;
+
     case 'listbook':
         $bookController->showListBook();
         break;
 
     case 'category':
         $bookController->showByCategory();
+        break;
+
+    case 'about':
+        $siteController->about();
+        break;
+
+    case 'contact':
+        $siteController->contact();
         break;
 
     case 'add_to_mybook':
@@ -107,6 +98,8 @@ switch ($action) {
     case 'bookdetail':
         $id = $_GET['id'] ?? null;
         $bookController->viewDetail($id);
+        break;
+
         break;
 
     case 'mybook':
@@ -133,12 +126,57 @@ switch ($action) {
         $bookController->search();
         break;
 
-    case 'about':
-        $siteController->about();
+    case 'book_management':
+        $adminController->showAdminDashboard();
         break;
 
-    case 'contact':
-        $siteController->contact();
+    case 'show_form_add_book':
+        $adminController->showAddBookForm();
+        break;
+
+    case 'addbook':
+        $adminController->doAddBook();
+        break;
+
+    case 'edit_book':
+        $id = $_GET['id'] ?? null;
+        $adminController->showEditBookForm($id);
+        break;
+
+    case 'do_edit_book':
+        $adminController->doEditBook();
+        break;
+
+    case 'delete_book':
+        $id = $_GET['id'] ?? null;
+        $adminController->doDeleteBook($id);
+        break;
+
+    case 'admin_borrow_list':
+        $adminController->list();
+        break;
+
+    case 'admin_borrow_detail':
+        $id = $_GET['id'] ?? null;
+        $adminController->detail($id);
+        break;
+
+    case 'admin_update_borrow_status':
+        $id = $_GET['id'] ?? null;
+        $status = $_GET['status'] ?? null;
+        $adminController->updateStatus($id, $status);
+        break;
+
+    case 'import_book_by_excel':
+        $adminController->show_form_import();
+        break;
+
+    case 'do_import_book':
+        $adminController->doImportBook();
+        break;
+
+    case 'admin_user_list':
+        $adminController->userManagement();
         break;
 
     default:
