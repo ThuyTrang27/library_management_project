@@ -161,3 +161,79 @@ a {
     text-decoration: none;
     color: inherit; /* Giúp link giữ màu của văn bản xung quanh thay vì bị đổi thành màu xanh */
 }
+
+/* body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        } */
+
+        .container-import {
+            background-color: #add8e6; /* Màu xanh nhạt giống ảnh */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+            border: 1px solid #90caf9;
+        }
+
+        .container-import h3 {
+            margin-bottom: 25px;
+            color: #333;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .input-file {
+            text-align: left;
+            margin-bottom: 25px;
+        }
+
+        .input-file label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .input-file input[type="file"] {
+            width: 100%;
+            padding: 12px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box; /* Giúp input không bị tràn */
+            cursor: pointer;
+        }
+
+        .button-import {
+            background-color: #2196f3; /* Màu xanh đậm hơn cho nút */
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            width: 100%;
+        }
+
+        .button-import:hover {
+            background-color: #1976d2;
+        }
+
+        /* Thêm hiệu ứng focus cho input */
+        .input-file input[type="file"]:focus {
+            outline: none;
+            border-color: #2196f3;
+            box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+        }
+
+        

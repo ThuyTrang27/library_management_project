@@ -11,8 +11,9 @@ class Book
     // Lấy sách có giới hạn để phân trang
     public function getBooksPagination($limit, $offset)
     {
-        // b là viết tắt cho books, c là viết tắt cho categories
-        $sql = "SELECT b.book_id, b.book_title, b.author, b.stock_quantity, b.image_url, c.categories_name 
+        // Thêm b.price, b.publisher, b.publish_year vào câu SELECT
+        $sql = "SELECT b.book_id, b.book_title, b.author, b.stock_quantity, b.image_url, 
+                   b.price, b.publisher, b.publish_year, c.categories_name 
             FROM books b
             LEFT JOIN categories c ON b.categories_id = c.categories_id 
             LIMIT :limit OFFSET :offset";
@@ -61,9 +62,135 @@ class Book
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    // thêm sách vào database
+    public function checkBookExist($title)
+    {
+        $sql = "SELECT COUNT(*) FROM books WHERE book_title = :title";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':title', $title, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
+    }
+    public function addNewBook($data)
+    {
+        if ($this->checkBookExist($data['book_title'])) {
+            return [
+                'status' => false,
+                'message' => 'The book title already exists in the system!'
+            ];
+        }
+        try {
+            $sql = "INSERT INTO books 
+                    (book_title, author, categories_id, publisher, publish_year, price, stock_quantity, image_url, content) 
+                    VALUES 
+                    (:book_title, :author, :categories_id, :publisher, :publish_year, :price, :stock_quantity, :image_url, :content)";
+            $stmt = $this->conn->prepare($sql);
+            $result = $stmt->execute([
+                ':book_title'      => $data['book_title'],
+                ':author'          => $data['author'],
+                ':categories_id'   => $data['categories_id'],
+                ':publisher'       => $data['publisher'],
+                ':publish_year'    => $data['publish_year'],
+                ':price'           => $data['price'],
+                ':stock_quantity'  => $data['stock_quantity'],
+                ':image_url'       => $data['image_url'],
+                ':content'         => $data['content']
+            ]);
+            if ($result) {
+                return ['status' => true];
+            }
+            return ['status' => false];
+        } catch (Exception $e) {
+            return [
+                'status' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ];
+        }
+    }
+    public function updateBook($id, $data)
+    {
+        try {
+            $sql = "UPDATE books SET 
+                        book_title = :book_title,
+                        author = :author,
+                        categories_id = :categories_id,
+                        publisher = :publisher,
+                        publish_year = :publish_year,
+                        price = :price,
+                        stock_quantity = :stock_quantity,
+                        image_url = :image_url,
+                        content = :content
+                    WHERE book_id = :book_id";
+            $stmt = $this->conn->prepare($sql);
+            $result = $stmt->execute([
+                ':book_title'      => $data['book_title'],
+                ':author'          => $data['author'],
+                ':categories_id'   => $data['categories_id'],
+                ':publisher'       => $data['publisher'],
+                ':publish_year'    => $data['publish_year'],
+                ':price'           => $data['price'],
+                ':stock_quantity'  => $data['stock_quantity'],
+                ':image_url'       => $data['image_url'],
+                ':content'         => $data['content'],
+                ':book_id'        => $id
+            ]);
+            if ($result) {
+                return ['status' => true];
+            }
+            return ['status' => false];
+        } catch (Exception $e) {
+            return [
+                'status' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ];
+        }
+    }
+
+    public function deleteBook($id)
+    {
+        $sql = "DELETE FROM books WHERE book_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    //import book
+    public function importBook($data)
+    {
+        // Tạm thời bỏ qua bước CHECK trùng để test xem có INSERT được không
+        $sql = "INSERT INTO books (book_title, price, author, publisher, publish_year, stock_quantity, categories_id, content, image_url) 
+            VALUES (:book_title, :price, :author, :publisher, :publish_year, :stock_quantity, :categories_id, :content, :image_url)";
+
+        $stmt = $this->conn->prepare($sql);
+
+        $result = $stmt->execute([
+            ':book_title'     => $data['book_title'],
+            ':price'          => $data['price'],
+            ':author'         => $data['author'],
+            ':publisher'      => $data['publisher'],
+            ':publish_year'   => $data['publish_year'],
+            ':stock_quantity' => $data['stock_quantity'],
+            ':categories_id'  => $data['categories_id'],
+            ':content'        => $data['content'],
+            ':image_url'      => $data['image_url']
+        ]);
+
+        if (!$result) {
+            // LỆNH NÀY SẼ HIỆN RA LỖI THẬT SỰ (Ví dụ: sai tên cột, sai khóa ngoại...)
+            echo "<pre>";
+            print_r($stmt->errorInfo());
+            echo "Dữ liệu đang chèn: ";
+            print_r($data);
+            echo "</pre>";
+            die();
+        }
+
+        return $result;
+    }
+
 
     // Lấy sách theo category + phân trang
-    public function getBooksByCategory($categoryId, $limit, $offset)
+    public function getBooksyCategory($categoryId, $limit, $offset)
     {
         $sql = "SELECT b.book_id,
                    b.book_title,

@@ -15,36 +15,51 @@ class AuthController
 
         if (isset($_POST['login'])) {
             $message = $this->handleLogin(
-                $_POST['email'],
-                $_POST['password'],
-                $_POST['role']
+                $_POST['email'] ?? '',
+                $_POST['password'] ?? ''
             );
         }
 
         require dirname(__DIR__) . '/views/auth/login.php';
     }
 
-    private function handleLogin($email, $password, $role)
+    private function handleLogin($email, $password)
     {
         $user = $this->model->getUserByEmail($email);
-        $roleValue = (int)$role; // FIX CHUẨN VỚI VIEW
 
-        if (!$user) return "You did not register yet!";
-
-        if (password_verify($password, $user['password']) && $user['role'] == $roleValue) {
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['username'] = $user['username'];
-            header("Location: index.php?action=home");
-            exit();
+        if (!$user) {
+            return "You did not register yet!";
         }
-        return "You have entered the wrong password/email";
+
+        if (!password_verify($password, $user['password'])) {
+            return "Wrong email or password!";
+        }
+
+        $_SESSION['user'] = [
+            'id'       => $user['user_id'],
+            'username' => $user['username'],
+            'role'     => (int)$user['role']
+        ];
+
+        // Redirect theo role
+        if ((int)$user['role'] === 1) {
+            header("Location: index.php?action=admin_borrow_list");
+        } else {
+            header("Location: index.php?action=listbook");
+        }
+        exit();
     }
+
+
+
+    /* ================= REGISTER ================= */
+
+
 
     public function registerView()
     {
         require_once __DIR__ . '/../views/auth/register.php';
     }
-
 
     public function doRegister()
     {
