@@ -4,6 +4,8 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../models/user.php';
 require_once __DIR__ . '/../models/book.php';
 require_once __DIR__ . '/../models/category.php';
+require_once __DIR__ . '/../models/borrowRequestBook.php';
+require_once __DIR__ . '/../models/bookCopies.php';
 require_once dirname(__DIR__, 2) . '/app/core/Auth.php';
 
 class AdminController
@@ -13,6 +15,9 @@ class AdminController
 
     private $categoryModel;
     private $model;
+    private $borrowRequestBookModel;
+    private $bookCopiesModel;
+        
 
     public function __construct($db)
     {
@@ -22,20 +27,22 @@ class AdminController
 
         $this->categoryModel = new Category($db);
         $this->model = new BorrowRequest($db);
+        $this->borrowRequestBookModel = new BorrowRequestBook($db);
+        $this->bookCopiesModel = new BookCopies($db);
     }
 
     public function list()
     {
         Auth::admin();
-        $requests = $this->model->getAll();
+        $requests = $this->borrowRequestBookModel->getAll();
         require dirname(__DIR__, 2) . '/app/views/admin/borrowList.php';
     }
 
     public function detail($id)
     {
         Auth::admin();
-        $request = $this->model->getById($id);
-        $items = $this->model->getItems($id);
+        $request = $this->borrowRequestBookModel->getById($id);
+        $items = $this->bookCopiesModel->getItems($id);
         require dirname(__DIR__, 2) . '/app/views/admin/borrowDetail.php';
     }
 
@@ -55,7 +62,8 @@ class AdminController
         $totalPages = ceil($totalBooks / $limit);
 
         require_once __DIR__ . '/../views/admin/bookManagement.php';
-    }                                                                   
+    }           
+                                                            
 
     public function showAddBookForm() {
         require_once __DIR__ . '/../views/admin/formAddBook.php';
@@ -158,16 +166,19 @@ class AdminController
         header("Location: index.php?action=book_management"); // Xóa xong quay về danh sách
         }
     public function updateStatus($id, $status)
-    {
-        Auth::admin();
+{
+    Auth::admin();
 
-        if (!in_array($status, ['Approved', 'Rejected'])) {
-            die('Invalid status');
-        }
+    // Cho phép thêm trạng thái 'Returned'
+    if (!in_array($status, ['Approved', 'Rejected', 'Returned'])) {
+        die('Invalid status');
+    }
 
-        $this->model->updateStatus($id, $status);
-        header("Location: index.php?action=admin_borrow_list");
-        exit();
+    $result = $this->borrowRequestBookModel->updateStatus($id, $status);
+    
+    // Điều hướng về trang chi tiết hoặc danh sách kèm thông báo
+    header("Location: index.php?action=admin_borrow_list&msg=success");
+    exit();
 }
     public function show_form_import() {
         require_once __DIR__ . '/../views/admin/formImportBook.php';

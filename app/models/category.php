@@ -1,4 +1,10 @@
 <?php
+
+/**
+ * app/models/category.php
+ * Model quản lý danh mục
+ */
+
 class Category
 {
     private $conn;
@@ -8,13 +14,34 @@ class Category
         $this->conn = $conn;
     }
 
+    /**
+     * Lấy tất cả danh mục
+     */
     public function getAllCategories()
     {
-        $stmt = $this->conn->prepare(
-            "SELECT categories_id AS id, categories_name AS name FROM categories"
-        );
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->conn->query("SELECT * FROM categories ORDER BY categories_name");
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            error_log("Error getting categories: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    /**
+     * Lấy danh mục theo ID
+     */
+    public function getCategoryById($id)
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM categories WHERE categories_id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetch();
+        } catch (PDOException $e) {
+            error_log("Error getting category: " . $e->getMessage());
+            return null;
+        }
     }
     // Lấy sách theo loại (Category) có phân trang
     public function getBooksByCategory($categoryId, $limit, $offset)

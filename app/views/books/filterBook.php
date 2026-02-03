@@ -47,21 +47,36 @@
         </div>
     </div>
 
-    <!-- PAGINATION -->
-    <?php if ($totalPages > 1): ?>
-        <div class="pagination">
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <a class="<?= ($i == $currentPage) ? 'active' : '' ?>"
-                    href="index.php?action=category&id=<?= $selectedCategory['id'] ?>&page=<?= $i ?>">
-                    <?= $i ?>
-                </a>
-            <?php endfor; ?>
+    <<<<<<< HEAD
+        <!-- PAGINATION -->
+
+        <?php if ($totalPages > 1): ?>
+            <div class="pagination">
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <a class="<?= ($i == $currentPage) ? 'active' : '' ?>"
+                        href="index.php?action=category&id=<?= $selectedCategory['id'] ?>&page=<?= $i ?>">
+                        <?= $i ?>
+                    </a>
+                <?php endfor; ?>
+            </div>
+        <?php endif; ?>
+        =======
+        <!-- PAGINATION -->
+        <?php if ($totalPages > 1): ?>
+            <div class="pagination">
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <a class="<?= ($i == $currentPage) ? 'active' : '' ?>"
+                        href="index.php?action=category&id=<?= $selectedCategory['id'] ?>&page=<?= $i ?>">
+                        <?= $i ?>
+                    </a>
+                <?php endfor; ?>
+            </div>
+        <?php endif; ?>
+        >>>>>>> 90cdc47f1aadbd8058d827e3acdfd4e6e586fd0a
+
         </div>
-    <?php endif; ?>
 
-    </div>
-
-    <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
+        <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
 
 </body>
 

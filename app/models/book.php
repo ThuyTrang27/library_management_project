@@ -10,20 +10,20 @@ class Book
 
     // Lấy sách có giới hạn để phân trang
     public function getBooksPagination($limit, $offset)
-{
-    // Thêm b.price, b.publisher, b.publish_year vào câu SELECT
-    $sql = "SELECT b.book_id, b.book_title, b.author, b.stock_quantity, b.image_url, 
+    {
+        // Thêm b.price, b.publisher, b.publish_year vào câu SELECT
+        $sql = "SELECT b.book_id, b.book_title, b.author, b.stock_quantity, b.image_url, 
                    b.price, b.publisher, b.publish_year, c.categories_name 
             FROM books b
             LEFT JOIN categories c ON b.categories_id = c.categories_id 
             LIMIT :limit OFFSET :offset";
 
-    $stmt = $this->conn->prepare($sql);
-    $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 
     // Đếm tổng số sách để tính số trang
@@ -34,16 +34,17 @@ class Book
         return $stmt->fetchColumn();
     }
     // Lấy thông tin chi tiết sách theo ID
-    public function getBookById($bookId) {
+    public function getBookById($bookId)
+    {
         $query = "SELECT b.*, c.categories_name 
                   FROM books b 
                   LEFT JOIN categories c ON b.categories_id = c.categories_id 
                   WHERE b.book_id = :book_id";
-        
+
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':book_id', $bookId, PDO::PARAM_INT);
         $stmt->execute();
-        
+
         return $stmt->fetch();
     }
 
@@ -52,9 +53,9 @@ class Book
     {
         $keyword = "%" . $keyword . "%";
         $sql = "SELECT b.book_id, b.book_title, b.author, b.stock_quantity, b.image_url, c.categories_name 
-            FROM books b
-            LEFT JOIN categories c ON b.categories_id = c.categories_id 
-            WHERE b.book_title LIKE :keyword OR b.author LIKE :keyword";
+        FROM books b
+        LEFT JOIN categories c ON b.categories_id = c.categories_id 
+        WHERE b.book_title LIKE :keyword OR b.author LIKE :keyword";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':keyword', $keyword, PDO::PARAM_STR);
@@ -62,14 +63,16 @@ class Book
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     // thêm sách vào database
-    public function checkBookExist ($title) {
+    public function checkBookExist($title)
+    {
         $sql = "SELECT COUNT(*) FROM books WHERE book_title = :title";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':title', $title, PDO::PARAM_STR);
         $stmt->execute();
         return $stmt->fetchColumn() > 0;
     }
-    public function addNewBook($data){
+    public function addNewBook($data)
+    {
         if ($this->checkBookExist($data['book_title'])) {
             return [
                 'status' => false,
@@ -103,9 +106,9 @@ class Book
                 'message' => 'Error: ' . $e->getMessage()
             ];
         }
-
     }
-    public function updateBook($id, $data) {
+    public function updateBook($id, $data)
+    {
         try {
             $sql = "UPDATE books SET 
                         book_title = :book_title,
@@ -143,42 +146,44 @@ class Book
         }
     }
 
-    public function deleteBook($id) {
-    $sql = "DELETE FROM books WHERE book_id = :id";
-    $stmt = $this->conn->prepare($sql);
-    $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-    return $stmt->execute();
-}
+    public function deleteBook($id)
+    {
+        $sql = "DELETE FROM books WHERE book_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 
     //import book
-    public function importBook($data) {
-    // Tạm thời bỏ qua bước CHECK trùng để test xem có INSERT được không
-    $sql = "INSERT INTO books (book_title, price, author, publisher, publish_year, stock_quantity, categories_id, content, image_url) 
+    public function importBook($data)
+    {
+        // Tạm thời bỏ qua bước CHECK trùng để test xem có INSERT được không
+        $sql = "INSERT INTO books (book_title, price, author, publisher, publish_year, stock_quantity, categories_id, content, image_url) 
             VALUES (:book_title, :price, :author, :publisher, :publish_year, :stock_quantity, :categories_id, :content, :image_url)";
-    
-    $stmt = $this->conn->prepare($sql);
-    
-    $result = $stmt->execute([
-        ':book_title'     => $data['book_title'],
-        ':price'          => $data['price'],
-        ':author'         => $data['author'],
-        ':publisher'      => $data['publisher'],
-        ':publish_year'   => $data['publish_year'],
-        ':stock_quantity' => $data['stock_quantity'],
-        ':categories_id'  => $data['categories_id'],
-        ':content'        => $data['content'],
-        ':image_url'      => $data['image_url']
-    ]);
 
-    if (!$result) {
-        // LỆNH NÀY SẼ HIỆN RA LỖI THẬT SỰ (Ví dụ: sai tên cột, sai khóa ngoại...)
-        echo "<pre>";
-        print_r($stmt->errorInfo());
-        echo "Dữ liệu đang chèn: ";
-        print_r($data);
-        echo "</pre>";
-        die(); 
-    }
+        $stmt = $this->conn->prepare($sql);
+
+        $result = $stmt->execute([
+            ':book_title'     => $data['book_title'],
+            ':price'          => $data['price'],
+            ':author'         => $data['author'],
+            ':publisher'      => $data['publisher'],
+            ':publish_year'   => $data['publish_year'],
+            ':stock_quantity' => $data['stock_quantity'],
+            ':categories_id'  => $data['categories_id'],
+            ':content'        => $data['content'],
+            ':image_url'      => $data['image_url']
+        ]);
+
+        if (!$result) {
+            // LỆNH NÀY SẼ HIỆN RA LỖI THẬT SỰ (Ví dụ: sai tên cột, sai khóa ngoại...)
+            echo "<pre>";
+            print_r($stmt->errorInfo());
+            echo "Dữ liệu đang chèn: ";
+            print_r($data);
+            echo "</pre>";
+            die();
+        }
 
     return $result;
 }
@@ -212,3 +217,48 @@ class Book
 
     
 ?>
+        return $result;
+
+}
+    
+
+
+
+    // Lấy sách theo category + phân trang
+    public function getBooksyCategory($categoryId, $limit, $offset)
+    {
+        $sql = "SELECT b.book_id,
+                   b.book_title,
+                   b.author,
+                   b.stock_quantity,
+                   b.image_url,
+                   c.categories_name
+            FROM books b
+            INNER JOIN categories c 
+                ON b.categories_id = c.categories_id
+            WHERE b.categories_id = :categoryId
+            LIMIT :limit OFFSET :offset";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':categoryId', (int)$categoryId, PDO::PARAM_INT);
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Đếm tổng số sách theo category
+    public function getTotalBooksByCategory($categoryId)
+    {
+        $sql = "SELECT COUNT(*) 
+                FROM books 
+                WHERE categories_id = :categoryId";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':categoryId', (int)$categoryId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchColumn();
+    }
+}

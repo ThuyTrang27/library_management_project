@@ -47,7 +47,7 @@ switch ($action) {
     case 'logout':
         $authController->logout();
         break;
-        
+
     case 'listbook':
         $bookController->showListBook();
         break;
@@ -55,15 +55,15 @@ switch ($action) {
     case 'category':
         $bookController->showByCategory();
         break;
-    
+
     case 'about':
         $siteController->about();
         break;
-    
+
     case 'contact':
         $siteController->contact();
         break;
-        
+
     case 'add_to_mybook':
         $borrowController->addToMyBook($_GET['id'], $_GET['title'], $_GET['author'], $_GET['img']);
         break;
@@ -73,22 +73,17 @@ switch ($action) {
         $bookController->viewDetail($id);
         break;
 
-        break;
-
     case 'mybook':
         $borrowController->showMyBook();
         break;
-
 
     case 'show_borrow_form':
         $borrowController->showFormBookRequest();
         break;
 
-
     case 'submit_borrow':
         $borrowController->submitRequest();
         break;
-
 
     case 'remove_from_cart':
         $borrowController->removeFromCart();

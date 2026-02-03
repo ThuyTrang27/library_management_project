@@ -1,4 +1,4 @@
-<?php
+ <?php
 class AuthController
 {
     private $model;
@@ -9,7 +9,7 @@ class AuthController
     }
 
     /* ================= LOGIN ================= */
-    public function login()
+   public function login()
     {
         $message = null;
 
@@ -51,6 +51,13 @@ class AuthController
     }
 
 
+    public function logout()
+        {
+            session_destroy();
+            header("Location: index.php?action=listbook");
+            exit();
+        }
+
 
     /* ================= REGISTER ================= */
 
@@ -84,11 +91,5 @@ class AuthController
             exit();
         }
     }
-        public function logout()
-        {
-            session_destroy();
-            header("Location: index.php?action=listbook");
-            exit();
-        }
+
 }
-?>
