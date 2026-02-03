@@ -28,47 +28,43 @@ if (session_status() === PHP_SESSION_NONE) {
 
             <!-- LOGO -->
             <a class="navbar-brand d-flex align-items-center text-white fw-bold m-0" href="index.php?action=home">
-                <img src="images/logo.png" alt="Logo" width="45"
-                    class="me-2 shadow-sm rounded bg-white p-1">
+                <img src="images/logo.png" alt="Logo" width="45" class="me-2 shadow-sm rounded bg-white p-1">
                 <span style="letter-spacing: 1px;">TVAN LIBRARY</span>
             </a>
 
             <!-- USER -->
             <div class="d-flex align-items-center">
                 <?php if (isset($_SESSION['user'])): ?>
-                    <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle"
-                            type="button"
-                            data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i>
-                            <?= htmlspecialchars($_SESSION['user']['username']) ?>
-                        </button>
+                <div class="dropdown">
+                    <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-person-circle"></i>
+                        <?= htmlspecialchars($_SESSION['user']['username']) ?>
+                    </button>
 
-                        <ul class="dropdown-menu dropdown-menu-end shadow">
-                            <li>
-                                <a class="dropdown-item" href="index.php?action=profile">
-                                    <i class="bi bi-person me-2"></i> My Profile
-                                </a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="index.php?action=history">
-                                    <i class="bi bi-clock-history me-2"></i> My Borrowing History
-                                </a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-danger fw-bold"
-                                    href="index.php?action=logout">
-                                    <i class="bi bi-box-arrow-right me-2"></i> Log out
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    <ul class="dropdown-menu dropdown-menu-end shadow">
+                        <li>
+                            <a class="dropdown-item" href="index.php?action=profile">
+                                <i class="bi bi-person me-2"></i> My Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="index.php?action=history">
+                                <i class="bi bi-clock-history me-2"></i> My Borrowing History
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger fw-bold" href="index.php?action=logout">
+                                <i class="bi bi-box-arrow-right me-2"></i> Log out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
                 <?php else: ?>
-                    <a href="?action=login" class="btn btn-outline-light btn-sm me-2">Login</a>
-                    <a href="?action=register" class="btn btn-outline-light btn-sm me-2">Register</a>
+                <a href="?action=login" class="btn btn-outline-light btn-sm me-2">Login</a>
+                <a href="?action=register" class="btn btn-outline-light btn-sm me-2">Register</a>
                 <?php endif; ?>
             </div>
 
@@ -84,17 +80,13 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="col-md-8">
                     <ul class="nav">
                         <li class="nav-item">
-                            <a class="nav-link fw-bold active"
-                                href="index.php?action=home">Homepage</a>
+                            <a class="nav-link fw-bold active" href="index.php?action=home">Homepage</a>
                         </li>
 
                         <!-- DROPDOWN -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle fw-semibold"
-                                href="#"
-                                role="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false">
+                            <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
                                 Categories
                             </a>
 
@@ -109,21 +101,23 @@ if (session_status() === PHP_SESSION_NONE) {
                                 </li>
 
                                 <?php if (!empty($categories)): ?>
-                                    <?php foreach ($categories as $cat): ?>
-                                        <li>
-                                            <a class="dropdown-item" href="index.php?action=category&id=<?= $cat['id'] ?>">
-                                                <?= htmlspecialchars($cat['name']) ?>
-                                            </a>
-                                        </li>
-                                    <?php endforeach; ?>
+                                <?php foreach ($categories as $cat): ?>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="index.php?action=category&id=<?= $cat['categories_id'] ?>">
+                                        <?= htmlspecialchars($cat['categories_name']) ?> </a>
+                                </li>
+                                <?php endforeach; ?>
                                 <?php else: ?>
-                                    <li><span class="dropdown-item text-muted">No categories</span></li>
+                                <li><span class="dropdown-item text-muted">No categories</span></li>
                                 <?php endif; ?>
                             </ul>
                         </li>
 
-                        <li class="nav-item"><a class="nav-link fw-semibold" href="index.php?action=about">About</a></li>
-                        <li class="nav-item"><a class="nav-link fw-semibold" href="index.php?action=contact">Contact</a></li>
+                        <li class="nav-item"><a class="nav-link fw-semibold" href="index.php?action=about">About</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link fw-semibold" href="index.php?action=contact">Contact</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link fw-semibold" href="index.php?action=mybook">My book</a>
                         </li>
@@ -134,9 +128,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 <div class="col-md-4">
                     <form action="index.php" method="get" class="d-flex">
                         <input type="hidden" name="action" value="search">
-                        <input type="text" name="keyword"
-                            class="form-control me-2"
-                            placeholder="Search Book...">
+                        <input type="text" name="keyword" class="form-control me-2" placeholder="Search Book...">
                         <button class="btn btn-warning">
                             <i class="bi bi-search"></i>
                         </button>
