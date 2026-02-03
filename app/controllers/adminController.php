@@ -253,10 +253,6 @@ class AdminController
         header('Location: index.php?action=user_management');
         exit();
     }
-
-
-}
-   
-
+    }
     
 ?>
