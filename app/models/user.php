@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 class User
 {
     private $db;
@@ -13,6 +14,16 @@ class User
         $stmt = $this->db->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
+=======
+class User {
+    private $conn;
+
+    public function __construct($conn) {
+        if (!$conn) {
+            die('❌ conn NULL in model');
+        }
+        $this->conn = $conn;
+>>>>>>> 3f7e7f9ac9d8183744203643594bbb23085f7663
     }
 
     public function checkUserExist($username, $email) {
@@ -20,7 +31,11 @@ class User
                 WHERE username = :username OR email = :email 
                 LIMIT 1";
 
+<<<<<<< HEAD
         $stmt = $this->db->prepare($sql);
+=======
+        $stmt = $this->conn->prepare($sql);
+>>>>>>> 3f7e7f9ac9d8183744203643594bbb23085f7663
         $stmt->execute([
             ':username' => $username,
             ':email'    => $email
@@ -44,7 +59,11 @@ class User
                     VALUES 
                     (:fullname, :username, :email, :phone, :password, :address, :gender, :date_of_birth)";
 
+<<<<<<< HEAD
             $stmt = $this->db->prepare($sql);
+=======
+            $stmt = $this->conn->prepare($sql);
+>>>>>>> 3f7e7f9ac9d8183744203643594bbb23085f7663
             
             // Thực thi với mảng dữ liệu
             $result = $stmt->execute([
@@ -59,10 +78,17 @@ class User
             ]);
 
             if ($result) {
+<<<<<<< HEAD
                 return ['status' => true];
             }
             
             return ['status' => false];
+=======
+                return ['status' => true, 'message' => 'Đăng ký thành công!'];
+            }
+            
+            return ['status' => false, 'message' => 'Không thể thêm dữ liệu.'];
+>>>>>>> 3f7e7f9ac9d8183744203643594bbb23085f7663
 
         } catch (PDOException $e) {
             return [
@@ -71,6 +97,7 @@ class User
             ];
         }
     }
+<<<<<<< HEAD
 
     public function getAllUsers()
     {
@@ -92,4 +119,6 @@ class User
     }
 
 
+=======
+>>>>>>> 3f7e7f9ac9d8183744203643594bbb23085f7663
 }
