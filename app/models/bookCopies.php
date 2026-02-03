@@ -1,11 +1,13 @@
 <?php
 
-require_once __DIR__ . '/../core/lib/PHPMailer/src/Exception.php';
-require_once __DIR__ . '/../core/lib/PHPMailer/src/PHPMailer.php';
-require_once __DIR__ . '/../core/lib/PHPMailer/src/SMTP.php';
+
+require_once __DIR__ . '/../../public/lib/PHPMailer/src/Exception.php';
+require_once __DIR__ . '/../../public/lib/PHPMailer/src/PHPMailer.php';
+require_once __DIR__ . '/../../public/lib/PHPMailer/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+
 
 
 

@@ -1,8 +1,9 @@
 <?php
 
-require_once __DIR__ . '/../core/lib/PHPMailer/src/Exception.php';
-require_once __DIR__ . '/../core/lib/PHPMailer/src/PHPMailer.php';
-require_once __DIR__ . '/../core/lib/PHPMailer/src/SMTP.php';
+// Nhảy ra khỏi models, nhảy ra khỏi app, đi vào public/lib
+require_once __DIR__ . '/../../public/lib/PHPMailer/src/Exception.php';
+require_once __DIR__ . '/../../public/lib/PHPMailer/src/PHPMailer.php';
+require_once __DIR__ . '/../../public/lib/PHPMailer/src/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -77,71 +78,30 @@ public function updateStatus($id, $status)
     try {
         $this->db->beginTransaction();
 
-        // 1. Cập nhật trạng thái trong bảng borrow_requests (Bảng chính)
+        // 1. Cập nhật trạng thái và ngày trả thực tế nếu là Returned
         $sql = "UPDATE borrow_requests 
                 SET request_status = ?, 
                     actual_return_date = CASE WHEN ? = 'Returned' THEN NOW() ELSE actual_return_date END 
                 WHERE borrow_request_id = ?";
         $this->db->prepare($sql)->execute([$status, $status, $id]);
 
-        // 2. Lấy danh sách các cuốn sách trong đơn hàng này
+        // 2. Xử lý kho (Stock)
         $items = $this->getItems($id);
-
         foreach ($items as $item) {
-            $bookId = $item['book_id'];
-
             if ($status === 'Approved') {
-                // TÌM BẢN SAO: Lấy 1 bản sao đang rảnh (Available) của cuốn sách này
-                $sqlCopy = "SELECT book_copies_id FROM book_copies 
-                            WHERE book_id = ? AND book_status = 'Available' LIMIT 1";
-                $stmt = $this->db->prepare($sqlCopy);
-                $stmt->execute([$bookId]);
-                $copy = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if ($copy) {
-                    $copyId = $copy['book_copies_id'];
-
-                    // GÁN ID VÀO CHI TIẾT ĐƠN: Cập nhật cột book_copies_id đang bị NULL
-                    $updateDetail = "UPDATE borrow_request_books 
-                                     SET book_copies_id = ? 
-                                     WHERE borrow_request_id = ? AND book_id = ?";
-                    $this->db->prepare($updateDetail)->execute([$copyId, $id, $bookId]);
-
-                    // ĐỔI TRẠNG THÁI BẢN SAO: Chuyển sang 'Borrowed' để người khác không mượn trùng
-                    $updateCopyStatus = "UPDATE book_copies SET book_status = 'Borrowed' WHERE book_copies_id = ?";
-                    $this->db->prepare($updateCopyStatus)->execute([$copyId]);
-                    
-                    // Giảm tồn kho tổng trong bảng books
-                    $this->modifyStock($bookId, $item['quantity'], '-');
-                } else {
-                    // Nếu hết bản sao rảnh, có thể ném ra lỗi hoặc dừng giao dịch
-                    throw new Exception("Sách ID $bookId đã hết bản sao sẵn có.");
-                }
-
+                $this->modifyStock($item['book_id'], $item['quantity'], '-');
             } elseif ($status === 'Returned') {
-                // KHI TRẢ SÁCH: Tìm ID bản sao đã mượn để trả lại trạng thái 'Available'
-                $sqlGetCopy = "SELECT book_copies_id FROM borrow_request_books 
-                               WHERE borrow_request_id = ? AND book_id = ?";
-                $stmt = $this->db->prepare($sqlGetCopy);
-                $stmt->execute([$id, $bookId]);
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                if ($row && $row['book_copies_id']) {
-                    $this->db->prepare("UPDATE book_copies SET book_status = 'Available' WHERE book_copies_id = ?")
-                             ->execute([$row['book_copies_id']]);
-                }
-                
-                // Tăng tồn kho tổng trong bảng books
-                $this->modifyStock($bookId, $item['quantity'], '+');
+                $this->modifyStock($item['book_id'], $item['quantity'], '+');
             }
         }
 
+        // 3. Gửi Email (Chỉ cho Approved/Rejected)
         $this->handleNotifications($id, $status);
+
         $this->db->commit();
         return true;
     } catch (Exception $e) {
         $this->db->rollBack();
-        error_log($e->getMessage()); // Ghi log lỗi để kiểm tra
         return false;
     }
 }
