@@ -73,8 +73,6 @@ switch ($action) {
         $bookController->viewDetail($id);
         break;
 
-        break;
-
     case 'mybook':
         $borrowController->showMyBook();
         break;

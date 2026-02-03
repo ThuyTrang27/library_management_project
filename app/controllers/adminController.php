@@ -55,7 +55,8 @@ class AdminController
         $totalPages = ceil($totalBooks / $limit);
 
         require_once __DIR__ . '/../views/admin/bookManagement.php';
-    }                                                                   
+    }           
+                                                            
 
     public function showAddBookForm() {
         require_once __DIR__ . '/../views/admin/formAddBook.php';
@@ -158,16 +159,19 @@ class AdminController
         header("Location: index.php?action=book_management"); // Xóa xong quay về danh sách
         }
     public function updateStatus($id, $status)
-    {
-        Auth::admin();
+{
+    Auth::admin();
 
-        if (!in_array($status, ['Approved', 'Rejected'])) {
-            die('Invalid status');
-        }
+    // Cho phép thêm trạng thái 'Returned'
+    if (!in_array($status, ['Approved', 'Rejected', 'Returned'])) {
+        die('Invalid status');
+    }
 
-        $this->model->updateStatus($id, $status);
-        header("Location: index.php?action=admin_borrow_list");
-        exit();
+    $result = $this->model->updateStatus($id, $status);
+    
+    // Điều hướng về trang chi tiết hoặc danh sách kèm thông báo
+    header("Location: index.php?action=admin_borrow_list&msg=success");
+    exit();
 }
     public function show_form_import() {
         require_once __DIR__ . '/../views/admin/formImportBook.php';

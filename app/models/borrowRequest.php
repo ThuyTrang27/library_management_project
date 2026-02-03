@@ -19,7 +19,6 @@ class BorrowRequest
 
     public function getAll()
     {
-        // Đổi return_date thành schedule_return_date
         $sql = "SELECT br.borrow_request_id AS id, u.full_name, u.address, u.phone, 
                        br.request_date, br.schedule_return_date, br.request_status AS status
                 FROM borrow_requests br
@@ -40,73 +39,92 @@ class BorrowRequest
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getItems($id)
-    {
-        $sql = "SELECT 
+  public function getItems($id)
+{
+    $sql = "SELECT 
                 b.book_id,
                 b.book_title,
                 b.author,
                 brb.quantity,
                 c.categories_name AS category,
-                MIN(bc.barcode) AS barcode
+                bc.barcode -- Lấy trực tiếp barcode từ bảng copies
             FROM borrow_request_books brb
             JOIN books b ON brb.book_id = b.book_id
             JOIN categories c ON b.categories_id = c.categories_id
-            LEFT JOIN book_copies bc ON b.book_id = bc.book_id
+            -- Kết nối với bảng copies để lấy barcode đầu tiên khả dụng
+            LEFT JOIN (
+                SELECT book_id, MIN(barcode) as barcode 
+                FROM book_copies 
+                GROUP BY book_id
+            ) bc ON b.book_id = bc.book_id
             WHERE brb.borrow_request_id = ?
-            GROUP BY 
-                b.book_id, b.book_title, b.author, brb.quantity, c.categories_name";
+            GROUP BY b.book_id, b.book_title, b.author, brb.quantity, c.categories_name, bc.barcode";
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute([$id]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+}
     public function updateStatus($id, $status)
-    {
-        try {
-            $this->db->beginTransaction();
+{
+    try {
+        $this->db->beginTransaction();
 
-            // 1. Update status
-            $sql = "UPDATE borrow_requests SET request_status = ? WHERE borrow_request_id = ?";
-            $this->db->prepare($sql)->execute([$status, $id]);
+        // 1. Cập nhật trạng thái và ngày trả thực tế nếu là Returned
+        $sql = "UPDATE borrow_requests 
+                SET request_status = ?, 
+                    actual_return_date = CASE WHEN ? = 'Returned' THEN NOW() ELSE actual_return_date END 
+                WHERE borrow_request_id = ?";
+        $this->db->prepare($sql)->execute([$status, $status, $id]);
 
-            // 2. Trừ kho nếu Approved
+        // 2. Xử lý kho (Stock)
+        $items = $this->getItems($id);
+        foreach ($items as $item) {
             if ($status === 'Approved') {
-                $items = $this->getItems($id);
-                foreach ($items as $item) {
-                    $sqlStock = "UPDATE books 
-                             SET stock_quantity = stock_quantity - ? 
-                             WHERE book_id = ? AND stock_quantity >= ?";
-                    $this->db->prepare($sqlStock)
-                        ->execute([$item['quantity'], $item['book_id'], $item['quantity']]);
-                }
+                $this->modifyStock($item['book_id'], $item['quantity'], '-');
+            } elseif ($status === 'Returned') {
+                $this->modifyStock($item['book_id'], $item['quantity'], '+');
             }
-
-            // 3. Lấy email user
-            $sqlUser = "SELECT u.email, u.full_name
-                    FROM borrow_requests br
-                    JOIN users u ON br.user_id = u.user_id
-                    WHERE br.borrow_request_id = ?";
-            $stmt = $this->db->prepare($sqlUser);
-            $stmt->execute([$id]);
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-            // 4. Gửi mail
-            if ($user && in_array($status, ['Approved', 'Rejected'])) {
-                $this->sendBorrowStatusEmail(
-                    $user['email'],
-                    $user['full_name'],
-                    $status
-                );
-            }
-
-            $this->db->commit();
-            return true;
-        } catch (Exception $e) {
-            $this->db->rollBack();
-            return false;
         }
+
+        // 3. Gửi Email (Chỉ cho Approved/Rejected)
+        $this->handleNotifications($id, $status);
+
+        $this->db->commit();
+        return true;
+    } catch (Exception $e) {
+        $this->db->rollBack();
+        return false;
     }
+}
+
+private function modifyStock($bookId, $quantity, $operator)
+{
+    $sql = "UPDATE books SET stock_quantity = stock_quantity $operator ? WHERE book_id = ?";
+    if ($operator === '-') $sql .= " AND stock_quantity >= ?";
+    
+    $params = ($operator === '-') ? [$quantity, $bookId, $quantity] : [$quantity, $bookId];
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute($params);
+
+    if ($operator === '-' && $stmt->rowCount() == 0) {
+        throw new Exception("Sách ID $bookId không đủ số lượng.");
+    }
+}
+
+private function handleNotifications($requestId, $status) {
+    if (!in_array($status, ['Approved', 'Rejected'])) return;
+    
+    $sqlUser = "SELECT u.email, u.full_name FROM borrow_requests br 
+                JOIN users u ON br.user_id = u.user_id WHERE br.borrow_request_id = ?";
+    $stmt = $this->db->prepare($sqlUser);
+    $stmt->execute([$requestId]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        $this->sendBorrowStatusEmail($user['email'], $user['full_name'], $status);
+    }
+}
 
     private function sendBorrowStatusEmail($email, $name, $status)
     {

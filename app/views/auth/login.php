@@ -20,7 +20,7 @@
             <h1>Welcome back !</h1>
 
             <?php if (isset($message) && $message): ?>
-                <div class="msg"><?php echo $message; ?></div>
+            <div class="msg"><?php echo $message; ?></div>
             <?php endif; ?>
 
             <form method="POST">
@@ -39,15 +39,12 @@
                 <a href="index.php?action=register" class="btn-reg">Register</a>
 
             </form>
-            <form action="index.php" method="get">
-                <input type="hidden" name="action" value="register">
-                <button type="submit" class="btn-reg">Register</button>
-            </form>
 
 
         </div>
 
-        <div class="right-img" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66');">
+        <div class="right-img"
+            style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66');">
         </div>
     </div>
 </body>
