@@ -253,6 +253,15 @@ class AdminController
         header('Location: index.php?action=user_management');
         exit();
     }
+
+    public function showStatistic()
+    {
+        Auth::admin();
+    $generalStats = $this->bookModel->getGeneralStatistics();
+    $categoryStats = $this->bookModel->getBooksByCategory();
+    
+    require_once __DIR__ . '/../views/admin/statistic.php';
+}
     }
     
 ?>

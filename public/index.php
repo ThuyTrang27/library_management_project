@@ -154,6 +154,11 @@ switch ($action) {
     case 'admin_user_list':
         $adminController->userManagement();
         break;
+
+    case 'admin_statistic':
+        $adminController->showStatistic();
+        break;
+
     default:
         header("Location: index.php?action=listbook");
         exit();

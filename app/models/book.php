@@ -182,7 +182,31 @@ class Book
 
     return $result;
 }
+    // Thống kê chung
+    public function getGeneralStatistics() {
+    // Đếm tổng số sách
+    $stmt1 = $this->conn->query("SELECT COUNT(*) as total FROM books");
+    $totalBooks = $stmt1->fetch(PDO::FETCH_ASSOC)['total'];
     
+    // Đếm số yêu cầu mượn đang chờ (Giả sử status = 'pending' hoặc 0)
+    $stmt2 = $this->conn->query("SELECT COUNT(*) as total FROM borrow_requests"); // Bạn có thể thêm WHERE status = 0
+    $totalRequests = $stmt2->fetch(PDO::FETCH_ASSOC)['total'];
+    
+    return [
+        'total_books' => $totalBooks,
+        'total_requests' => $totalRequests
+    ];
+}
+
+    public function getBooksByCategory() {
+    $sql = "SELECT c.categories_name, COUNT(b.book_id) as count 
+            FROM categories c 
+            LEFT JOIN books b ON c.categories_id = b.categories_id 
+            GROUP BY c.categories_id, c.categories_name";
+            
+    $stmt = $this->conn->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // Trả về mảng tất cả các dòng
+}
 }
 
 
