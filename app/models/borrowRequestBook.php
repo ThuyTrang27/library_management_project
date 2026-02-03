@@ -21,7 +21,7 @@ class BorrowRequestBook
                        br.request_date, br.schedule_return_date, br.request_status AS status
                 FROM borrow_requests br
                 JOIN users u ON br.user_id = u.user_id
-                ORDER BY br.request_date DESC";
+                ORDER BY br.borrow_request_id DESC";
         return $this->db->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -37,7 +37,7 @@ class BorrowRequestBook
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getItems($requestId)
+    private function getItems($requestId)
     {
         $sql = "SELECT book_id, quantity FROM borrow_request_books WHERE borrow_request_id = ?";
         $stmt = $this->db->prepare($sql);
