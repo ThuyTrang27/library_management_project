@@ -87,25 +87,18 @@
             </form>
 
             <hr>
-
-<<<<<<< HEAD
-            <form action="" class="back-to-login">
-=======
-            <form action="login.php" class="back-to-login">
->>>>>>> 3f7e7f9ac9d8183744203643594bbb23085f7663
+            <form action="?action=login" class="back-to-login">
                 <p>Already have an account?</p>
                 <button type="submit" class="btn btn-primary btn-block">Login</button>
             </form>
 
-<<<<<<< HEAD
-=======
             <?php if (!empty($_SESSION['error'])): ?>
                 <div class="alert alert-danger" style="margin-top: 20px;">
                     <?= $_SESSION['error']; ?>
                 </div>
                 <?php unset($_SESSION['error']); ?>
+
             <?php endif; ?>
->>>>>>> 3f7e7f9ac9d8183744203643594bbb23085f7663
         </div>
     </div>
 

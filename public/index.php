@@ -158,3 +158,4 @@ switch ($action) {
         header("Location: index.php?action=listbook");
         exit();
 }
+?>

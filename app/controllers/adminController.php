@@ -269,7 +269,7 @@ class AdminController
     {
         Auth::admin();
     $generalStats = $this->bookModel->getGeneralStatistics();
-    $categoryStats = $this->bookModel->getBooksByCategory();
+    $categoryStats = $this->bookModel->countBooksByCategory();
     
     require_once __DIR__ . '/../views/admin/statistic.php';
 }

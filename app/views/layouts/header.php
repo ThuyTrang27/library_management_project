@@ -111,8 +111,8 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <?php if (!empty($categories)): ?>
                                     <?php foreach ($categories as $cat): ?>
                                         <li>
-                                            <a class="dropdown-item" href="index.php?action=category&id=<?= $cat['id'] ?>">
-                                                <?= htmlspecialchars($cat['name']) ?>
+                                            <a class="dropdown-item" href="index.php?action=category&id=<?= $cat['categories_id'] ?>">
+                                                <?= htmlspecialchars($cat['categories_name']) ?>
                                             </a>
                                         </li>
                                     <?php endforeach; ?>

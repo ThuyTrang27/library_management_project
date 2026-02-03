@@ -103,4 +103,5 @@ class BookController
         // Hiển thị kết quả ra view
         require_once __DIR__ . '/../views/books/searchResult.php';
     }
+   
 }

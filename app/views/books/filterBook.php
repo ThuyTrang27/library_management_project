@@ -14,7 +14,7 @@
 
         <h2 class="mt-4 mb-3">
             Result for category:
-            <span><?= htmlspecialchars($selectedCategory['name']) ?></span>
+            <span><?= htmlspecialchars($selectedCategory['categories_name']) ?></span>
         </h2>
 
         <div class="book-grid">
