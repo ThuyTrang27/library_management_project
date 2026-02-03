@@ -66,8 +66,8 @@ $current_action = isset($_GET['action']) ? $_GET['action'] : '';
             Borrowing Management
         </a>
         
-        <a class="btn <?php echo ($current_action == 'admin_statistics') ? 'btn-outline-primary' : 'btn-outline-secondary'; ?>" 
-           href="index.php?action=admin_statistics">
+        <a class="btn <?php echo ($current_action == 'admin_statistic') ? 'btn-outline-primary' : 'btn-outline-secondary'; ?>" 
+           href="index.php?action=admin_statistic">
             Statistics
         </a>
              
