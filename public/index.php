@@ -27,7 +27,7 @@ require_once dirname(__DIR__) . '/app/controllers/authController.php';
 require_once dirname(__DIR__) . '/app/controllers/bookController.php';
 require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
 require_once dirname(__DIR__) . '/app/controllers/adminController.php';
-require_once dirname(__DIR__) . '/app/controllers/SiteController.php';
+// require_once dirname(__DIR__) . '/app/controllers/SiteController.php';
 
 
 $database = new Database();
@@ -42,7 +42,7 @@ $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
 $borrowController = new BorrowController($db);
 $adminController = new AdminController($db);
-$siteController = new SiteController($db);
+// $siteController = new SiteController($db);
 
 
 
