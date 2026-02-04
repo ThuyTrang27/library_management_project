@@ -75,6 +75,7 @@ body {
 .btn-add-to-cart {
     background-color: #2ecc71;
     color: white;
+    margin-left: 70px;
 }
 
 .btn-add-to-cart:hover {

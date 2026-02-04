@@ -23,7 +23,7 @@
         <!-- Lưới hiển thị sách -->
        <div class="book-grid">
     <?php foreach ($books as $book): ?>
-        <div class="book-item book-card">
+        <div class="book-item ">
             <a href="index.php?action=bookdetail&id=<?= $book['book_id'] ?>" style="text-decoration: none; color: inherit;">
                 <div class="book-image-wrapper">
                     <img src="images/<?= htmlspecialchars($book['image_url']) ?>"
@@ -47,14 +47,6 @@
                     <p class="book-info">
                         <strong>Stock:</strong> <?= htmlspecialchars($book['stock_quantity']) ?>
                     </p>
-
-                    <div class="mt-2 text-center">
-                        <a href="index.php?action=bookdetail&id=<?= $book['book_id'] ?>" 
-                           class="btn btn-sm btn-outline-primary w-100" 
-                           style="text-decoration: none;">
-                           View Detail
-                        </a>
-                    </div>
                 </div>
         </div>
     <?php endforeach; ?>

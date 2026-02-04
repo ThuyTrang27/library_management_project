@@ -18,7 +18,13 @@
    
     <div class="container">
         <h1 class="text-center mt-4 mb-4">Book Management</h1>
-
+        <ul class="pagination">
+            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                <li class="<?php echo ($i == $currentPage) ? 'active' : ''; ?>">
+                    <a href="index.php?action=book_management&page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                </li>
+            <?php endfor; ?>
+        </ul>
         <div class="select-add-book">
                 <a href="index.php?action=import_book_by_excel">
                     <button class="btn-add-book">Import books</button>

@@ -40,9 +40,7 @@ class BorrowController
 
         // 3. Xử lý logic thêm hoặc cập nhật
         if ($this->isBookInCart($bookId)) {
-            $this->increaseQuantity($bookId);
-            // Sau khi cập nhật, dùng PHP redirect cho nhanh
-            header("Location: " . ($_SERVER['HTTP_REFERER'] ?? 'index.php'));
+            echo "<script>alert('This book is already in My book!'); window.history.back();</script>";
         } else {
             $this->addNewBookToCart($bookId, $bookTitle, $author, $image);
             // Khi thêm mới, dùng Script để hiện Alert thông báo
@@ -63,11 +61,6 @@ class BorrowController
     private function isBookInCart($bookId)
     {
         return isset($_SESSION['my_book_cart'][$bookId]);
-    }
-
-    private function increaseQuantity($bookId)
-    {
-        $_SESSION['my_book_cart'][$bookId]['quantity'] += 1;
     }
 
     private function addNewBookToCart($bookId, $bookTitle, $author, $image)
@@ -99,9 +92,7 @@ class BorrowController
         require_once __DIR__ . '/../views/books/myBook.php';
     }
 
-    /**
-     * Xử lý gửi yêu cầu mượn vào Database
-     */
+    // Xử lý gửi yêu cầu mượn vào Database //    
     public function submitRequest()
     {
         Auth::user();

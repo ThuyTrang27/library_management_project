@@ -46,7 +46,7 @@ class AdminController
         require dirname(__DIR__, 2) . '/app/views/admin/borrowDetail.php';
     }
 
-    public function showAdminDashboard()
+    public function bookManagement()
     {
         $categories = $this->categoryModel->getAllCategories();
 
@@ -247,23 +247,6 @@ class AdminController
         require_once __DIR__ . '/../views/admin/userManagement.php';
     }
 
-    public function lockUser()
-    {
-        if (isset($_GET['id'])) {
-            $this->userModel->lockUser($_GET['id']);
-        }
-        header('Location: index.php?action=user_management');
-        exit();
-    }
-
-    public function unlockUser()
-    {
-        if (isset($_GET['id'])) {
-            $this->userModel->unlockUser($_GET['id']);
-        }
-        header('Location: index.php?action=user_management');
-        exit();
-    }
 
     public function showStatistic()
     {

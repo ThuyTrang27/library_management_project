@@ -15,7 +15,7 @@
         <p><strong>Book Informations</strong></p>
         
         <?php foreach ($_SESSION['my_book_cart'] as $book): ?>
-        <div class="book-card">
+        <div class="book-card ">
             <img src="<?php echo $book['image']; ?>" alt="Sách">
             <div class="book-info">
                 <h4><?php echo $book['title']; ?></h4>
@@ -23,9 +23,7 @@
                 <p><strong>Author:</strong> <?php echo $book['author']; ?></p>
                 <div class="quantity-control">
                     <strong>Quantity:</strong>
-                    <button class="btn-qty">+</button>
                     <span>1</span>
-                    <button class="btn-qty">-</button>
                 </div>
             </div>
         </div>

@@ -1,14 +1,26 @@
 
-    // Tìm tất cả các ô input có thuộc tính 'required'
-    const inputs = document.querySelectorAll('input[required]');
-    
-    inputs.forEach(input => {
-        // Khi ô đó bị trống lúc nhấn Submit
-        input.oninvalid = function(e) {
-            e.target.setCustomValidity("Please fill out this field.");
-        };
-        // Khi người dùng bắt đầu gõ thì xóa thông báo lỗi đi để họ nhấn Submit lại được
-        input.oninput = function(e) {
-            e.target.setCustomValidity("");
-        };
-    });
+function updateQty(bookId, change) {
+    let qtyElement = document.getElementById('qty-' + bookId);
+    let currentQty = parseInt(qtyElement.innerText);
+    let newQty = currentQty + change;
+
+    // Nếu số lượng mới > 0, cập nhật như bình thường
+    if (newQty > 0) {
+        qtyElement.innerText = newQty;
+        fetch(`index.php?action=update_cart_qty&id=${bookId}&qty=${newQty}`);
+    } 
+    // Nếu số lượng mới bằng 0, thực hiện xóa
+    else {
+        if (confirm("Do you want to remove this book from the list?")) {
+            fetch(`index.php?action=remove_from_cart&id=${bookId}`)
+                .then(() => {
+                    // Tìm phần tử cha (book-card) và xóa nó khỏi giao diện
+                    let bookCard = qtyElement.closest('.book-card');
+                    bookCard.remove();
+                    
+                    // Nếu sau khi xóa mà không còn sách nào, có thể reload để hiện thông báo trống
+                    location.reload(); 
+                });
+        }
+    }
+}

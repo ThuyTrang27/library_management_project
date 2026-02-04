@@ -62,7 +62,7 @@ class BookController
         // Lấy tên thể loại đang chọn
         $selectedCategory = null;
         foreach ($categories as $cat) {
-            if ($cat['id'] == $categoryId) {
+            if ($cat['categories_id'] == $categoryId) {
                 $selectedCategory = $cat;
                 break;
             }
@@ -70,7 +70,7 @@ class BookController
 
         // Nếu không tìm thấy category → quay về trang chính
         if ($selectedCategory === null) {
-            header("Location: listbook.php");
+            header("Location: index.php?action=listbook");
             exit();
         }
 
@@ -105,3 +105,4 @@ class BookController
     }
    
 }
+?>

@@ -98,7 +98,7 @@ switch ($action) {
         break;
 
     case 'book_management':
-        $adminController->showAdminDashboard();
+        $adminController->bookManagement();
         break;
 
     case 'show_form_add_book':
