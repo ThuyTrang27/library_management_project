@@ -1,34 +1,53 @@
 <?php
-// require_once __DIR__ . '/../config/config.php';
+session_start();
+
+/*
+|--------------------------------------------------------------------------
+| CONFIG & DATABASE
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/config/config.php';
 
+/*
+|--------------------------------------------------------------------------
+| MODELS
+|--------------------------------------------------------------------------
+*/
 require_once dirname(__DIR__) . '/app/models/user.php';
 require_once dirname(__DIR__) . '/app/models/book.php';
-
-require_once dirname(__DIR__) . '/app/controllers/authController.php';
-require_once dirname(__DIR__) . '/app/controllers/bookController.php';
-require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
 require_once dirname(__DIR__) . '/app/models/category.php';
 
+/*
+|--------------------------------------------------------------------------
+| CONTROLLERS
+|--------------------------------------------------------------------------
+*/
+require_once dirname(__DIR__) . '/app/controllers/authController.php';
+require_once dirname(__DIR__) . '/app/controllers/bookController.php';
+require_once dirname(__DIR__) . '/app/models/category.php';
 
-
-session_start();
+require_once dirname(__DIR__) . '/app/controllers/borrowController.php';
+require_once dirname(__DIR__) . '/app/controllers/adminController.php';
 
 $database = new Database();
 $db = $database->connect();
-$categoryModel = new Category($db);
-$categories = $categoryModel->getAllCategories();
 
+/*
+|--------------------------------------------------------------------------
+| CONTROLLER INSTANCES
+|--------------------------------------------------------------------------
+*/
 $authController = new AuthController(new User($db));
 $bookController = new BookController($db);
 $borrowController = new BorrowController($db);
-require_once dirname(__DIR__) . '/app/models/category.php';
+$adminController = new AdminController($db);
 
 
 
-$action = isset($_GET['action']) ? $_GET['action'] : 'listbook';
+$action = isset($_GET['action']) ? $_GET['action'] : 'admin_dashboard';
 
 switch ($action) {
+
     case 'register':
         $authController->registerView();
         break;
@@ -37,7 +56,6 @@ switch ($action) {
         $authController->doRegister();
         break;
 
-
     case 'login':
         $authController->login();
         break;
@@ -45,14 +63,12 @@ switch ($action) {
     case 'logout':
         $authController->logout();
         break;
-
-    case 'home':
     case 'listbook':
         $bookController->showListBook();
         break;
 
     case 'category':
-        $bookController->showByCategory();
+        $bookController->showByCategory(); 
         break;
 
      case 'add_to_mybook':
@@ -73,7 +89,7 @@ switch ($action) {
         break;
         
     case 'submit_borrow':
-        $borrowController->submitRequest(); // Hàm mình viết ở câu trả lời trước
+        $borrowController->submitRequest(); 
         break;
     
     case 'remove_from_cart':
@@ -82,6 +98,32 @@ switch ($action) {
 
     case 'update_cart_qty':
         $borrowController->updateCartQty();
+        break;
+    
+    case 'admin_dashboard':
+        $adminController->showAdminDashboard();
+        break;
+    
+    case 'show_form_add_book':
+        $adminController->showAddBookForm();
+        break;
+
+    case 'addbook':
+        $adminController->doAddBook();
+        break;
+    
+    case 'edit_book':
+        $id = $_GET['id'] ?? null;
+        $adminController->showEditBookForm($id);
+    break;
+
+    case 'do_edit_book':
+        $adminController->doEditBook();
+        break;
+    
+    case 'delete_book':
+        $id = $_GET['id'] ?? null;
+        $adminController->doDeleteBook($id);
         break;
 
     default:
