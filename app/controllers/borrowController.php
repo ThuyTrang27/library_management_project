@@ -32,24 +32,20 @@ class BorrowController
 
     public function addToMyBook($bookId, $bookTitle, $author, $image)
     {
-        // 1. Kiểm tra quyền truy cập
         $this->checkLogin();
 
-        // 2. Đảm bảo giỏ hàng đã được khởi tạo
         $this->initCart();
 
-        // 3. Xử lý logic thêm hoặc cập nhật
         if ($this->isBookInCart($bookId)) {
             echo "<script>alert('This book is already in My book!'); window.history.back();</script>";
         } else {
             $this->addNewBookToCart($bookId, $bookTitle, $author, $image);
-            // Khi thêm mới, dùng Script để hiện Alert thông báo
             echo "<script>alert('Added to My book!'); window.history.back();</script>";
         }
         exit();
     }
 
-    // --- Các hàm hỗ trợ (Private Helper Methods) ---
+    // Private Helper Methods //
 
     private function initCart()
     {
@@ -73,18 +69,14 @@ class BorrowController
             'quantity' => 1
         ];
     }
-
-    /**
-     * Hiển thị Form điền thông tin mượn
-     */
+    
+    // Hiển thị Form điền thông tin mượn //
     public function showFormBookRequest()
     {
         require_once __DIR__ . '/../views/books/formBookBorrowRequest.php';
     }
 
-    /**
-     * Hiển thị trang danh sách sách đã chọn
-     */
+    // Hiển thị trang danh sách sách đã chọn //
     public function showMyBook()
     {
         $listBooks = isset($_SESSION['my_book_cart']) ? $_SESSION['my_book_cart'] : [];

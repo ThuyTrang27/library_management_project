@@ -189,7 +189,6 @@ class Book
     //import book
     public function importBook($data)
     {
-        // Tạm thời bỏ qua bước CHECK trùng để test xem có INSERT được không
         $sql = "INSERT INTO books (book_title, price, author, publisher, publish_year, stock_quantity, categories_id, content, image_url) 
             VALUES (:book_title, :price, :author, :publisher, :publish_year, :stock_quantity, :categories_id, :content, :image_url)";
 
@@ -208,7 +207,6 @@ class Book
         ]);
 
         if (!$result) {
-            // LỆNH NÀY SẼ HIỆN RA LỖI THẬT SỰ (Ví dụ: sai tên cột, sai khóa ngoại...)
             echo "<pre>";
             print_r($stmt->errorInfo());
             echo "Dữ liệu đang chèn: ";

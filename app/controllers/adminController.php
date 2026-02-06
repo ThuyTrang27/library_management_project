@@ -199,12 +199,8 @@ class AdminController
             $skipped = 0;
 
             foreach ($data as $index => $row) {
-                if ($index == 0) continue; // Bỏ qua dòng tiêu đề
-
-                // Kiểm tra nếu dòng này trống (ví dụ check book_id rỗng)
+                if ($index == 0) continue; 
                 if (empty($row[1])) continue;
-
-                // Chuẩn bị mảng dữ liệu theo đúng cấu trúc bảng
                 $bookData = [
                     'book_title'     => $row[1], // Cột B
                     'price'          => $row[2], // Cột C
@@ -217,20 +213,17 @@ class AdminController
                     'image_url'      => $row[9]  // Cột J
                 ];
 
-                // Gọi Model để xử lý logic
                 if ($this->bookModel->importBook($bookData)) {
                     $success++;
                 } else {
                     $skipped++;
                 }
             }
-            // Điều hướng về trang danh sách kèm thông báo
            $_SESSION['import_result'] = [
                 'success' => $success,
                 'skipped' => $skipped
             ];
 
-                // Header bây giờ ngắn gọn như ý bạn
             header("Location: index.php?action=book_management");
             exit();
 
